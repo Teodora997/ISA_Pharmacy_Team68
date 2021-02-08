@@ -11,7 +11,7 @@ public class Medicine {
 
     @Id
     @Column(name = "Id")
-    private Integer id;
+    private Long id;
 
     @Column(name = "Name")
     private String name;
@@ -37,11 +37,27 @@ public class Medicine {
     @Column(name = "Additional")
     private String additional;
 
-    public Integer getId() {
+    public Medicine(){
+
+    }
+    
+    public Medicine(Long id, String name, String type, String form, String ingredients, String producer, String regime,
+    Integer alternative, String additional) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.form = form;
+        this.ingredients = ingredients;
+        this.producer = producer;
+        this.regime = regime;
+        this.alternative = alternative;
+        this.additional = additional;
+    }
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -108,4 +124,6 @@ public class Medicine {
     public void setAdditional(String additional) {
         this.additional = additional;
     }
+
+   
 }

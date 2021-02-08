@@ -16,7 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -31,33 +30,37 @@ public abstract class User implements UserDetails{
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name="Id",nullable = false)
-    @SequenceGenerator(name="mySg",sequenceName = "myS",initialValue = 1,allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "mySg")
-    private Integer id;
+    @Column(name="Id")
+    @SequenceGenerator(name="gen1",sequenceName = "gen11",initialValue = 1,allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "gen1")
+    private Long id;
 
-    @Column(name="First_Name",unique = false,nullable = false)
+    @Column(name="First_Name")
     private String FirstName;
 
-    @Column(name="Email",unique = false)
-    private String email;
-
-    @Column(name="Password",unique = false)
-    private String password;
-
-    @Column(name="Telephone",unique = false)
-    private String telephone;
-
-    @Column(name="Adress",unique = false)
-    private String adress;
-    
-    @Column(name="City",unique = false)
-    private String city;
-
-    @Column(name="Last_Name",unique = false,nullable = false)
+    @Column(name="Last_Name")
     private String LastName;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @Column(name="Email")
+    private String email;
+
+    @Column(name="Password")
+    private String password;
+
+    @Column(name="Telephone")
+    private String telephone;
+
+    @Column(name="Address")
+    private String address;
+    
+    @Column(name="City")
+    private String city;
+
+    @Column(name="Role")
+    private String role;
+
+    
+    @ManyToMany()
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))        
@@ -65,6 +68,17 @@ public abstract class User implements UserDetails{
 
     public User(){
 
+    }
+
+    public User(Long id,String firstName,String lastName,String password,String address,String city,String email,String telephone){
+        this.id=id;
+        this.FirstName=firstName;
+        this.LastName=lastName;
+        this.password=password;
+        this.address=address;
+        this.city=city;
+        this.email=email;
+        this.telephone=telephone;
     }
     public String getFirstName(){
         return FirstName;
@@ -78,10 +92,10 @@ public abstract class User implements UserDetails{
     public void setLastName(String name){
         this.LastName=name;
     }
-    public Integer getId(){
+    public Long getId(){
         return id;
     }
-    public void setId(Integer id){
+    public void setId(Long id){
         this.id=id;
     }
    
@@ -116,12 +130,12 @@ public abstract class User implements UserDetails{
         this.telephone = telephone;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getCity() {

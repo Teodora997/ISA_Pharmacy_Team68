@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,9 +19,8 @@ public class Authority implements GrantedAuthority {
 
 	@Id
     @Column(name="id",nullable = false,insertable = false)
-    @SequenceGenerator(name="mySgg",sequenceName = "mySs",initialValue = 1,allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "mySgg")
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name="name")
     private String name;
@@ -42,11 +40,11 @@ public class Authority implements GrantedAuthority {
     }
 
     @JsonIgnore
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

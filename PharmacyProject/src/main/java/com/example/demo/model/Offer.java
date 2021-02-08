@@ -1,15 +1,21 @@
 package com.example.demo.model;
 
-import java.time.LocalDate;
-
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+import com.example.demo.model.Users.Supplier;
+
+@Entity
+@Table(name="Offer")
 public class Offer {
     
     @Id
     @Column(name="Id")
-    private Integer id;
+    private Long id;
 
     @Column(name="idOrder")
     private Integer idOrder;
@@ -21,13 +27,28 @@ public class Offer {
     private String status;
 
     @Column(name = "DeliveryDate")
-    private LocalDate deliveryDate;
+    private String deliveryDate;
 
-    public Integer getId() {
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Supplier supplier;
+
+    public Offer(){
+
+    }
+    
+    public Long getId() {
         return id;
     }
-
-    public void setId(Integer id) {
+    public Offer(Long id, Integer idOrder, Double price, String status, String deliveryDate, Supplier supplier) {
+        this.id = id;
+        this.idOrder = idOrder;
+        this.price = price;
+        this.status = status;
+        this.deliveryDate = deliveryDate;
+        this.supplier = supplier;
+    }
+    
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -55,11 +76,21 @@ public class Offer {
         this.status = status;
     }
 
-    public LocalDate getDeliveryDate() {
+    public String getDeliveryDate() {
         return deliveryDate;
     }
 
-    public void setDeliveryDate(LocalDate deliveryDate) {
+    public void setDeliveryDate(String deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
+    }
+
+    
 }

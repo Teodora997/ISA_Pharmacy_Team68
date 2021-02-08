@@ -1,44 +1,37 @@
 package com.example.demo.model;
 
-import java.util.List;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name=" medicinePriceList")
-public class MedicinePriceList {
-    
+@Table(name="WorkTime")
+public class WorkTime {
     @Id
     @Column(name="Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    //@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = " medicinePriceList")
-    //private Set<MedicinePriceListItem>  medicinePriceList;
-
-    @OneToOne(mappedBy = "medicinePriceList")
-    private Pharmacy pharmacy;
-
     @Column(name="FromDate")
     private String fromDate;
-
     @Column(name="ToDate")
     private String toDate;
+    @Column(name="Shift")
+    private Integer shift;
 
 
-    public MedicinePriceList() {
+    public WorkTime(){
+
     }
-
+    
+    public WorkTime(Long id, String fromDate, String toDate, Integer shift) {
+        this.id = id;
+        this.fromDate = fromDate;
+        this.toDate = toDate;
+        this.shift = shift;
+    }
     public Long getId() {
         return id;
     }
@@ -47,8 +40,7 @@ public class MedicinePriceList {
         this.id = id;
     }
 
-
-    public String getFromDate() {
+    public String fromDate() {
         return fromDate;
     }
 
@@ -64,5 +56,14 @@ public class MedicinePriceList {
         this.toDate = toDate;
     }
 
+    public Integer getShift(){
+        return shift;
+    }
+
+    public void setShift(Integer shift){
+        this.shift=shift;
+    }
+
     
+
 }

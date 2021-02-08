@@ -1,107 +1,77 @@
 package com.example.demo.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.example.demo.model.Users.Dermatologist;
-import com.example.demo.model.Users.Pharmacist;
 
 @Entity
 @Table(name = "Pharmacies")
 public class Pharmacy {
     @Id
     @Column(name = "Id")
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name = "Name")
-    private LocalDate name;
+    private String name;
 
     @Column(name = "Address")
-    private LocalTime adress;
-
-    @Column(name = "Dermatologist")
-    private List<Dermatologist> dermatologist;
-
-    @Column(name = "Pharmacist")
-    private List<Pharmacist> pharmacist;
-
-    @Column(name = "Medicines")
-    private List<Medicine> medicines;
-    
-    @Column(name = "Examinations")
-    private List<Examination> examinations;
+    private String address;
     
     @Column(name="Mark")
-    private Integer mark;
+    private Double mark;
 
-    public Integer getId() {
+    @OneToOne(fetch =FetchType.LAZY )
+    @JoinColumn(name="IdMedPriceList",referencedColumnName ="id" )
+    private MedicinePriceList medicinePriceList;
+
+    @OneToOne(fetch =FetchType.LAZY )
+    @JoinColumn(name="IdExPriceList",referencedColumnName ="id" )
+    private MedicinePriceList ExaminationPriceList;
+
+
+
+    public Pharmacy() {
+    }
+    
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public LocalDate getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(LocalDate name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public LocalTime getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(LocalTime adress) {
-        this.adress = adress;
+    public void setAdress(String address) {
+        this.address = address;
     }
 
-
-    public List<Dermatologist> getDermatologist() {
-        return dermatologist;
-    }
-
-    public void setDermatologist(List<Dermatologist> dermatologist) {
-        this.dermatologist = dermatologist;
-    }
-
-    public List<Pharmacist> getPharmacist() {
-        return pharmacist;
-    }
-
-    public void setPharmacist(List<Pharmacist> pharmacist) {
-        this.pharmacist = pharmacist;
-    }
-
-    public List<Medicine> getMedicines() {
-        return medicines;
-    }
-
-    public void setMedicines(List<Medicine> medicines) {
-        this.medicines = medicines;
-    }
-
-    public List<Examination> getExaminations() {
-        return examinations;
-    }
-
-    public void setExaminations(List<Examination> examinations) {
-        this.examinations = examinations;
-    }
-
-    public Integer getMark() {
+    public Double getMark() {
         return mark;
     }
 
-    public void setMark(Integer mark) {
+    public void setMark(Double mark) {
         this.mark = mark;
     }
+
+    
 }

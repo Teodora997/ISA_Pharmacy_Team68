@@ -12,34 +12,41 @@ public class SystemAdmin extends User {
      */
     private static final long serialVersionUID = 1L;
 
+
+    public SystemAdmin(){
+
+    }
+    
+    public SystemAdmin(Long id, String firstName, String lastName, String password, String address, String city,
+            String email, String telephone) {
+        super(id, firstName, lastName, password, address, city, email, telephone);
+    }
+    
     @Override
     public String getUsername() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public boolean isEnabled() {
-        // TODO Auto-generated method stub
         return false;
     }
+
+    
     
 }

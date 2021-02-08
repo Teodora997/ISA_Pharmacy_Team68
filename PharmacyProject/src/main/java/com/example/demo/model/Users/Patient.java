@@ -21,33 +21,47 @@ public class Patient extends User {
 
     @Column(name="Category")
     private String category;
+
+    @Column(name="Penals")
+    private Integer penals;
+
+
+    
+    public Patient(){
+
+    }
+    
+    public Patient(Long id, String firstName, String lastName, String password, String address, String city,
+    String email, String telephone, String allergy, Integer points, String category, Integer penals) {
+        super(id, firstName, lastName, password, address, city, email, telephone);
+        this.allergy = allergy;
+        this.points = points;
+        this.category = category;
+        this.penals = penals;
+        }
+
     @Override
     public String getUsername() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        // TODO Auto-generated method stub
         return false;
     }
 
     @Override
     public boolean isEnabled() {
-        // TODO Auto-generated method stub
         return false;
     }
 
@@ -74,5 +88,15 @@ public class Patient extends User {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public Integer getPenals() {
+        return penals;
+    }
+
+    public void setPenals(Integer penals) {
+        this.penals = penals;
+    }
+
+   
     
 }
