@@ -1,0 +1,34 @@
+<form #userForm="ngForm">
+  <div class="jumbotron">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h2>Login</h2>
+                <form #loginForm="ngForm"  *ngIf="!submitted" [formGroup]="form">
+                    <div class="form-group">
+                        <label>Mail</label>
+                        <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" 
+                          id="email" name="email" [(ngModel)]="loginModel.email"/>
+                        <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                            <div *ngIf="f.email.errors.required">Email is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" 
+                          id="exampleInputPassword1" name="password" [(ngModel)]="loginModel.password"/>
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="f.password.errors.required">Password is required</div>
+                            <div *ngIf="f.password.errors.minlength">Password must be at least 3 characters</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button  class="btn btn-primary" (click)="onClickLogin()">Login</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+  </form>

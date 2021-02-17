@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User implements UserDetails{
 
     /**
@@ -58,6 +57,10 @@ public abstract class User implements UserDetails{
 
     @Column(name="Role")
     private String role;
+
+    @Column(name="isActivated")
+    private boolean isActivated;
+
 
     
     @ManyToMany()
@@ -145,4 +148,21 @@ public abstract class User implements UserDetails{
     public void setCity(String city) {
         this.city = city;
     }
+
+    public void setIsActivated(boolean isActivated){
+        this.isActivated=isActivated;
+    }
+
+    public boolean getIsActivated(){
+        return isActivated;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
 }
