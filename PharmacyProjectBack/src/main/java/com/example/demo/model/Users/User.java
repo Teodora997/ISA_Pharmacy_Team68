@@ -2,6 +2,7 @@ package com.example.demo.model.Users;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +14,10 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+
+import com.example.demo.model.RequestForReg;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,7 +25,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class User implements UserDetails{
+public class User implements UserDetails{
 
     /**
      *
@@ -67,7 +71,10 @@ public abstract class User implements UserDetails{
     @JoinTable(name = "user_authority",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))        
-    private List<Authority> authorities;
+    private Set<Authority> authorities;
+
+    @OneToOne(mappedBy = "userData")
+	private RequestForReg requestForReg;
 
     public User(){
 
@@ -116,12 +123,12 @@ public abstract class User implements UserDetails{
     public void setPassword(String password) {
         this.password = password;
     }
-    public void setAuthorities(List<Authority> authorities) {
+    public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Set<Authority> getAuthorities() {
         return this.authorities;
     }
 
@@ -163,6 +170,44 @@ public abstract class User implements UserDetails{
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public RequestForReg getRequestForReg() {
+        return requestForReg;
+    }
+
+    public void setRequestForReg(RequestForReg requestForReg) {
+        this.requestForReg = requestForReg;
+    }
+
+    @Override
+    public String getUsername() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }

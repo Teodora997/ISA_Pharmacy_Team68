@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { API_GET_USER } from './config/apiPaths';
 import { USER_ID_KEY, USER_ROLE_KEY } from './config/localStorageKeys';
+import { RequestForReg } from './registration/requestForReg';
 import { ApiService } from './service/api.service';
 import { ConfigService } from './service/config.service';
 import { User } from './user';
@@ -20,12 +21,11 @@ export class UserService {
 
   
   _url1 = 'http://localhost:8081/api/users/public';
+  _url2 = 'http://localhost:8081/api/users/public/addUser';
 
   constructor(private _http: HttpClient, private apiService: ApiService, private config: ConfigService) { }
 
-  // enroll(requestForPatReg: RequestForPatReg) {
-  //    return this._http.post<any>(this._url, requestForPatReg);
-  // }
+
 
   getUser(userId: number): Observable<any> {
       return this._http.get(`${this._url1}/${userId}`);
@@ -122,5 +122,9 @@ export class UserService {
           this.currentUser = user;
           return user;
         }));
+    }
+
+    enroll(requestForReg: RequestForReg){
+        return this._http.post<any>(this._url2,requestForReg);
     }
 }

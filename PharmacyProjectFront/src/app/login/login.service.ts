@@ -11,7 +11,7 @@ export class LoginService {
 
   constructor(private http:HttpClient) { }
 
-  login(login:Login){
+  login(login:Login){ 
     return this.http.post<any>(this.url,login);
   }
 }

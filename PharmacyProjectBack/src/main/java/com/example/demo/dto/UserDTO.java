@@ -22,6 +22,11 @@ public class UserDTO {
     private UserTokenState token;
     private List<String> authorities;
 
+
+    public UserDTO(){
+
+    }
+    
     public UserDTO(Long id, String firstName, String lastName, String email, String password,
             String telephone, String address, String city,String role, boolean isActivated, UserTokenState token) {
         this.id = id;

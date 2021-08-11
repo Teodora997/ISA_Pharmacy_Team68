@@ -10,12 +10,14 @@ import { LoginService } from './login/login.service';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiService, AuthService, ConfigService, UserService } from './service';
 import { RouterModule } from '@angular/router';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    routingComponent
+    routingComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

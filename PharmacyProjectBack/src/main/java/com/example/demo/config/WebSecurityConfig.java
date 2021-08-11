@@ -57,7 +57,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 
                 .authorizeRequests()
                 .antMatchers("/auth/**").permitAll()
-                .antMatchers("/api/**").permitAll();
+                .antMatchers("/api/**").permitAll()
+                .anyRequest().authenticated().and();
+                
+
+        http.csrf().disable();
                 // .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, jwtUserDetailsService),BasicAuthenticationFilter.class);
                 
                
@@ -66,6 +70,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     public void configure(WebSecurity web) throws Exception{
         web.ignoring().antMatchers(HttpMethod.POST,"/auth/login");
+
+        web.ignoring().antMatchers(HttpMethod.GET, "/**/public/**");
+        web.ignoring().antMatchers(HttpMethod.POST, "/**/public/**");
+        web.ignoring().antMatchers(HttpMethod.PUT, "/**/public/**");
+        web.ignoring().antMatchers(HttpMethod.DELETE, "/**/public/**");
+
+        web.ignoring().antMatchers(HttpMethod.GET, "/**/api/**");
+        web.ignoring().antMatchers(HttpMethod.POST, "/**/api/**");
+        web.ignoring().antMatchers(HttpMethod.PUT, "/**/api/**");
+        web.ignoring().antMatchers(HttpMethod.DELETE, "/**/api/**");
+
+        web.ignoring().antMatchers(HttpMethod.GET, "/api/users");
+        web.ignoring().antMatchers(HttpMethod.POST, "/api/requestForReg");
+
         web.ignoring().antMatchers(HttpMethod.GET,"/","/webjars/**","/*.html","/favicon.ico","/**/*.html","/**/*.css","/**/*.js");
     }
 }
