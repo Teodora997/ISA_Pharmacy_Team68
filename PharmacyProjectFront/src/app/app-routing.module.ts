@@ -2,9 +2,14 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegistrationComponent } from './registration/registration.component';
+import { HomePageComponent } from './homepage/homepage.component';
 
-const routes: Routes = [{path: 'login', component: LoginComponent},
-                        {path: 'registration', component: RegistrationComponent}  
+const routes: Routes = [
+  {path: 'login', component: LoginComponent},
+  {path: 'registration', component: RegistrationComponent} ,
+  { path: 'homepage', component: HomePageComponent },
+  { path: '', redirectTo: 'homepage', pathMatch: 'full',}, 
+  { path: '**', redirectTo: 'homepage', pathMatch: 'full'},
 ];
 
 @NgModule({
@@ -12,8 +17,5 @@ const routes: Routes = [{path: 'login', component: LoginComponent},
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
-
-export const routingComponent=[LoginComponent,
-RegistrationComponent]
 
 

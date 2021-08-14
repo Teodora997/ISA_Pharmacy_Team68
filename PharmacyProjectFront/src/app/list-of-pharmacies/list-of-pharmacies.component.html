@@ -1,0 +1,23 @@
+<div style="text-align: center;">
+    <h1>List of all pharmacies</h1>
+    <div >
+        <table style="border:1px solid black;margin-left:auto;margin-right:auto;border-top: 1;"  >
+        <thead>
+                <tr>
+                    <th>Id</th>
+                   <th>Name</th>
+                   <th>Address </th>
+                   <th></th>
+                 </tr>
+        </thead>
+        <tbody>
+                <tr *ngFor = 'let p of pharmacies'>
+                   <td>{{p.id}}</td>
+                   <td>{{p.name}}</td>
+                   <td>{{p.address}}</td>
+                </tr>
+        </tbody> 
+            
+        </table>
+    </div>
+</div>

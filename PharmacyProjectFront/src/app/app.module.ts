@@ -2,7 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule, routingComponent } from './app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WorkTimeService } from './work-time.service';
 import { LoginComponent } from './login/login.component';
@@ -11,19 +11,21 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiService, AuthService, ConfigService, UserService } from './service';
 import { RouterModule } from '@angular/router';
 import { RegistrationComponent } from './registration/registration.component';
+import { HomePageComponent } from './homepage/homepage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    routingComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    HomePageComponent
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
+    BrowserModule,
     HttpClientModule,
     FormsModule,
+    RouterModule,
     ReactiveFormsModule,
   ],
   providers: [WorkTimeService,

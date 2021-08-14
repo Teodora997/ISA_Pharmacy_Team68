@@ -78,7 +78,7 @@ public class UserController {
 
             return new ResponseEntity<User>(user, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<String>("User with email is already registered", HttpStatus.METHOD_NOT_ALLOWED);
+            return new ResponseEntity<User>(user, HttpStatus.OK);
         }
     }
 

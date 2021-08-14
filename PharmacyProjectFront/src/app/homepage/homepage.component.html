@@ -1,0 +1,44 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<div class="wrapper" style="background-image: url(./assets/ph.jpg); margin-top: -2px;height: 100vh;background-repeat: no-repeat;background-size: cover; ">
+    
+    <div class="sidebar" style="background-color: rgb(222, 222, 235);width: 100px;height: 100vh;" >
+        <div class="logo">
+            <a href="#" class="simple-text" style="font-size: mediums;">
+                <div class="logo-img" >
+                    <img src="/assets/logo1.jpg"  style="width: 100px;height: 50px;"/>
+                </div>
+                My Pharmacy
+            </a>
+        </div>
+        <div class="sidebar-wrapper" >
+            <ul class="nav">
+                <li routerLinkActive="active" class="nav-item">
+                    <a class="nav-link sidebar-1" [routerLink]="['/login']" > <i class="material-icons">person</i>
+                        <p style="color: green; font-weight: 500;">Log in</p>
+                    </a>
+                </li>
+                <li routerLinkActive="active" class="nav-item">
+                    <a class="nav-link sidebar-1" [routerLink]="['/registration']"> <i
+                            class="material-icons">person_add</i>
+                        <p style="color: green; font-weight: 500;">Register</p>
+                    </a>
+                </li>
+                <li routerLinkActive="active" class="nav-item">
+                    <a class="nav-link sidebar-1" [routerLink]="['/homepage/pharmacies']"> <i
+                            class="material-icons">store</i>
+                        <p style="color: green; font-weight: 500;">Pharmacies</p>
+                    </a>
+                </li>
+                <li routerLinkActive="active" class="nav-item">
+                    <a class="nav-link sidebar-1" [routerLink]="['/homepage/medicines']"> <i
+                            class="material-icons">medication</i>
+                        <p style="color: green; font-weight: 500;">Medicines</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>

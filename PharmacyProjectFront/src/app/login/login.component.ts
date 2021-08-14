@@ -10,8 +10,9 @@ import { UserService } from '../user.service';
 import { Login } from './login';
 import { LoginService } from './login.service';
 
+
 @Component({
-  selector: 'app-login',
+  selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
