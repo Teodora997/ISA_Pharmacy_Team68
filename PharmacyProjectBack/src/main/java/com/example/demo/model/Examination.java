@@ -2,11 +2,14 @@ package com.example.demo.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.example.demo.model.Users.Dermatologist;
@@ -36,8 +39,36 @@ public class Examination {
     @ManyToOne(fetch =FetchType.LAZY)
     private Patient patient;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private Pharmacy pharmacy;
+
+    @Enumerated(EnumType.ORDINAL)
+    private ExaminationStatus status;
+
+    public Examination(){
+        
+    }
+
+    public Examination(Long id, String date, String time, Integer price, Integer duration, Dermatologist dermatologist,
+            Patient patient, Pharmacy pharmacy, ExaminationStatus status) {
+        this.id = id;
+        this.date = date;
+        this.time = time;
+        this.price = price;
+        this.duration = duration;
+        this.dermatologist = dermatologist;
+        this.patient = patient;
+        this.pharmacy = pharmacy;
+        this.status = status;
+    }
+
+    public ExaminationStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ExaminationStatus status) {
+        this.status = status;
+    }
 
     public String getDate() {
         return date;

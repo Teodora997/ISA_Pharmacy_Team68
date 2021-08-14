@@ -2,6 +2,8 @@ package com.example.demo.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,8 +37,25 @@ public class Consulting {
     @ManyToOne(fetch =FetchType.LAZY)
     private Patient patient;
 
+    @Enumerated(EnumType.ORDINAL)
+    private ExaminationStatus status;
+
+
     public Consulting(){
         
+    }
+    
+
+    public Consulting(Long id, String date, String time, Integer price, Integer duration, Pharmacist pharmacist,
+            Patient patient, ExaminationStatus status) {
+        this.id = id;
+        this.date = date;
+        this.time = time;
+        this.price = price;
+        this.duration = duration;
+        this.pharmacist = pharmacist;
+        this.patient = patient;
+        this.status = status;
     }
 
     public Consulting(Long id, String date, String time, Integer price, Integer duration, Pharmacist pharmacist,
@@ -48,6 +67,30 @@ public class Consulting {
         this.duration = duration;
         this.pharmacist = pharmacist;
         this.patient = patient;
+    }
+
+    public Pharmacist getPharmacist() {
+        return pharmacist;
+    }
+
+    public void setPharmacist(Pharmacist pharmacist) {
+        this.pharmacist = pharmacist;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public ExaminationStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ExaminationStatus status) {
+        this.status = status;
     }
 
     public Long getId() {
