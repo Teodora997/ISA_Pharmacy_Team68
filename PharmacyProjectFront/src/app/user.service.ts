@@ -21,12 +21,15 @@ export class UserService {
 
   
   _url1 = 'http://localhost:8081/api/users/public';
-  _url2 = 'http://localhost:8081/api/users/public/addUser';
+  _url2 = 'http://localhost:8081/api/users/register';
 
   constructor(private _http: HttpClient, private apiService: ApiService, private config: ConfigService) { }
 
 
-
+  public register(newUser:User){
+    return this._http.post<User>(this._url2,newUser);
+ }
+ 
   getUser(userId: number): Observable<any> {
       return this._http.get(`${this._url1}/${userId}`);
   }
@@ -124,7 +127,5 @@ export class UserService {
         }));
     }
 
-    enroll(requestForReg: RequestForReg){
-        return this._http.post<any>(this._url2,requestForReg);
-    }
+    
 }

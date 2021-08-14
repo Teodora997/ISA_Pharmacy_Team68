@@ -1,17 +1,11 @@
 export class User{
-
-constructor(
-    public id:string,
-    public firstName: string,
-    public lastName:string,
-    public email:string,
-    public address:string,
-    public city:string,
-    public telephone:string,
-    public password:string,
-    public password1:String,
-    public role:String
-){}
-
-
+     id!: string;
+     firstName!: string;
+     lastName!: string;
+     email!: string;
+     address!: string;
+     city!: string;
+     telephone!: string;
+     password!: string;
+     role!: string;
 }

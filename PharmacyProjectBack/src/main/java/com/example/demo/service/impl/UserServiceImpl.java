@@ -98,4 +98,29 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(u);
     }
 
+
+
+    @Override
+    public User registerUser(User newUser) {
+        if(findByEmail(newUser.getEmail()) == null){
+            User u = new User();
+            u.setPassword(passwordEncoder.encode(newUser.getPassword()));
+            u.setFirstName(newUser.getFirstName());
+            u.setLastName(newUser.getLastName());
+            u.setAddress(newUser.getAddress());
+            u.setCity(newUser.getCity());
+            u.setEmail(newUser.getEmail());
+            u.setTelephone(newUser.getTelephone());
+            u.setIsActivated(true);
+           // u.setPrviPutLogovan(true);
+            u.setRole("ROLE_PATIENT");
+
+            userRepository.save(u);
+            return u;
+        }
+        else {
+            return null;
+        }
+    }
+
 }

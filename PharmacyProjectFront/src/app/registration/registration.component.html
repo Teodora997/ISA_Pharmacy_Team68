@@ -1,78 +1,59 @@
-<form #userForm="ngForm"  (ngSubmit)="onSubmit()">
-    <div class="jumbotron">
+<div class="jumbotron">
       <div class="container">
           <div class="row">
               <div class="col-md-6 offset-md-3">
                   <h2>Registration</h2>
-                  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                  <form  #registrationForm="ngForm" (ngSubmit)="register()">
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" 
-                          id="firstName" name="firstName" [(ngModel)]="registrationModel.firstName"/>
-                        <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
-                            <div *ngIf="f.firstName.errors.required">First name is required</div>
-                        </div>
+                        <input type="text" class="form-control"  
+                          #firstName="ngModel" name="firstName" [(ngModel)]="registrationModel.firstName"/>
                     </div>
                     <div class="form-group">
                         <label>Last name</label>
-                        <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" 
-                          id="lastName" name="lastName" [(ngModel)]="registrationModel.lastName"/>
-                        <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
-                            <div *ngIf="f.lastName.errors.required">Last name is required</div>
-                        </div>
+                        <input type="text"  class="form-control" 
+                           #lastName="ngModel" name="lastName" [(ngModel)]="registrationModel.lastName"/>
                     </div>
                       <div class="form-group">
                           <label>Mail</label>
-                          <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" 
-                            id="email" name="email" [(ngModel)]="registrationModel.email"/>
-                          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                              <div *ngIf="f.email.errors.required">Email is required</div>
-                          </div>
+                          <input type="text"  class="form-control" 
+                             #mail="ngModel" name="email" [(ngModel)]="registrationModel.email"/>
+                          
                       </div>
                       <div class="form-group">
                         <label>Address</label>
-                        <input type="text" formControlName="address" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.address.errors }" 
-                          id="address" name="address" [(ngModel)]="registrationModel.address"/>
-                        <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
-                            <div *ngIf="f.address.errors.required"><Address></Address> is required</div>
-                        </div>
+                        <input type="text"  class="form-control"  
+                          #address="ngModel" name="address" [(ngModel)]="registrationModel.address"/>
+                        
                     </div>
                     <div class="form-group">
                         <label>City</label>
-                        <input type="text" formControlName="city" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.city.errors }" 
-                          id="city" name="city" [(ngModel)]="registrationModel.city"/>
-                        <div *ngIf="submitted && f.city.errors" class="invalid-feedback">
-                            <div *ngIf="f.city.errors.required">City is required</div>
-                        </div>
+                        <input type="text"  class="form-control" 
+                           #city="ngModel" name="city" [(ngModel)]="registrationModel.city"/>
+                        
                     </div>
                     <div class="form-group">
                         <label>Telephone</label>
-                        <input type="text" formControlName="telephone" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.telephone.errors }" 
-                          id="telephone" name="telephone" [(ngModel)]="registrationModel.telephone"/>
-                        <div *ngIf="submitted && f.telephone.errors" class="invalid-feedback">
-                            <div *ngIf="f.telephone.errors.required">Telephone is required</div>
-                        </div>
+                        <input type="text"  class="form-control"  
+                           #telephone="ngModel" name="telephone" [(ngModel)]="registrationModel.telephone"/>
+                        
                     </div>
                       <div class="form-group">
                           <label>Password</label>
-                          <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" 
-                            id="exampleInputPassword1" name="password" [(ngModel)]="registrationModel.password"/>
-                          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
-                              <div *ngIf="f.password.errors.required">Password is required</div>
-                              <div *ngIf="f.password.errors.minlength">Password must be at least 3 characters</div>
-                          </div>
+                          <input type="password"  class="form-control"  
+                             #password="ngModel" name="password" [(ngModel)]="registrationModel.password"/>
+                         
                       </div>
                       <div class="form-group">
                         <label>Please repeat your password</label>
-                        <input type="password1" formControlName="password1" class="form-control" name="password1" [(ngModel)]="registrationModel.password1" id="exampleInputPassword2"/>       
+                        <input type="password"  class="form-control" name="password1" [(ngModel)]="password1" />       
                     </div>
   
                       <div class="form-group">
-                        <button class="btn btn-primary" >Register</button>                     
+                        <button type="submit" class="btn btn-primary" >Register</button>                     
                        </div>
                   </form>
               </div>
           </div>
       </div>
   </div>
- </form>

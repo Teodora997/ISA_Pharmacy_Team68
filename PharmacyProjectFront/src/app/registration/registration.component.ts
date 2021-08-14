@@ -13,50 +13,50 @@ import { RequestForReg } from './requestForReg';
 export class RegistrationComponent implements OnInit{
 
 
-  
-  registrationModel= new User("","","","","","","","","","");
-  requestModel= new RequestForReg(this.registrationModel,0,false);
-  registerForm!: FormGroup;
+  user: User;
+  registrationModel: User;
+  password1: string;
   submitted = false;
   done:boolean=false;
   
 
-  constructor(private userService:UserService,private formBuilder: FormBuilder,private router:Router) {}
+  constructor(private userService:UserService,private formBuilder: FormBuilder,private router:Router) {
+    this.registrationModel=new User();
+    this.user= new User();
+    this.password1="";
+  }
 
 
-  ngOnInit(): void {
-    this.registerForm=this.formBuilder.group({
-      firstName: ['',Validators.required],
-      lastName:['',Validators.required],
-      email: ['',[Validators.required,Validators.email]],
-      address:['',Validators.required],
-      city: ['',Validators.required],
-      telephone:['',Validators.required],
-      password: ['',[Validators.required,Validators.minLength(3)]],
-      password1:['',[Validators.required,Validators.minLength(3)]]  
-    });
+  ngOnInit()  {
+    this.password1="";
   }
   
-  get f() {return this.registerForm.controls;}
 
-  onSubmit(){
 
-    console.log(this.requestModel.userData.email);
-    this.userService.enroll(this.requestModel)
-    .subscribe(
-      data=>{
-        alert("Request is sent")
-        this.done=true;
-        console.log("Success!")
-      },
-      error=>console.error("Error!",error)
-    )
-
-    this.submitted=true;
-    if(this.registerForm.invalid){
-      return;
+  register(){
+    console.log(this.registrationModel.password);
+    if(this.registrationModel.password==this.password1){
+      this.userService.register(this.registrationModel).subscribe(
+        {
+          next: user =>{
+            this.registrationModel=user;
+            console.log(this.user);
+            if(this.user==null){
+              console.log("User with this email already exists!");
+              alert("User with this email already exists!");
+            }else{
+              alert("Successufully registered!");
+            this.router.navigate(["/login"]);
+            }
+          }
+        }
+      );
+      
     }
-    alert('Registered')
+      else{
+        alert("Passwords must be the same!");
+      }
+
   }
 
 }

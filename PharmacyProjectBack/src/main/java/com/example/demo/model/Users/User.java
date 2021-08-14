@@ -73,8 +73,7 @@ public class User implements UserDetails{
             inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))        
     private Set<Authority> authorities;
 
-    @OneToOne(mappedBy = "userData")
-	private RequestForReg requestForReg;
+   
 
     public User(){
 
@@ -172,13 +171,7 @@ public class User implements UserDetails{
         this.role = role;
     }
 
-    public RequestForReg getRequestForReg() {
-        return requestForReg;
-    }
 
-    public void setRequestForReg(RequestForReg requestForReg) {
-        this.requestForReg = requestForReg;
-    }
 
     @Override
     public String getUsername() {
@@ -189,25 +182,25 @@ public class User implements UserDetails{
     @Override
     public boolean isAccountNonExpired() {
         // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
         // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
         // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
         // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
 }

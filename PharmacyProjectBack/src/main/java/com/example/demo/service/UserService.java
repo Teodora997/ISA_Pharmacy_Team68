@@ -12,4 +12,5 @@ public interface UserService {
     User save(User u);
     User findByEmail(String mail);
     void remove(User u);
+    User registerUser(User user);
 }

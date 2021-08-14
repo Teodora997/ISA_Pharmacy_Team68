@@ -1,12 +1,19 @@
 package com.example.demo.controller;
 
 import com.example.demo.TimeProvider;
+
+import java.util.Properties;
+
+import javax.servlet.http.HttpServletRequest;
+
 import com.example.demo.Roles;
 import com.example.demo.dto.RequestForRegDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.model.RequestForReg;
+import com.example.demo.model.Users.ConfirmationToken;
 import com.example.demo.model.Users.User;
 import com.example.demo.repository.UserRepository.AuthorityRepository;
+import com.example.demo.repository.UserRepository.ConfirmationTokenRepository;
 import com.example.demo.repository.UserRepository.UserRepository;
 import com.example.demo.service.RequestForRegService;
 import com.example.demo.service.UserService;
@@ -22,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 @RequestMapping(value = "api/users")
 public class UserController {
@@ -29,6 +37,8 @@ public class UserController {
 	
     @Autowired
     private UserServiceImpl userServiceImpl;
+
+	@Autowired UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -43,7 +53,7 @@ public class UserController {
 	private UserRepository  userRepository;
 	
 	@Autowired
-	private RequestForRegService requestForRegService;
+    private ConfirmationTokenRepository confirmationTokenRepository;
 
 	
 
@@ -55,44 +65,21 @@ public class UserController {
 
 	
 
-    @PostMapping("/public/addUser")
-    public ResponseEntity<RequestForRegDTO> createRequest (@RequestBody RequestForRegDTO requestreg) throws Exception{
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody User newUser) {
 
-		System.out.println("AAAAAAAAAA");
-		System.out.println(requestreg.getId());
-        if (userRepository.findByEmail(requestreg.getUserData().getEmail()) != null) {
-			throw new Exception("Email '" + requestreg.getUserData().getEmail() + "' already exists.");
-		}
-		if (!requestreg.getUserData().getPassword().equals(requestreg.getUserData().getPassword1())) {
-			throw new Exception("Provided passwords must be the same.");
-		}
-		
-		System.out.println("BBBBBBBBBB");
-		System.out.println(requestreg.getUserData().getEmail());
+	
+        User user = userService.registerUser(newUser);
+        if(user != null) {
 
-		User user=new User();
-		user.setId(requestreg.getUserData().getId());
-		user.setLastName(requestreg.getUserData().getLastName());
-		user.setFirstName(requestreg.getUserData().getFirstName());
-		user.setAddress(requestreg.getUserData().getAddress());
-		user.setCity(requestreg.getUserData().getCity());
-		user.setEmail(requestreg.getUserData().getEmail());
-		user.setTelephone(requestreg.getUserData().getTelephone());
-		user.setPassword(passwordEncoder.encode(requestreg.getUserData().getPassword()));
-		user.setRole(Roles.ROLE_PATIENT);
-		user.getAuthorities().add(authorityRepository.findByName(Roles.ROLE_PATIENT));
+            ConfirmationToken confirmationToken = new ConfirmationToken(user);
 
-		user = userServiceImpl.save(user);
+            confirmationTokenRepository.save(confirmationToken);
 
-		System.out.println(user.getEmail());
-
-		RequestForReg req = new RequestForReg(user);
-		req = requestForRegService.save(req);
-
-		System.out.println("CCCCCCCCCC");
-		System.out.println(req.getId());
-		
-		return new ResponseEntity<>(new RequestForRegDTO(req), HttpStatus.CREATED);
+            return new ResponseEntity<User>(user, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<String>("User with email is already registered", HttpStatus.METHOD_NOT_ALLOWED);
+        }
     }
 
     
