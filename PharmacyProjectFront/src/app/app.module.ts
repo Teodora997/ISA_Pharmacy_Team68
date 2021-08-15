@@ -14,6 +14,8 @@ import { RouterModule } from '@angular/router';
 import { RegistrationComponent } from './registration/registration.component';
 import { HomePageComponent } from './homepage/homepage.component';
 import { PharmacyService } from './service/pharmacy.service';
+import {SystemAdminHomepageComponent} from './system-admin/system-admin-homepage/system-admin-homepage.component';
+import { SystemAdminModule } from './system-admin/system-admin.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { PharmacyService } from './service/pharmacy.service';
     RegistrationComponent,
     HomePageComponent,
     AllMedicinesComponent,
-    AllPharmaciesComponent
+    AllPharmaciesComponent,
+    SystemAdminHomepageComponent
   ],
   imports: [
     AppRoutingModule,
@@ -31,6 +34,7 @@ import { PharmacyService } from './service/pharmacy.service';
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
+    SystemAdminModule
   ],
   providers: [
   LoginService,

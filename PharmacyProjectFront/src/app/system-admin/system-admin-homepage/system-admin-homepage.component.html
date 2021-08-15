@@ -1,0 +1,45 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<div >
+<div id="divHeaderGuest">
+    <nav>
+        <ul >
+            
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/addPharmacy']" > <i class="material-icons">person</i>
+                    <p style="color: green; font-weight: 500;">Add pharmacy</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/addDermatologist']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Add dermatologist</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/addMedicine']"> <i
+                        class="material-icons">store</i>
+                    <p style="color: green; font-weight: 500;">Add medicine</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/addSupplier']"> <i
+                        class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">Add supplier</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/homepage']" (click)="logout()"> <i
+                        class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">Logout</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>	
+<div>
+    <h3 style="text-align: center;">PHARMACY</h3>
+    
+</div>
+</div>	  
