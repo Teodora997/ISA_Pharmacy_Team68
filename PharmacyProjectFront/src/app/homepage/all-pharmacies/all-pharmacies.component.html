@@ -1,0 +1,84 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<div class="wrapper" style="background-color:white; margin-top: -50px;height: 100vh; ">
+    <div>
+   <div class="sidebar" style="background-color: rgb(222, 222, 235);width: 100px;height: 100vh;" >
+        <div class="logo">
+            <a href="#" class="simple-text" style="font-size: mediums;">
+                <div class="logo-img" >
+                    <img src="/assets/logo1.jpg"  style="width: 100px;height: 50px;"/>
+                </div>
+                My Pharmacy
+            </a>
+        </div>
+        <div class="sidebar-wrapper" >
+            <ul class="nav">
+                <li routerLinkActive="active" class="nav-item">
+                    <a class="nav-link sidebar-1" [routerLink]="['/login']" > <i class="material-icons">person</i>
+                        <p style="color: green; font-weight: 500;">Log in</p>
+                    </a>
+                </li>
+                <li routerLinkActive="active" class="nav-item">
+                    <a class="nav-link sidebar-1" [routerLink]="['/registration']"> <i
+                            class="material-icons">person_add</i>
+                        <p style="color: green; font-weight: 500;">Register</p>
+                    </a>
+                </li>
+                <li routerLinkActive="active" class="nav-item">
+                    <a class="nav-link sidebar-1" [routerLink]="['/pharmacies']"> <i
+                            class="material-icons">store</i>
+                        <p style="color: green; font-weight: 500;">Pharmacies</p>
+                    </a>
+                </li>
+                <li routerLinkActive="active" class="nav-item">
+                    <a class="nav-link sidebar-1" [routerLink]="['/medicines']"> <i
+                            class="material-icons">medication</i>
+                        <p style="color: green; font-weight: 500;">Medicines</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+   </div>
+    </div>
+<div style="margin-left: 200px;margin-top: -550px;">
+   <h1 style="color: rgb(100, 98, 216);"> PHARMACIES</h1>
+   <button type="button" (click)=" previewSearch = !previewSearch " > PRETRAGA </button>
+    <div *ngIf="previewSearch">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <input type="text" value="" placeholder="Name" class="form-control" name="name"
+                    #name="ngModel" [(ngModel)]="searchParameters.name" />
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <input type="text" value="" placeholder="Address" class="form-control" name="address"
+                    #address="ngModel" [(ngModel)]="searchParameters.address" />
+            </div>
+        </div>
+        <button (click)="pretraga()">Pretrazi</button>
+    </div>
+   <div class="card" style="margin-top: 150px;">
+    <div class="card-header card-header-success">
+        <h4 class="card-title">Pharmacies</h4>
+    </div>
+    <div class="card-content table-responsive table-full-width">
+        <table class="table">
+            <thead class="text-success">
+                <th>Name <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
+                <th>Mark <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
+                <th>Address</th>
+            </thead>
+            <tbody>
+                <tr *ngFor='let k of allPharmacies'>
+                    <td>{{k.name}}</td>
+                    <td>{{k.mark}}</td>
+                    <td>{{k.address}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+</div>
