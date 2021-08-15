@@ -87,6 +87,9 @@ export class LoginComponent implements OnInit {
         localStorage.setItem(USER_TOKEN_KEY, data.token.accessToken);
         localStorage.setItem(USER_ROLE_KEY, data.role);
         
+        if(this.u.role=="ROLE_SYS_ADMIN"){
+          this.router.navigate(["/system-admin-homepage"]);
+        }
         alert("Logged in!");    
     },
     error=> { 
