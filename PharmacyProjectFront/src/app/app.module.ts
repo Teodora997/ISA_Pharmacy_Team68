@@ -4,21 +4,25 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { WorkTimeService } from './work-time.service';
 import { LoginComponent } from './login/login.component';
+import { AllPharmaciesComponent } from './homepage/all-pharmacies/all-pharmacies.component';
+import { AllMedicinesComponent } from './homepage/all-medicines/all-medicines.component';
 import { LoginService } from './login/login.service';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiService, AuthService, ConfigService, UserService } from './service';
 import { RouterModule } from '@angular/router';
 import { RegistrationComponent } from './registration/registration.component';
 import { HomePageComponent } from './homepage/homepage.component';
+import { PharmacyService } from './service/pharmacy.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegistrationComponent,
-    HomePageComponent
+    HomePageComponent,
+    AllMedicinesComponent,
+    AllPharmaciesComponent
   ],
   imports: [
     AppRoutingModule,
@@ -28,10 +32,11 @@ import { HomePageComponent } from './homepage/homepage.component';
     RouterModule,
     ReactiveFormsModule,
   ],
-  providers: [WorkTimeService,
+  providers: [
   LoginService,
   AuthService,
   UserService,
+  PharmacyService,
   ApiService,
   ConfigService
 

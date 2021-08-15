@@ -1,6 +1,38 @@
-<form #userForm="ngForm">
-  <div class="jumbotron">
-    <div class="container">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<div  >
+<div id="divHeaderGuest">
+    <nav>
+        <ul >
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/login']" > <i class="material-icons">person</i>
+                    <p style="color: green; font-weight: 500;">Log in</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/registration']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Register</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/pharmacies']"> <i
+                        class="material-icons">store</i>
+                    <p style="color: green; font-weight: 500;">Pharmacies</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/medicines']"> <i
+                        class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">Medicines</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>	
+<div>
+    <form #userForm="ngForm">
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <h2>Login</h2>
@@ -28,7 +60,9 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
+       
+    
 </div>
   </form>
+</div>
+</div>	  
