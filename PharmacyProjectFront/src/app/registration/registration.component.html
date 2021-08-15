@@ -1,59 +1,91 @@
-<div class="jumbotron">
-      <div class="container">
-          <div class="row">
-              <div class="col-md-6 offset-md-3">
-                  <h2>Registration</h2>
-                  <form  #registrationForm="ngForm" (ngSubmit)="register()">
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<div >
+<div id="divHeaderGuest">
+  <nav>
+      <ul >
+          <li routerLinkActive="active">
+              <a  [routerLink]="['/login']" > <i class="material-icons">person</i>
+                  <p style="color: green; font-weight: 500;">Log in</p>
+              </a>
+          </li>
+          <li routerLinkActive="active" >
+              <a [routerLink]="['/registration']"> <i
+                      class="material-icons">person_add</i>
+                  <p style="color: green; font-weight: 500;">Register</p>
+              </a>
+          </li>
+          <li routerLinkActive="active" >
+              <a  [routerLink]="['/pharmacies']"> <i
+                      class="material-icons">store</i>
+                  <p style="color: green; font-weight: 500;">Pharmacies</p>
+              </a>
+          </li>
+          <li routerLinkActive="active" >
+              <a [routerLink]="['/medicines']"> <i
+                      class="material-icons">medication</i>
+                  <p style="color: green; font-weight: 500;">Medicines</p>
+              </a>
+          </li>
+      </ul>
+  </nav>
+</div>	
+<div>
+   <div >
+            <div class="col-md-6 offset-md-3">
+                <h2>Registration</h2>
+                <form  #registrationForm="ngForm" (ngSubmit)="register()">
+                  <div class="form-group">
+                      <label>Name</label>
+                      <input type="text" class="form-control"  
+                        #firstName="ngModel" name="firstName" [(ngModel)]="registrationModel.firstName"/>
+                  </div>
+                  <div class="form-group">
+                      <label>Last name</label>
+                      <input type="text"  class="form-control" 
+                         #lastName="ngModel" name="lastName" [(ngModel)]="registrationModel.lastName"/>
+                  </div>
                     <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control"  
-                          #firstName="ngModel" name="firstName" [(ngModel)]="registrationModel.firstName"/>
-                    </div>
-                    <div class="form-group">
-                        <label>Last name</label>
+                        <label>Mail</label>
                         <input type="text"  class="form-control" 
-                           #lastName="ngModel" name="lastName" [(ngModel)]="registrationModel.lastName"/>
-                    </div>
-                      <div class="form-group">
-                          <label>Mail</label>
-                          <input type="text"  class="form-control" 
-                             #mail="ngModel" name="email" [(ngModel)]="registrationModel.email"/>
-                          
-                      </div>
-                      <div class="form-group">
-                        <label>Address</label>
-                        <input type="text"  class="form-control"  
-                          #address="ngModel" name="address" [(ngModel)]="registrationModel.address"/>
+                           #mail="ngModel" name="email" [(ngModel)]="registrationModel.email"/>
                         
                     </div>
                     <div class="form-group">
-                        <label>City</label>
-                        <input type="text"  class="form-control" 
-                           #city="ngModel" name="city" [(ngModel)]="registrationModel.city"/>
-                        
+                      <label>Address</label>
+                      <input type="text"  class="form-control"  
+                        #address="ngModel" name="address" [(ngModel)]="registrationModel.address"/>
+                      
+                  </div>
+                  <div class="form-group">
+                      <label>City</label>
+                      <input type="text"  class="form-control" 
+                         #city="ngModel" name="city" [(ngModel)]="registrationModel.city"/>
+                      
+                  </div>
+                  <div class="form-group">
+                      <label>Telephone</label>
+                      <input type="text"  class="form-control"  
+                         #telephone="ngModel" name="telephone" [(ngModel)]="registrationModel.telephone"/>
+                      
+                  </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password"  class="form-control"  
+                           #password="ngModel" name="password" [(ngModel)]="registrationModel.password"/>
+                       
                     </div>
                     <div class="form-group">
-                        <label>Telephone</label>
-                        <input type="text"  class="form-control"  
-                           #telephone="ngModel" name="telephone" [(ngModel)]="registrationModel.telephone"/>
-                        
-                    </div>
-                      <div class="form-group">
-                          <label>Password</label>
-                          <input type="password"  class="form-control"  
-                             #password="ngModel" name="password" [(ngModel)]="registrationModel.password"/>
-                         
-                      </div>
-                      <div class="form-group">
-                        <label>Please repeat your password</label>
-                        <input type="password"  class="form-control" name="password1" [(ngModel)]="password1" />       
-                    </div>
-  
-                      <div class="form-group">
-                        <button type="submit" class="btn btn-primary" >Register</button>                     
-                       </div>
-                  </form>
-              </div>
-          </div>
-      </div>
-  </div>
+                      <label>Please repeat your password</label>
+                      <input type="password"  class="form-control" name="password1" [(ngModel)]="password1" />       
+                  </div>
+
+                    <div class="form-group">
+                      <button type="submit" class="btn btn-primary" >Register</button>                     
+                     </div>
+                </form>
+            </div>
+        </div>
+</div>
+</div>	  

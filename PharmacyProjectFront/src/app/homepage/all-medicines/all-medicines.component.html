@@ -1,60 +1,39 @@
 <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
-<div class="wrapper" style="background-color:white; margin-top: -50px;height: 100vh; ">
-    <div>
-        <div class="sidebar" style="background-color: rgb(222, 222, 235);width: 100px;height: 100vh;" >
-            <div class="logo">
-                <a href="#" class="simple-text">
-                    <div class="logo-img">
-                        <img src="/assets/logo1.jpg" style="width: 100px;height: 50px;" />
-                    </div>
-                    My Pharmacy
+<div>
+<div id="divHeaderGuest">
+    <nav>
+        <ul >
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/login']" > <i class="material-icons">person</i>
+                    <p style="color: green; font-weight: 500;">Log in</p>
                 </a>
-            </div>
-            <div class="sidebar-wrapper">
-                <ul class="nav">
-                    <li routerLinkActive="active" class="nav-item">
-                        <a class="nav-link sidebar-1" [routerLink]="['/login']"> <i class="material-icons">person</i>
-                            <p style="color: green; font-weight: 500;">Log in</p>
-                        </a>
-                    </li>
-                    <li routerLinkActive="active" class="nav-item">
-                        <a class="nav-link sidebar-1" [routerLink]="['/homepage/registration']"> <i
-                                class="material-icons">person_add</i>
-                            <p style="color: green; font-weight: 500;">Register</p>
-                        </a>
-                    </li>
-                    <li routerLinkActive="active" class="nav-item">
-                        <a class="nav-link sidebar-1" [routerLink]="['/homepage/pharmacies']"> <i
-                                class="material-icons">store</i>
-                            <p style="color: green; font-weight: 500;">Pharmacies</p>
-                        </a>
-                    </li>
-                    <li routerLinkActive="active" class="nav-item">
-                        <a class="nav-link sidebar-1" [routerLink]="['/homepage/medicines']"> <i
-                                class="material-icons">scatter_plot</i>
-                            <p style="color: green; font-weight: 500;">Medicines</p>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div style="margin-left: 200px;margin-top: -550px;">
-        <h1 style="color: rgb(100, 98, 216);">All Medicines</h1>
-        <div class="row">
-
-            <div class="card">
-                <div class="card-header card-header-success">
-                </div>
-               
-            </div>
-
-
-            
-        </div>
-
-    </div>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/registration']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Register</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/pharmacies']"> <i
+                        class="material-icons">store</i>
+                    <p style="color: green; font-weight: 500;">Pharmacies</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/medicines']"> <i
+                        class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">Medicines</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>	
+<div>
+    <h1>MWD</h1>
+    <h1>MWD</h1>
+    <h1>MWD</h1>
 </div>
+</div>	  
