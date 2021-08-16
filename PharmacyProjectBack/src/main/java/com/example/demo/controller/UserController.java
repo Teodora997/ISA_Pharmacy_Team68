@@ -11,6 +11,9 @@ import com.example.demo.dto.RequestForRegDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.model.RequestForReg;
 import com.example.demo.model.Users.ConfirmationToken;
+import com.example.demo.model.Users.Dermatologist;
+import com.example.demo.model.Users.PharmacyAdmin;
+import com.example.demo.model.Users.Supplier;
 import com.example.demo.model.Users.User;
 import com.example.demo.repository.UserRepository.AuthorityRepository;
 import com.example.demo.repository.UserRepository.ConfirmationTokenRepository;
@@ -81,6 +84,57 @@ public class UserController {
             return new ResponseEntity<User>(user, HttpStatus.OK);
         }
     }
+    @PostMapping("/registerDermatologist")
+    public ResponseEntity<?> registerDermatologist(@RequestBody User newUser) {
 
+        
+        Dermatologist user = userService.registerDermatologist(newUser);
+        User u=new User(user.getId(),user.getFirstName(),user.getLastName(),user.getPassword(), user.getAddress(),user.getCity(),user.getEmail(),user.getTelephone());
+        if(user != null) {
+
+            ConfirmationToken confirmationToken = new ConfirmationToken(user);
+
+            confirmationTokenRepository.save(confirmationToken);
+
+            return new ResponseEntity<User>(u, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<User>(u, HttpStatus.OK);
+        }
+    }
     
+    @PostMapping("/registerSupplier")
+    public ResponseEntity<?> registerSupplier(@RequestBody User newUser) {
+
+        
+        Supplier user = userService.registerSupplier(newUser);
+        User u=new User(user.getId(),user.getFirstName(),user.getLastName(),user.getPassword(), user.getAddress(),user.getCity(),user.getEmail(),user.getTelephone());
+        if(user != null) {
+
+            ConfirmationToken confirmationToken = new ConfirmationToken(user);
+
+            confirmationTokenRepository.save(confirmationToken);
+
+            return new ResponseEntity<User>(u, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<User>(u, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("/registerPharmacyAdmin")
+    public ResponseEntity<?> registerPharmacyAdmin(@RequestBody User newUser) {
+
+        
+        PharmacyAdmin user = userService.registerPharmacyAdmin(newUser);
+        User u=new User(user.getId(),user.getFirstName(),user.getLastName(),user.getPassword(), user.getAddress(),user.getCity(),user.getEmail(),user.getTelephone());
+        if(user != null) {
+
+            ConfirmationToken confirmationToken = new ConfirmationToken(user);
+
+            confirmationTokenRepository.save(confirmationToken);
+
+            return new ResponseEntity<User>(u, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<User>(u, HttpStatus.OK);
+        }
+    }
 }

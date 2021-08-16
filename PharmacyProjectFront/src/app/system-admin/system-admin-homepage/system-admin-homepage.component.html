@@ -5,33 +5,44 @@
 <div id="divHeaderGuest">
     <nav>
         <ul >
-            
             <li routerLinkActive="active">
-                <a  [routerLink]="['/addPharmacy']" > <i class="material-icons">person</i>
+                <a  [routerLink]="['/system-admin-homepage']" > <i class="material-icons">person</i>
+                    <p style="color: green; font-weight: 500;">My profile</p>
+                </a>
+            </li>
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/add-pharmacy']" > <i class="material-icons">store</i>
                     <p style="color: green; font-weight: 500;">Add pharmacy</p>
                 </a>
             </li>
             <li routerLinkActive="active" >
-                <a [routerLink]="['/addDermatologist']"> <i
+                <a [routerLink]="['/add-pharmacy-admin']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Add pharmacy admin</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/add-dermatologist']"> <i
                         class="material-icons">person_add</i>
                     <p style="color: green; font-weight: 500;">Add dermatologist</p>
                 </a>
             </li>
             <li routerLinkActive="active" >
-                <a  [routerLink]="['/addMedicine']"> <i
-                        class="material-icons">store</i>
-                    <p style="color: green; font-weight: 500;">Add medicine</p>
-                </a>
-            </li>
-            <li routerLinkActive="active" >
-                <a [routerLink]="['/addSupplier']"> <i
-                        class="material-icons">medication</i>
+                <a [routerLink]="['/add-supplier']"> <i
+                        class="material-icons">person_add</i>
                     <p style="color: green; font-weight: 500;">Add supplier</p>
                 </a>
             </li>
             <li routerLinkActive="active" >
-                <a [routerLink]="['/homepage']" (click)="logout()"> <i
+                <a  [routerLink]="['/add-medicine']"> <i
                         class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">Add medicine</p>
+                </a>
+            </li>
+            
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/homepage']" (click)="logout()"> <i
+                        class="material-icons">power_settings_new</i>
                     <p style="color: green; font-weight: 500;">Logout</p>
                 </a>
             </li>
@@ -39,7 +50,7 @@
     </nav>
 </div>	
 <div>
-    <h3 style="text-align: center;">PHARMACY</h3>
+    <input type="text" [(ngModel)]="user.firstName"/>
     
 </div>
 </div>	  
