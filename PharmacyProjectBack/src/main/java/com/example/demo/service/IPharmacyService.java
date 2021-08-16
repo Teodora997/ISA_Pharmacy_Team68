@@ -8,5 +8,5 @@ import com.example.demo.model.Pharmacy;
 public interface IPharmacyService {
     public List<Pharmacy> findAllPharmacies();
     public List<Pharmacy> searchPharmacies(SearchPharmacyDTO searchPharmacyDTO);
-
+    
 }

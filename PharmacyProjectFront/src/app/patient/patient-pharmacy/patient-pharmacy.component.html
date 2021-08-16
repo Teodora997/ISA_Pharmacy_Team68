@@ -1,0 +1,60 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<div>
+<div id="divHeaderGuest">
+    <nav>
+        <ul >
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/patient-homepage']" > <i class="material-icons">person</i>
+                    <p style="color: green; font-weight: 500;">My profile</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/patient-pharmacies']"> <i
+                        class="material-icons">store</i>
+                    <p style="color: green; font-weight: 500;">Pharmacies</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/pharmacist-apointments']"> <i
+                        class="material-icons">store</i>
+                    <p style="color: green; font-weight: 500;">Pharmacist apointments</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/dermatologist-apointments']"> <i
+                        class="material-icons">store</i>
+                    <p style="color: green; font-weight: 500;">Dermatologist apointments</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/medicine-reservations']"> <i
+                        class="material-icons">store</i>
+                    <p style="color: green; font-weight: 500;">Medicine reservations</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/make-counsulting']"> <i
+                        class="material-icons">store</i>
+                    <p style="color: green; font-weight: 500;">Make consulting</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/homepage']" (click)="logout()"> <i
+                        class="material-icons">power_settings_new</i>
+                    <p style="color: green; font-weight: 500;">Logout</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>	
+<div>
+    <h1 style="color: rgb(100, 98, 216);text-align: center;" > PHARMACY  {{pharmacy.name}} </h1>
+     
+    <div class="card" style="margin-top: 150px;">
+       
+     
+ </div>
+</div>
+</div>
