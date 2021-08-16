@@ -89,6 +89,8 @@ export class LoginComponent implements OnInit {
         
         if(this.u.role=="ROLE_SYS_ADMIN"){
           this.router.navigate(["/system-admin-homepage"]);
+        }else if(this.u.role=="ROLE_PATIENT"){
+          this.router.navigate(["/patient-homepage"]);
         }
         alert("Logged in!");    
     },

@@ -16,6 +16,8 @@ import { HomePageComponent } from './homepage/homepage.component';
 import { PharmacyService } from './service/pharmacy.service';
 import {SystemAdminHomepageComponent} from './system-admin/system-admin-homepage/system-admin-homepage.component';
 import { SystemAdminModule } from './system-admin/system-admin.module';
+import { PatientModule } from './patient/patient.module';
+import { PatientHomepageComponent } from './patient/patient-homepage/patient-homepage.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { SystemAdminModule } from './system-admin/system-admin.module';
     HomePageComponent,
     AllMedicinesComponent,
     AllPharmaciesComponent,
-    SystemAdminHomepageComponent
+    SystemAdminHomepageComponent,
+    PatientHomepageComponent
   ],
   imports: [
     AppRoutingModule,
@@ -34,7 +37,8 @@ import { SystemAdminModule } from './system-admin/system-admin.module';
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
-    SystemAdminModule
+    SystemAdminModule,
+    PatientModule
   ],
   providers: [
   LoginService,
