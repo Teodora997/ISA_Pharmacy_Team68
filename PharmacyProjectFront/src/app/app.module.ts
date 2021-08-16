@@ -16,6 +16,7 @@ import { HomePageComponent } from './homepage/homepage.component';
 import { PharmacyService } from './service/pharmacy.service';
 import {SystemAdminHomepageComponent} from './system-admin/system-admin-homepage/system-admin-homepage.component';
 import { SystemAdminModule } from './system-admin/system-admin.module';
+import { SystemAdminService } from './service/system-admin.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { SystemAdminModule } from './system-admin/system-admin.module';
   UserService,
   PharmacyService,
   ApiService,
-  ConfigService
+  ConfigService,
+  SystemAdminService
 
 
 ],

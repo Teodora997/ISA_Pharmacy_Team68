@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ public class ConfirmationToken {
     @Column(name="createdDateTime",nullable = false)
     private Date createdDateTime;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
 
     public ConfirmationToken(){

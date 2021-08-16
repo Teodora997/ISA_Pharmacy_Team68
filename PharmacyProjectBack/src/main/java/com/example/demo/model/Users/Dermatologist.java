@@ -41,6 +41,12 @@ public class Dermatologist extends User {
 
     }
 
+    public Dermatologist(User user){
+        super(user.getId(),user.getFirstName(),user.getLastName(),user.getEmail(),user.getAddress(),user.getCity(),user.getTelephone(),user.getPassword(),user.getRole(),user.getIsActivated());
+        this.mark=5.0;
+        this.workTime=null;
+
+    }
 
     @Override
     public String getUsername() {

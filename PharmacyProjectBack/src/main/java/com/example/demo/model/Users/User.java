@@ -89,6 +89,20 @@ public class User implements UserDetails{
         this.email=email;
         this.telephone=telephone;
     }
+    public User(Long id2, String firstName2, String lastName2, String email2, String address2, String city2,
+            String telephone2, String password2, String role2,Boolean isActivated) {
+        this.id=id2;
+        this.FirstName=firstName2;
+        this.LastName=lastName2;
+        this.password=password2;
+        this.address=address2;
+        this.city=city2;
+        this.email=email2;
+        this.telephone=telephone2;
+        this.role=role2;
+        this.isActivated=isActivated;
+    }
+
     public String getFirstName(){
         return FirstName;
     }

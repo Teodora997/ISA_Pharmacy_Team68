@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { USER_ROLE_KEY } from '../config/localStorageKeys';
+import { USER_ID_KEY, USER_ROLE_KEY } from '../config/localStorageKeys';
 import { Login } from './login';
 
 @Injectable({
@@ -23,7 +23,7 @@ export class LoginService {
     return this.http.post<any>(this.url1,request);
   }
   getLoggedUser() : Observable<any>{ 
-    const userId=localStorage.getItem(USER_ROLE_KEY);
-    return this.http.post<any>(this.url,userId);
+    const userId=localStorage.getItem(USER_ID_KEY);
+    return this.http.post<any>(this.url2,userId);
   }
 }
