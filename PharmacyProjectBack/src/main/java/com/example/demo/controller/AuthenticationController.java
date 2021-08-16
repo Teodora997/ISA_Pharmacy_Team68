@@ -63,9 +63,9 @@ public class AuthenticationController {
 
     @PostMapping(value = "/getLoggedUser")
     public ResponseEntity<UserDTO> getLoggedUser(@RequestBody String id) {
-
+        System.out.println("UZIMA LOGOVANOG "+id);
         User user=userService.findById(Long.parseLong(id));
-      
+      System.out.println("Nasao usera "+ user.getFirstName());
         return new ResponseEntity<UserDTO>(new UserDTO(user),HttpStatus.OK);
     }
     // @PostMapping("/change-password")
