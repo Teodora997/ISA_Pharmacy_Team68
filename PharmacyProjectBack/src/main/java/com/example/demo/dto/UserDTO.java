@@ -52,6 +52,7 @@ public class UserDTO {
         telephone=user.getTelephone();
         address=user.getAddress();
         role=user.getRole();
+        city=user.getCity();
         isActivated=user.getIsActivated();
         token=null;
         this.authorities=user.getAuthorities().stream().map(authority-> ((Authority)authority).getName()).collect(Collectors.toList());

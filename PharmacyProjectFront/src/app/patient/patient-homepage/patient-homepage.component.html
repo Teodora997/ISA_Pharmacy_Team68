@@ -53,8 +53,7 @@
 <div>
     <h2 style="color: rgb(100, 98, 216);">Profile informations</h2>
     <form (ngSubmit)="editProfile()" >
-        
-           
+    
                 <div class="form-group">
                     <input type="text"  name="email"  #email="ngModel" [(ngModel)]="user.email" disabled/>
                 </div>
@@ -82,7 +81,7 @@
                 </div>
 
         <div>
-            <input type="submit" style="color: rgb(85, 82, 230);" value="Edit profile" >
+            <button type="submit" style="color: rgb(85, 82, 230);"  >Edit profile</button>
         </div>
     </form>
     <div style="margin-left:300px; margin-top:-380px; padding:60px;">
@@ -96,7 +95,7 @@
                         </thead>
                         <tbody>
                             <tr >
-                                <td>}</td>
+                                <td></td>
                                 <td></td>
                             </tr>
                         </tbody>
