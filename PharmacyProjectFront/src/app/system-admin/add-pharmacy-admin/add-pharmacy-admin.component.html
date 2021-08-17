@@ -22,6 +22,12 @@
                 </a>
             </li>
             <li routerLinkActive="active" >
+                <a [routerLink]="['/add-system-admin']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Add system admin</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
                 <a [routerLink]="['/add-dermatologist']"> <i
                         class="material-icons">person_add</i>
                     <p style="color: green; font-weight: 500;">Add dermatologist</p>
@@ -91,7 +97,15 @@
                        <label>Please repeat your password</label>
                        <input type="password"  class="form-control" name="password1" [(ngModel)]="password1" />       
                    </div>
- 
+                   
+                   <div class="col-sm-6">
+                        <label>Pharmacy(required)</label>
+                        <div class="form-group">
+                            <select name="ph" #ph="ngModel" [(ngModel)]='pharmacy' >
+                            <option *ngFor="let p of pharmacies" [value]="p.id">{{p.name}} {{p.address}} </option>
+                            </select>
+                        </div>
+                    </div>  
                      <div class="form-group">
                        <button type="submit" class="btn btn-primary" >Register</button>                     
                       </div>

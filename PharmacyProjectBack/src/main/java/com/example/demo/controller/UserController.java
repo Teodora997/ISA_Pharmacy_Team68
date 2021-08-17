@@ -10,11 +10,13 @@ import com.example.demo.Roles;
 import com.example.demo.dto.RequestForRegDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserForEditDTO;
+import com.example.demo.model.Pharmacy;
 import com.example.demo.model.RequestForReg;
 import com.example.demo.model.Users.ConfirmationToken;
 import com.example.demo.model.Users.Dermatologist;
 import com.example.demo.model.Users.PharmacyAdmin;
 import com.example.demo.model.Users.Supplier;
+import com.example.demo.model.Users.SystemAdmin;
 import com.example.demo.model.Users.User;
 import com.example.demo.repository.UserRepository.AuthorityRepository;
 import com.example.demo.repository.UserRepository.ConfirmationTokenRepository;
@@ -127,6 +129,33 @@ public class UserController {
 
         
         PharmacyAdmin user = userService.registerPharmacyAdmin(newUser);
+        User u=new User(user.getId(),user.getFirstName(),user.getLastName(),user.getPassword(), user.getAddress(),user.getCity(),user.getEmail(),user.getTelephone());
+        if(user != null) {
+
+            ConfirmationToken confirmationToken = new ConfirmationToken(user);
+
+            confirmationTokenRepository.save(confirmationToken);
+
+            return new ResponseEntity<User>(u, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<User>(u, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping(value="/addPharmacyForAdmin/{id}")
+    public ResponseEntity<?> addPharmacyForAdmin(@RequestBody String pharmacyId, @PathVariable("id") String id){
+    
+        Pharmacy pharmacy=userService.addPharmacyForAdmin(pharmacyId, id);
+
+        return new ResponseEntity<String>(pharmacyId, HttpStatus.CREATED);
+    }
+
+
+    @PostMapping("/registerSystemAdmin")
+    public ResponseEntity<?> registerSystemAdmin(@RequestBody User newUser) {
+
+        
+        SystemAdmin user = userService.registerSystemAdmin(newUser);
         User u=new User(user.getId(),user.getFirstName(),user.getLastName(),user.getPassword(), user.getAddress(),user.getCity(),user.getEmail(),user.getTelephone());
         if(user != null) {
 

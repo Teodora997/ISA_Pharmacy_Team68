@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.example.demo.dto.SearchPharmacyDTO;
 import com.example.demo.model.Pharmacy;
 import com.example.demo.repository.PharmacyRepository;
+import com.example.demo.repository.UserRepository.PharmacyAdminRepository;
 import com.example.demo.service.PharmacyService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class PharmacyController {
     PharmacyService pharmacyService;
     @Autowired
     PharmacyRepository pharmacyRepository;
+
+    
 
     @GetMapping(value = "/allPharmacies")
     public ResponseEntity<List<Pharmacy>> getAllPharmacies(){
@@ -48,5 +51,11 @@ public class PharmacyController {
     public ResponseEntity<Pharmacy> addPharmacy(@RequestBody Pharmacy pharmacy){
         Pharmacy p=pharmacyService.addPharmacy(pharmacy);
         return new ResponseEntity<>(p,HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/getAvailablePharmacies")
+    public ResponseEntity<List<Pharmacy>> getAvailablePharmacies(){
+        List<Pharmacy> pharmacies=pharmacyService.getAvailablePharmacies();
+        return new ResponseEntity<>(pharmacies,HttpStatus.OK);
     }
 }

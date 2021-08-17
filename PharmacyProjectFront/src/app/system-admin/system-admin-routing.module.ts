@@ -5,6 +5,7 @@ import { AddMedicineComponent } from './add-medicine/add-medicine.component';
 import { AddPharmacyAdminComponent } from './add-pharmacy-admin/add-pharmacy-admin.component';
 import { AddPharmacyComponent } from './add-pharmacy/add-pharmacy.component';
 import { AddSupplierComponent } from './add-supplier/add-supplier.component';
+import { AddSystemAdminComponent } from './add-system-admin/add-system-admin.component';
 import { SystemAdminHomepageComponent } from './system-admin-homepage/system-admin-homepage.component';
 
 
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'add-dermatologist', component: AddDermatologistComponent },
   { path: 'add-supplier', component: AddSupplierComponent },
   { path: 'add-pharmacy-admin', component: AddPharmacyAdminComponent},
+  { path: 'add-system-admin', component: AddSystemAdminComponent},
   { path: 'add-pharmacy', component: AddPharmacyComponent},
   { path: 'add-medicine', component: AddMedicineComponent},
   

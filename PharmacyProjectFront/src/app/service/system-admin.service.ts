@@ -24,6 +24,13 @@ public registerPharmacyAdmin(user:User){
     return this.http.post<User>("http://localhost:8081/api/users/registerPharmacyAdmin",user);
 
 }
+public addPharmacyForAdmin(pharmacy: string, phAdminId:string) {
+    return this.http.post<string>("http://localhost:8081/api/users/addPharmacyForAdmin/" + phAdminId, pharmacy);
+}
+public registerSystemAdmin(user:User){
+    return this.http.post<User>("http://localhost:8081/api/users/registerSystemAdmin",user);
+
+}
 public addPharmacy(pharmacy:Pharmacy){
     return this.http.post<Pharmacy>("http://localhost:8081/api/pharmacies/addPharmacy",pharmacy);
 
