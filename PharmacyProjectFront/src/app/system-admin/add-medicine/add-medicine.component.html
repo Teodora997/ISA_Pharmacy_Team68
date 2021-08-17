@@ -87,22 +87,27 @@
                             #regime="ngModel" name="regime" [(ngModel)]="newMedicine.regime"/>
                         
                      </div>
-                     <div class="form-group">
-                        <label>Alternative</label>
-                        <input type="text"  class="form-control"  
-                           #alternative="ngModel" name="alternative" [(ngModel)]="newMedicine.alternative"/>
-                       
-                    </div>
+                    
                     <div class="form-group">
                         <label>Additional</label>
                         <input type="text"  class="form-control"  
                            #additional="ngModel" name="additional" [(ngModel)]="newMedicine.additional"/>
                        
                     </div>
- 
+        
+                    <div class="col-sm-6">
+                        <label>Alternatives</label>
+                        <div class="form-group">
+                        <select name="alt" #alt="ngModel" [(ngModel)]='alternatives'  multiple>
+                            <option *ngFor="let m of medicines" [value]="m.id">{{m.id}} {{m.name}} </option>
+                        </select>
+                    </div>
+                </div>
+               
                      <div class="form-group">
                        <button type="submit" class="btn btn-primary" >Add</button>                     
                       </div>
+                    
                  </form>
              </div>
          </div>

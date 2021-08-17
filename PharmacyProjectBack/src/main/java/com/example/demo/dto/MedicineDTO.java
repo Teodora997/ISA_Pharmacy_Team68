@@ -8,14 +8,14 @@ public class MedicineDTO {
     public String ingredients;
     public String producer;
     public String regime;
-    public String alternative;
+    //public String alternative;
     public String additional;
 
     public MedicineDTO() {
     }
 
     public MedicineDTO(String id, String name, String type, String form, String ingredients, String producer,
-            String regime, String alternative, String additional) {
+            String regime, String additional) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -23,7 +23,6 @@ public class MedicineDTO {
         this.ingredients = ingredients;
         this.producer = producer;
         this.regime = regime;
-        this.alternative = alternative;
         this.additional = additional;
     }
 
@@ -81,14 +80,6 @@ public class MedicineDTO {
 
     public void setRegime(String regime) {
         this.regime = regime;
-    }
-
-    public String getAlternative() {
-        return alternative;
-    }
-
-    public void setAlternative(String alternative) {
-        this.alternative = alternative;
     }
 
     public String getAdditional() {
