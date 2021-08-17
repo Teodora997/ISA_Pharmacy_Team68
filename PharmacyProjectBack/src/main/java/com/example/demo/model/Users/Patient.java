@@ -1,8 +1,16 @@
 package com.example.demo.model.Users;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.example.demo.model.Medicine;
 
 @Entity
 @Table(name="Patients")
@@ -13,8 +21,8 @@ public class Patient extends User {
      */
     private static final long serialVersionUID = 1L;
 
-    @Column(name="Allergy")
-    private String allergy;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Medicine> allergies = new HashSet<Medicine>();
 
     @Column(name="Points")
     private Integer points;
@@ -31,14 +39,30 @@ public class Patient extends User {
 
     }
     
+   
+
     public Patient(Long id, String firstName, String lastName, String password, String address, String city,
-    String email, String telephone, String allergy, Integer points, String category, Integer penals) {
+            String email, String telephone, Set<Medicine> allergies, Integer points, String category, Integer penals) {
         super(id, firstName, lastName, password, address, city, email, telephone);
-        this.allergy = allergy;
+        this.allergies = allergies;
         this.points = points;
         this.category = category;
         this.penals = penals;
-        }
+    }
+
+
+
+    public Patient(Long id2, String firstName2, String lastName2, String email2, String address2, String city2,
+            String telephone2, String password2, String role2, Boolean isActivated, Set<Medicine> allergies,
+            Integer points, String category, Integer penals) {
+        super(id2, firstName2, lastName2, email2, address2, city2, telephone2, password2, role2, isActivated);
+        this.allergies = allergies;
+        this.points = points;
+        this.category = category;
+        this.penals = penals;
+    }
+
+
 
     @Override
     public String getUsername() {
@@ -65,13 +89,19 @@ public class Patient extends User {
         return true;
     }
 
-    public String getAllergy() {
-        return allergy;
+    
+
+    public Set<Medicine> getAllergies() {
+        return allergies;
     }
 
-    public void setAllergy(String allergy) {
-        this.allergy = allergy;
+
+
+    public void setAllergies(Set<Medicine> allergies) {
+        this.allergies = allergies;
     }
+
+
 
     public Integer getPoints() {
         return points;
