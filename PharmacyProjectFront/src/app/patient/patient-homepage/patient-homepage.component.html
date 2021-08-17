@@ -19,25 +19,25 @@
             </li>
             <li routerLinkActive="active" >
                 <a [routerLink]="['/pharmacist-apointments']"> <i
-                        class="material-icons">store</i>
-                    <p style="color: green; font-weight: 500;">Pharmacist apointments</p>
+                        class="material-icons">reorder</i>
+                    <p style="color: green; font-weight: 500;">Pharmacist consultings</p>
                 </a>
             </li>
             <li routerLinkActive="active" >
                 <a [routerLink]="['/dermatologist-apointments']"> <i
-                        class="material-icons">store</i>
+                        class="material-icons">reorder</i>
                     <p style="color: green; font-weight: 500;">Dermatologist apointments</p>
                 </a>
             </li>
             <li routerLinkActive="active" >
                 <a [routerLink]="['/medicine-reservations']"> <i
-                        class="material-icons">store</i>
+                        class="material-icons">medication</i>
                     <p style="color: green; font-weight: 500;">Medicine reservations</p>
                 </a>
             </li>
             <li routerLinkActive="active" >
                 <a [routerLink]="['/make-counsulting']"> <i
-                        class="material-icons">store</i>
+                        class="material-icons">playlist_add</i>
                     <p style="color: green; font-weight: 500;">Make consulting</p>
                 </a>
             </li>
@@ -77,31 +77,48 @@
                 </div>
             
                 <div>
-                    <h3>Number of penatlies :</h3>
+                    <label>Number of points :</label>
                 </div>
 
         <div>
             <button type="submit" style="color: rgb(85, 82, 230);"  >Edit profile</button>
         </div>
     </form>
-    <div style="margin-left:300px; margin-top:-390px; padding:60px;">
-        <h2 style="color: rgb(100, 98, 216);">My allergies</h2>
+    <div style="margin-left:300px; margin-top:-400px; padding:60px;">
+        <button  style="color: rgb(100, 98, 216);border: 0ch;font-size: medium;width:max-content;background-color: white;"> My allergies</button>
         <div class="row">
                 <div class="card-content table-responsive table-full-width">
                     <table class="table">
                         <thead class="text-success">
-                            <th>Code</th>
+                            <th>Id</th>
                             <th>Name</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
+                            <tr *ngFor='let a of myAllergies'>
+                                <td>{{a.id}}</td>
+                                <td>{{a.name}}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+            <form (ngSubmit)="addAllergy()" #allergyForm="ngForm">
+                <h4>Choose medicine</h4>
+                <div class="row">
+                   
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <select name="tag" [(ngModel)]='newAllergy' >
+                                <option *ngFor='let med of allMedicines' [ngValue]="med.id">{{med.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" style="color: rgb(85, 82, 230);" >Add allergy</button>
+                </div>
+
+            </form>
 
         </div>
 
