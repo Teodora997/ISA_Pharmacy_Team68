@@ -25,17 +25,18 @@ INSERT INTO `user_authority` (user_id, authority_id) VALUES (700, 2);
 INSERT INTO `work_time` (id,from_date,shift,to_date) values (1,'',1,'');
 INSERT INTO `work_time` (id,from_date,shift,to_date) values (2,'',2,'');
 
-INSERT INTO `patients` (allergy,category,penals,points,id) values ('Penicilin','Kategorija',1,10,200);
-INSERT INTO `patients` (allergy,category,penals,points,id) values ('Penicilin','Kategorija',1,10,300);
+INSERT INTO `patients` (category,penals,points,id) values ('Kategorija',1,10,200);
+INSERT INTO `patients` (category,penals,points,id) values ('Kategorija',1,10,300);
 
 INSERT INTO `dermatologists` (mark,id,work_time_id) values (0,400,1);
 INSERT INTO `dermatologists` (mark,id,work_time_id) values (0,500,2);
 
 INSERT INTO `examination_price_list` (id,examinations,price) values (1,'',3000);
 
-INSERT INTO `medicines` (id,additional,form,ingredients,name,producer,regime,type) values (1,'','','','','','','');
-INSERT INTO `medicines` (id,additional,form,ingredients,name,producer,regime,type) values (2,'','','','','','','');
 
+INSERT INTO `medicines` (id,additional,form,ingredients,name,producer,regime,type) values (1,'','','','Ibuprofen','','','');
+INSERT INTO `medicines` (id,additional,form,ingredients,name,producer,regime,type) values (2,'','','','Rapten','','','');
+INSERT INTO  `patients_allergies` (patient_id,allergies_id)values (200,1);
 INSERT INTO `medicine_price_list` (id,from_date,to_date) values (1,'','');
 
 INSERT INTO `pharmacies` (id,address,mark,name,id_ex_price_list,id_med_price_list) values (1,'Bulevar Oslobodjenja 88',0,'Benu',1,1);

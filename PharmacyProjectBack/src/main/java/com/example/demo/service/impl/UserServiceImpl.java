@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import com.example.demo.TimeProvider;
+import com.example.demo.dto.UserForEditDTO;
 import com.example.demo.model.Users.ConfirmationToken;
 import com.example.demo.model.Users.Dermatologist;
 import com.example.demo.model.Users.PharmacyAdmin;
@@ -216,6 +217,17 @@ public class UserServiceImpl implements UserService {
         else {
             return null;
         }
+    }
+
+    @Override
+    public void editProfile(UserForEditDTO editedUser) {
+        User u=userRepository.findByEmail(editedUser.getEmail());
+        u.setFirstName(editedUser.getFirstName());
+        u.setLastName(editedUser.getLastName());
+        u.setCity(editedUser.getCity());
+        u.setAddress(editedUser.getAddress());
+        u.setTelephone(editedUser.getTelephone());
+        userRepository.save(u);
     }
 
 }

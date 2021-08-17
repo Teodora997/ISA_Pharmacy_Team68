@@ -29,7 +29,9 @@ export class UserService {
   public register(newUser:User){
     return this._http.post<User>(this._url2,newUser);
  }
- 
+ public editProfile(editedUser:User) {
+    return this._http.post("http://localhost:8081/api/users/editProfile",editedUser);
+  }
   getUser(userId: number): Observable<any> {
       return this._http.get(`${this._url1}/${userId}`);
   }

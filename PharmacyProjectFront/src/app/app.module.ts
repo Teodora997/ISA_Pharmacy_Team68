@@ -19,6 +19,7 @@ import { SystemAdminModule } from './system-admin/system-admin.module';
 import { SystemAdminService } from './service/system-admin.service';
 import { PatientModule } from './patient/patient.module';
 import { PatientHomepageComponent } from './patient/patient-homepage/patient-homepage.component';
+import { PatientService } from './service/patient.service';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { PatientHomepageComponent } from './patient/patient-homepage/patient-hom
   PharmacyService,
   ApiService,
   ConfigService,
-  SystemAdminService
+  SystemAdminService,
+  PatientService
 
 
 ],
