@@ -1,9 +1,19 @@
 package com.example.demo.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Medicines")
@@ -31,8 +41,9 @@ public class Medicine {
     @Column(name = "Regime")
     private String regime;
 
-    @Column(name = "Alternative")
-    private Integer alternative;
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Medicine> alternative = new HashSet<Medicine>();
 
     @Column(name = "Additional")
     private String additional;
@@ -42,7 +53,7 @@ public class Medicine {
     }
     
     public Medicine(Long id, String name, String type, String form, String ingredients, String producer, String regime,
-    Integer alternative, String additional) {
+    Set<Medicine> alternative, String additional) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -67,6 +78,16 @@ public class Medicine {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+   
+
+    public Set<Medicine> getAlternative() {
+        return alternative;
+    }
+
+    public void setAlternative(Set<Medicine> alternative) {
+        this.alternative = alternative;
     }
 
     public String getType() {
@@ -109,13 +130,7 @@ public class Medicine {
         this.regime = regime;
     }
 
-    public Integer getAlternative() {
-        return alternative;
-    }
-
-    public void setAlternative(Integer alternative) {
-        this.alternative = alternative;
-    }
+    
 
     public String getAdditional() {
         return additional;

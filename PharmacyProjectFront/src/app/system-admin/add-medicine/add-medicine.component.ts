@@ -19,11 +19,13 @@ export class AddMedicineComponent implements OnInit{
   password1: string;
   submitted = false;
   done:boolean=false;
+  alternatives: string[] = [];
+  medicines: Medicine[] = [];
   
 
   constructor(private loginService: LoginService,private systemAdminService: SystemAdminService,private formBuilder: FormBuilder,private router:Router) {
     this.newMedicine=new Medicine();
-    
+    this.medicines=[];
     this.user= new User();
     this.password1="";
   }
@@ -31,26 +33,51 @@ export class AddMedicineComponent implements OnInit{
 
   ngOnInit()  {
     this.password1="";
+    this.getAllMedicines();
   }
   
+  getAllMedicines() {
 
+    this.systemAdminService.getAllMedicines().subscribe(
+        {
+            next: m => {
+                this.medicines = m;
+                console.log(this.medicines);
+            }
+        });
+   
+   
+}
 
   addMedicine() {
-    console.log(this.newMedicine);
+    console.log("Saljem lijek na bek: "+this.newMedicine);
 
     this.systemAdminService.addMedicine(this.newMedicine).subscribe(
         {
             next: medicine => {
                 this.newMedicine = medicine;
                 console.log(this.newMedicine);
-                alert("Added new medicine!");
+                
                
                 if (this.newMedicine == null) {
                     alert("Medicine with this id is already registered!");
+                }else{
+                  alert("Added new medicine!");
                 }
+                
+                this.systemAdminService.addAlternatives(this.alternatives, this.newMedicine.id).subscribe(
+                  {
+                      next: a=> {
+                          this.alternatives = a;
+                          this.refresh();
+
+                      }
+                     
+                  });
+                 
             }
+            
         });
-   
    
 }
 

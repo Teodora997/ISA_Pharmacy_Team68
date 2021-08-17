@@ -6,7 +6,6 @@ export class Medicine{
     ingredients!:string;
     producer!: string;
     regime!:string;
-    alternative!:string;
     additional!:string;
 
 }

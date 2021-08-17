@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 import { Medicine } from "../model/medicine";
 import { Pharmacy } from "../model/pharmacy";
 import { User } from "../user";
@@ -31,4 +32,10 @@ public addMedicine(medicine:Medicine){
     return this.http.post<Medicine>("http://localhost:8081/api/medicines/addMedicine",medicine);
 
 }
+public addAlternatives(alternatives: string[], medicineId:string) {
+    return this.http.post<string[]>("http://localhost:8081/api/medicines/addAlternatives/" + medicineId, alternatives);
+}
+public getAllMedicines():Observable<Medicine[]>{
+    return this.http.get<Medicine[]>("http://localhost:8081/api/medicines/getAllMedicines");
+  }
 }
