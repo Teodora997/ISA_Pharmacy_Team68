@@ -33,7 +33,8 @@ INSERT INTO `dermatologists` (mark,id,work_time_id) values (0,500,2);
 
 INSERT INTO `examination_price_list` (id,examinations,price) values (1,'',3000);
 
-INSERT INTO `medicines` (id,additional,alternative,form,ingredients,name,producer,regime,type) values (1,'',1,'','','','','','');
+INSERT INTO `medicines` (id,additional,form,ingredients,name,producer,regime,type) values (1,'','','','','','','');
+INSERT INTO `medicines` (id,additional,form,ingredients,name,producer,regime,type) values (2,'','','','','','','');
 
 INSERT INTO `medicine_price_list` (id,from_date,to_date) values (1,'','');
 
