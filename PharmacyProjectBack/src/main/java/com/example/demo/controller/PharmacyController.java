@@ -44,4 +44,9 @@ public class PharmacyController {
         System.out.println("Nasao apoteku "+ pharmacy.getName());
         return new ResponseEntity<>(pharmacy,HttpStatus.OK);
     }
+    @PostMapping(value = "/addPharmacy")
+    public ResponseEntity<Pharmacy> addPharmacy(@RequestBody Pharmacy pharmacy){
+        Pharmacy p=pharmacyService.addPharmacy(pharmacy);
+        return new ResponseEntity<>(p,HttpStatus.OK);
+    }
 }

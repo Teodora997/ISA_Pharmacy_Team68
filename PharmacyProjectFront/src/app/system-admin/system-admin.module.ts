@@ -6,13 +6,17 @@ import { SystemAdminRoutingModule } from './system-admin-routing.module';
 import { AddDermatologistComponent } from './add-dermatologist/add-dermatologist.component';
 import { AddSupplierComponent } from './add-supplier/add-supplier.component';
 import { AddPharmacyAdminComponent } from './add-pharmacy-admin/add-pharmacy-admin.component';
+import { AddPharmacyComponent } from './add-pharmacy/add-pharmacy.component';
+import { AddMedicineComponent } from './add-medicine/add-medicine.component';
 
 
 @NgModule({
   declarations: [
     AddDermatologistComponent,
     AddSupplierComponent,
-    AddPharmacyAdminComponent
+    AddPharmacyAdminComponent,
+    AddPharmacyComponent,
+    AddMedicineComponent
   ],
   imports: [
     CommonModule,

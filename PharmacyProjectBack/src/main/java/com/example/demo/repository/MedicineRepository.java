@@ -1,9 +1,11 @@
 package com.example.demo.repository;
 
+import java.util.Optional;
+
 import com.example.demo.model.Medicine;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface MedicineRepository extends JpaRepository<Medicine,Integer> {
-    
+public interface MedicineRepository extends JpaRepository<Medicine,Long> {
+    //public Optional<Medicine> findById(Long id);
 }
