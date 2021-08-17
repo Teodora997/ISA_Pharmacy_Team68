@@ -8,6 +8,7 @@ import { AddSupplierComponent } from './add-supplier/add-supplier.component';
 import { AddPharmacyAdminComponent } from './add-pharmacy-admin/add-pharmacy-admin.component';
 import { AddPharmacyComponent } from './add-pharmacy/add-pharmacy.component';
 import { AddMedicineComponent } from './add-medicine/add-medicine.component';
+import { AddSystemAdminComponent } from './add-system-admin/add-system-admin.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { AddMedicineComponent } from './add-medicine/add-medicine.component';
     AddSupplierComponent,
     AddPharmacyAdminComponent,
     AddPharmacyComponent,
-    AddMedicineComponent
+    AddMedicineComponent,
+    AddSystemAdminComponent
   ],
   imports: [
     CommonModule,

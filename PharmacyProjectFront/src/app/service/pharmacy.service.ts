@@ -12,6 +12,10 @@ export class PharmacyService {
   public getAllPhamracies(): Observable<Pharmacy[]> {
     return this.http.get<Pharmacy[]>("http://localhost:8081/api/pharmacies/allPharmacies");
   }
+
+  public getAvailablePharmacies(): Observable<Pharmacy[]> {
+    return this.http.get<Pharmacy[]>("http://localhost:8081/api/pharmacies/getAvailablePharmacies");
+  }
   public searchPharmacies(sp:SearchPharmacy): Observable<Pharmacy[]> {
     return this.http.post<Pharmacy[]>("http://localhost:8081/api/pharmacies/searchPharmacies",sp);
   }

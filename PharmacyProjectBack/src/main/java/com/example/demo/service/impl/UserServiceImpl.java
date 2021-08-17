@@ -6,17 +6,22 @@ import java.util.NoSuchElementException;
 
 import com.example.demo.TimeProvider;
 import com.example.demo.dto.UserForEditDTO;
+import com.example.demo.model.Pharmacy;
 import com.example.demo.model.Users.ConfirmationToken;
 import com.example.demo.model.Users.Dermatologist;
 import com.example.demo.model.Users.PharmacyAdmin;
 import com.example.demo.model.Users.Supplier;
+import com.example.demo.model.Users.SystemAdmin;
 import com.example.demo.model.Users.User;
+import com.example.demo.repository.PharmacyRepository;
 import com.example.demo.repository.UserRepository.AuthorityRepository;
 import com.example.demo.repository.UserRepository.ConfirmationTokenRepository;
 import com.example.demo.repository.UserRepository.DermatologistRepository;
 import com.example.demo.repository.UserRepository.PharmacyAdminRepository;
 import com.example.demo.repository.UserRepository.SupplierRepository;
+import com.example.demo.repository.UserRepository.SystemAdminRepository;
 import com.example.demo.repository.UserRepository.UserRepository;
+import com.example.demo.service.PharmacyService;
 import com.example.demo.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +55,15 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PharmacyAdminRepository pharmacyAdminRepository;
+
+    @Autowired
+    private SystemAdminRepository systemAdminRepository;
+
+    @Autowired
+    private PharmacyService pharmacyService;
+
+    @Autowired
+    private PharmacyRepository pharmacyRepository;
 
     @Override
     public User findById(Long id) {
@@ -218,7 +232,32 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+    @Override
+    public SystemAdmin registerSystemAdmin(User newUser) {
+        if(findByEmail(newUser.getEmail()) == null){
+            //User u = new User();
+            SystemAdmin sysAdmin=new SystemAdmin();
+            sysAdmin.setPassword(passwordEncoder.encode(newUser.getPassword()));
+            sysAdmin.setFirstName(newUser.getFirstName());
+            sysAdmin.setLastName(newUser.getLastName());
+            sysAdmin.setAddress(newUser.getAddress());
+            sysAdmin.setCity(newUser.getCity());
+            sysAdmin.setEmail(newUser.getEmail());
+            sysAdmin.setTelephone(newUser.getTelephone());
+            sysAdmin.setIsActivated(true);
+           // u.setPrviPutLogovan(true);
+           sysAdmin.setRole("ROLE_SYS_ADMIN");
 
+            //userRepository.save(u);
+            
+            systemAdminRepository.save(sysAdmin);
+
+            return sysAdmin;
+        }
+        else {
+            return null;
+        }
+    }
     @Override
     public void editProfile(UserForEditDTO editedUser) {
         User u=userRepository.findByEmail(editedUser.getEmail());
@@ -229,5 +268,22 @@ public class UserServiceImpl implements UserService {
         u.setTelephone(editedUser.getTelephone());
         userRepository.save(u);
     }
+
+    @Override
+    public Pharmacy addPharmacyForAdmin(String pId, String id) {
+        Long phId=Long.parseLong(pId);
+        Pharmacy pharmacy = pharmacyRepository.findById(phId).get();
+        Long aId=Long.parseLong(id);
+      PharmacyAdmin phAdmin =(PharmacyAdmin)findById(aId);
+
+       if(phAdmin!=null){
+           phAdmin.setPharmacy(pharmacy);
+           pharmacyAdminRepository.save(phAdmin);
+           return pharmacy;
+       }
+        return null;
+    }
+
+    
 
 }

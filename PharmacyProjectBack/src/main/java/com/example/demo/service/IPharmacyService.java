@@ -10,5 +10,7 @@ public interface IPharmacyService {
     public List<Pharmacy> findAllPharmacies();
     public List<Pharmacy> searchPharmacies(SearchPharmacyDTO searchPharmacyDTO);
     Pharmacy addPharmacy(Pharmacy pharmacy);
+    List<Pharmacy> getAvailablePharmacies();
     List<ExaminationDTO> getAvailableExaminations(Long pharmacyId);
+
 }
