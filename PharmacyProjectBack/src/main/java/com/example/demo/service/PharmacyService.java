@@ -1,10 +1,12 @@
 package com.example.demo.service;
 
+import com.example.demo.repository.ExaminationRepository;
 import com.example.demo.repository.PharmacyRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.demo.dto.ExaminationDTO;
 import com.example.demo.dto.SearchPharmacyDTO;
 import com.example.demo.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ public class PharmacyService implements IPharmacyService {
     @Autowired
     PharmacyRepository pharmacyRepository;
    
+    @Autowired
+    ExaminationRepository examinationRepository;
+
     @Override
     public List<Pharmacy> findAllPharmacies(){
         return pharmacyRepository.findAll();
@@ -60,5 +65,36 @@ System.out.println("REZULTAT"+ret);
        return pharmacy;
     }
 
+    @Override
+    public List<ExaminationDTO> getAvailableExaminations(Long pharmacyId) {
+        List<ExaminationDTO> availableExaminations=new ArrayList<>();
+        List<Examination> examinations=getExaminationsByPharmacy(pharmacyId);
+        for(Examination e:examinations){
+            if(e.getStatus()==ExaminationStatus.available|| e.getStatus().equals(ExaminationStatus.canceled)){
+                ExaminationDTO ea=new ExaminationDTO();
+                ea.setExaminationId(e.getId());
+                ea.setDermatologistId(e.getDermatologist().getId());
+                ea.setDermatologistName(e.getDermatologist().getFirstName());
+                ea.setDermatologistRate(e.getDermatologist().getMark());
+                ea.setPrice(e.getPrice());
+                ea.setDate(e.getDate());
+                ea.setTime(e.getTime());
+                availableExaminations.add(ea);
 
+            }
+        }
+        return availableExaminations;
+    }
+
+    public List<Examination> getExaminationsByPharmacy(Long pharmacyId){
+        //Pharmacy p=pharmacyRepository.findById(pharmacyId).get();
+        List<Examination> ret=new ArrayList<>();
+        List<Examination> ex=examinationRepository.findAll();
+        for(Examination e:ex){
+            if(e.getPharmacy().getId().equals(pharmacyId)){
+                ret.add(e);
+            }
+        }
+        return ret;
+    }
 }
