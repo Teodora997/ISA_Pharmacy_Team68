@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.example.demo.dto.ExaminationDTO;
+import com.example.demo.dto.ExaminationDTO;
 import com.example.demo.model.Medicine;
 import com.example.demo.model.Users.Patient;
+import com.example.demo.model.Users.User;
 import com.example.demo.repository.MedicineRepository;
 import com.example.demo.repository.UserRepository.PatientRepository;
+import com.example.demo.service.PharmacyService;
 import com.example.demo.service.impl.PatientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +31,21 @@ public class PatientController {
     private PatientService patientService;
 
     @Autowired
+    private PharmacyService pharmacyService;
+    
+    @Autowired
     private MedicineRepository medicineRepository;
     @Autowired
     private PatientRepository patientRepository;
 
-    public PatientController(PatientService patientService,MedicineRepository medicineRepository,PatientRepository patientRepository) {
+public PatientController(PatientService patientService, PharmacyService pharmacyService,
+            MedicineRepository medicineRepository, PatientRepository patientRepository) {
         this.patientService = patientService;
-        this.medicineRepository=medicineRepository;
-        this.patientRepository=patientRepository;
+        this.pharmacyService = pharmacyService;
+        this.medicineRepository = medicineRepository;
+        this.patientRepository = patientRepository;
     }
+
 
     @GetMapping(value="/getMyAllergies/{id}")
     public ResponseEntity<Set<Medicine>> getMyAllergies(@PathVariable("id") String id){
@@ -64,5 +74,21 @@ public class PatientController {
         patientRepository.save(p);
         return new ResponseEntity<String>("Allergy added!",HttpStatus.OK);
     }
+ 
+    @GetMapping(value="/getAvailableExaminations/{pharmacyId}")
+    public ResponseEntity<List<ExaminationDTO>> getAvailableExaminations(@PathVariable("pharmacyId") Long pharmacyId)
+    {   
+        List<ExaminationDTO> ex=pharmacyService.getAvailableExaminations(pharmacyId);
+        return new ResponseEntity<List<ExaminationDTO>>(ex,HttpStatus.OK);
+    }
+    
+    @PostMapping(value="/makeExamination/{examinationId}")
+    public ResponseEntity<Long> makeExamination(@RequestBody String patientId,@PathVariable("examinationId") Long examinationId){
 
+       Long id=patientService.makeExamination(patientId,examinationId);
+       if(id!=null){
+        return new ResponseEntity<Long>(id,HttpStatus.OK);
+    }
+    return null;
+}
 }

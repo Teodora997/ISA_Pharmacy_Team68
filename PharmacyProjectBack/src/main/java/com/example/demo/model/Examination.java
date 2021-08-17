@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -25,7 +27,7 @@ public class Examination {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "Date")
-    private String date;
+    private LocalDate date;
     @Column(name = "Time")
     private String time;
     @Column(name = "Price")
@@ -49,7 +51,7 @@ public class Examination {
         
     }
 
-    public Examination(Long id, String date, String time, Integer price, Integer duration, Dermatologist dermatologist,
+    public Examination(Long id, LocalDate date, String time, Integer price, Integer duration, Dermatologist dermatologist,
             Patient patient, Pharmacy pharmacy, ExaminationStatus status) {
         this.id = id;
         this.date = date;
@@ -70,11 +72,11 @@ public class Examination {
         this.status = status;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

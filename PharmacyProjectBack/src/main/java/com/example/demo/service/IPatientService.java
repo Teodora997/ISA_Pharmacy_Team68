@@ -6,4 +6,5 @@ import com.example.demo.model.Medicine;
 
 public interface IPatientService {
     public Set<Medicine> getMyAllergies(String id);
+    public Long makeExamination(String patientId,Long examinationId);
 }
