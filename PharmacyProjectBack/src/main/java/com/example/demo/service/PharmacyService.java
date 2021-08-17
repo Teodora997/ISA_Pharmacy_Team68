@@ -54,5 +54,11 @@ System.out.println("REZULTAT"+ret);
         return ret;
     }
 
+    @Override
+    public Pharmacy addPharmacy(Pharmacy pharmacy) {
+       pharmacyRepository.save(pharmacy);
+       return pharmacy;
+    }
+
 
 }
