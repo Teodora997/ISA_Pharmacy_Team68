@@ -1,14 +1,15 @@
 package com.example.demo.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.example.demo.dto.ConsultingDTO;
 import com.example.demo.dto.ExaminationDTO;
-import com.example.demo.dto.ExaminationDTO;
+import com.example.demo.model.Consulting;
 import com.example.demo.model.Medicine;
 import com.example.demo.model.Users.Patient;
-import com.example.demo.model.Users.User;
 import com.example.demo.repository.MedicineRepository;
 import com.example.demo.repository.UserRepository.PatientRepository;
 import com.example.demo.service.PharmacyService;
@@ -90,5 +91,25 @@ public PatientController(PatientService patientService, PharmacyService pharmacy
         return new ResponseEntity<Long>(id,HttpStatus.OK);
     }
     return null;
+}
+@PostMapping(value="/makeConsulting/{consultingId}")
+    public ResponseEntity<Long> makeConsulting(@RequestBody String patientId,@PathVariable("consultingId") Long consultingId){
+        System.out.println("rezervise pregled kod farmaceuta -kontroler"+ consultingId+patientId);
+       Long id=patientService.makeConsulting(patientId,consultingId);
+       if(id!=null){
+        return new ResponseEntity<Long>(id,HttpStatus.OK);
+    }
+    return null;
+}
+@PostMapping(value = "/getPharmaciesForConsulting/{date}")
+    public ResponseEntity<List<ConsultingDTO>> getPharmaciesForConsulting(@RequestBody String time,@PathVariable("date") String date){
+       System.out.println("TRAZI APOTEKE SA ZADATIM PARAMETRIMA "+date+time);
+        List<ConsultingDTO> ret=patientService.getPharmaciesForConsulting(LocalDate.parse(date), time);
+        if(ret!=null){
+           //System.out.println(ret.get(0).getPharmacyName());
+        return new ResponseEntity<List<ConsultingDTO>>(ret,HttpStatus.OK);
+    }else{
+        return null;
+    }
 }
 }

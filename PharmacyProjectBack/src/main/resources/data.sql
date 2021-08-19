@@ -40,6 +40,7 @@ INSERT INTO  `patients_allergies` (patient_id,allergies_id)values (200,1);
 INSERT INTO `medicine_price_list` (id,from_date,to_date) values (1,'','');
 
 INSERT INTO `pharmacies` (id,address,mark,name,id_ex_price_list,id_med_price_list) values (1,'Bulevar Oslobodjenja 88',0,'Benu',1,1);
+INSERT INTO `pharmacies` (id,address,mark,name,id_ex_price_list,id_med_price_list) values (2,'Kisacka 88',0,'Jankovic',1,1);
 
 INSERT INTO `pharmacists` (mark,id,pharmacy_id,work_time_id) values (0,600,1,1);
 
@@ -52,6 +53,9 @@ INSERT INTO `derm_pharmacy` (derm_id,pharmacy_id) values (500,1);
 
 INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (1,'2021-08-22',0,0,3,'',400,200,1);
 INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (2,'2021-08-22',0,0,0,'',500,200,1);
+INSERT INTO `consulting` (id,date,duration,price,status,time,patient_id,pharmacist_id) values (1,'2021-08-22',0,800,3,'8:00',null,600);
+INSERT INTO `consulting` (id,date,duration,price,status,time,patient_id,pharmacist_id) values (2,'2021-08-22',0,800,0,'9:00',null,600);
+
 
 INSERT INTO `med_price_list_items` (id,name,price,medicine_id,medicine_price_list_id) values (1,'Ibuprofen',0,1,1);
 
