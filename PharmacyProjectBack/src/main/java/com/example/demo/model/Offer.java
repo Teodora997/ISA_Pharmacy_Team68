@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +29,7 @@ public class Offer {
     private String status;
 
     @Column(name = "DeliveryDate")
-    private String deliveryDate;
+    private LocalDate deliveryDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Supplier supplier;
@@ -39,7 +41,7 @@ public class Offer {
     public Long getId() {
         return id;
     }
-    public Offer(Long id, Integer idOrder, Double price, String status, String deliveryDate, Supplier supplier) {
+    public Offer(Long id, Integer idOrder, Double price, String status, LocalDate deliveryDate, Supplier supplier) {
         this.id = id;
         this.idOrder = idOrder;
         this.price = price;
@@ -76,11 +78,11 @@ public class Offer {
         this.status = status;
     }
 
-    public String getDeliveryDate() {
+    public LocalDate getDeliveryDate() {
         return deliveryDate;
     }
 
-    public void setDeliveryDate(String deliveryDate) {
+    public void setDeliveryDate(LocalDate deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 

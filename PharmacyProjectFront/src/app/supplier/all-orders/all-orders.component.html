@@ -1,0 +1,65 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<div>
+<div id="divHeaderGuest">
+    <nav>
+        <ul >
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/supplier-homepage']" > <i class="material-icons">person</i>
+                    <p style="color: green; font-weight: 500;">My profile</p>
+                </a>
+            </li>
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/all-orders']" > <i class="material-icons">article</i>
+                    <p style="color: green; font-weight: 500;">Orders</p>
+                </a>
+            </li>
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/all-offers']" > <i class="material-icons">article</i>
+                    <p style="color: green; font-weight: 500;">Offers</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>	
+<div>
+    <h1 style="color: rgb(100, 98, 216);"> All orders</h1>
+     <div>
+         <div class="col-sm-6">
+             <div class="form-group">
+                 <input type="text" value="" placeholder="Name" class="form-control" name="name"
+                     #name="ngModel" [(ngModel)]="searchParameters.name" />
+             </div>
+         </div>
+         <div class="col-sm-6">
+             <div class="form-group">
+                 <input type="text" value="" placeholder="Address" class="form-control" name="address"
+                     #address="ngModel" [(ngModel)]="searchParameters.address" />
+             </div>
+         </div>
+         <button (click)="pretraga()">Search</button>
+     </div>
+    <div class="card" style="margin-top: 150px;">
+     
+     <div class="card-content table-responsive table-full-width">
+         <table class="table">
+             <thead class="text-success">
+                <th>Id</th>
+                 <th>Name <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
+                 <th>Mark <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
+                 <th>Address</th>
+             </thead>
+             <tbody>
+                 <tr *ngFor='let k of allPharmacies'>
+                    <td [routerLink]="[k.id]">{{k.id}}</td>
+                     <td >{{k.name}}</td>
+                     <td>{{k.mark}}</td>
+                     <td>{{k.address}}</td>
+                 </tr>
+             </tbody>
+         </table>
+     </div>
+ </div>
+</div>
+</div>
