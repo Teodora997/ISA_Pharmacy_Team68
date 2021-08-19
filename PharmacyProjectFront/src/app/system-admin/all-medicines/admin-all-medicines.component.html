@@ -1,7 +1,7 @@
 <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
-<div >
+<div>
 <div id="divHeaderGuest">
     <nav>
         <ul >
@@ -51,47 +51,62 @@
                     <p style="color: green; font-weight: 500;">All medicines</p>
                 </a>
             </li>
-            
-            <li routerLinkActive="active" >
-                <a [routerLink]="['/homepage']" (click)="logout()"> <i
-                        class="material-icons">power_settings_new</i>
-                    <p style="color: green; font-weight: 500;">Logout</p>
-                </a>
-            </li>
         </ul>
     </nav>
 </div>	
 <div>
-    <h2 style="color: rgb(100, 98, 216);">Profile informations</h2>
-    <form (ngSubmit)="editProfile()" >
-    
-                <div class="form-group">
-                    <input type="text"  name="email"  #email="ngModel" [(ngModel)]="user.email" disabled/>
-                </div>
+    <h1 style="color: rgb(100, 98, 216);"> All medicines</h1>
+     <div>
+         <div class="col-sm-6">
+             <div class="form-group">
+                 <input type="text" value="" placeholder="Name" class="form-control" name="name"
+                     #name="ngModel" [(ngModel)]="searchParameter" />
+             </div>
+         </div>
         
-                <div class="form-group">
-                    <input type="text"  name="firstName"  #firstName="ngModel" [(ngModel)]="user.firstName"/>
-                </div>
-            
-                <div class="form-group">
-                    <input type="text"  name="lastName"  #lastName="ngModel" [(ngModel)]="user.lastName"/>
-                </div>
-                <div class="form-group">
-                    <input type="text"  name="address"  #address="ngModel" [(ngModel)]="user.address"/>
-                </div>
-                <div class="form-group">
-                    <input type="text"  name="city"  #city="ngModel" [(ngModel)]="user.city"/>
-                </div>
-           
-                <div class="form-group">
-                    <input type="text"  name="telephone"  #telephone="ngModel" [(ngModel)]="user.telephone"/>
-                </div>
-            
+         <button (click)="pretraga()">Search</button>
+     </div>
+     <br>
+     <div>
+     <div class="col-sm-6">
+        <div class="form-group">
+           <select name="type" #type="ngModel" [(ngModel)]="filterParameter" >
+               <option value="ANTIBIOTIC">Antibiotic</option>
+               <option value="ANTIHISTAMINE">Antihistamine</option>
+               <option value="ANESTHETIC">Anesthetic</option>
+               <option value="ANALGETIC">Analgetic</option> 
+               <option value="ANTISEPTICS">Antiseptic</option>
+           </select>
+       </div>
+       <button (click)="filter()">Filter</button>
+    </div>
+    </div>
 
-        <div>
-            <button type="submit" style="color: rgb(85, 82, 230);"  >Edit profile</button>
-        </div>
-    </form>
-    
+
+    <div class="card" style="margin-top: 150px;">
+     
+     <div class="card-content table-responsive table-full-width">
+         <table class="table">
+             <thead class="text-success">
+                <th>Id</th>
+                 <th>Name <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
+                 <th>Type <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
+                 <th>Pharmacies</th>
+                 <th>Description</th>
+             </thead>
+             <tbody>
+                 <tr *ngFor='let m of allMedicines'>
+                    <td [routerLink]="[m.id]">{{m.id}}</td>
+                     <td >{{m.name}}</td>
+                     <td>{{m.type}}</td>
+                    <td><button>Pharmacies</button></td>
+                    <td><button > Description</button></td>
+                 </tr>
+             </tbody>
+         </table>
+     </div>
+     
+     </ng-template>
+ </div>
 </div>
-</div>	  
+</div>

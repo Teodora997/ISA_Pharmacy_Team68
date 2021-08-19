@@ -12,4 +12,6 @@ public interface MedicineService {
     Medicine addMedicine(MedicineDTO medicine);
     Medicine findById(Long id);
     List<Medicine> addAlternatives(ArrayList<String> alternativesId,String id);
+    List<Medicine> searchMedicines(String name);
+    List<MedicineDTO> filterMedicines(List<MedicineDTO> medicines,String type);
 }
