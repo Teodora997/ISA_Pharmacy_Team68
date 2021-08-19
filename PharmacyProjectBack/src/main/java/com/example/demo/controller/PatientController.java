@@ -112,4 +112,11 @@ public PatientController(PatientService patientService, PharmacyService pharmacy
         return null;
     }
 }
+@GetMapping(value = "/getConsultingsByPatient/{patientId}")
+    public ResponseEntity<List<ConsultingDTO>> getPharmaciesForConsulting(@PathVariable("patientId") String patientId){
+        System.out.println("TRAZI preglede pd "+patientId);
+        List<ConsultingDTO> ret=patientService.getConsultingsByPatient(Long.parseLong(patientId));
+        
+        return new ResponseEntity<List<ConsultingDTO>>(ret,HttpStatus.OK);
+}
 }

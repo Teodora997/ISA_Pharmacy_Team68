@@ -103,4 +103,38 @@ public class PatientService implements IPatientService{
         consultingRepository.save(consulting);
         return consultingId;
     }
+
+    @Override
+    public List<ConsultingDTO> getConsultingsByPatient(Long patientId) {
+        List<Consulting> cons=new ArrayList<>();
+        cons=consultingRepository.findAll();
+        System.out.println("svi pregledi"+ cons);
+        List<ConsultingDTO> ret=new ArrayList<>();
+        for(Consulting c:cons){
+            if(c.getPatient()!=null ){
+                System.out.println("u ifu 1"+c.getPatient().getId()+" "+patientId);
+                if(c.getPatient().getId().equals(patientId)){
+                    System.out.println("u ifu 2");
+               ConsultingDTO cd=new ConsultingDTO();
+                cd.setConsultingId(c.getId());
+                cd.setDate(c.getDate());
+                cd.setTime(c.getTime());
+                Pharmacy ph=pharmacistRepository.findById(c.getPharmacist().getId()).get().getPharmacy();
+                cd.setPharmacyId(ph.getId());
+                cd.setPharmacyName(ph.getName());
+                cd.setPharmacyAddress(ph.getAddress());
+                cd.setPharmacyRate(ph.getMark());
+                cd.setPrice(c.getPrice());
+                cd.setPharmacistId(c.getPharmacist().getId());
+                cd.setPharmacistName(c.getPharmacist().getFirstName().concat(c.getPharmacist().getLastName()));
+                cd.setPharmaistRate(c.getPharmacist().getMark()); 
+                cd.setPatientId(patientId);
+                ret.add(cd);
+                
+            }
+        }
+    }
+    System.out.println("pregledii "+ret);
+        return ret;
+    }
 }

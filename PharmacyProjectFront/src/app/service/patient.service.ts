@@ -31,4 +31,7 @@ export class PatientService {
   public makeConsulting(consId:number,patientId:string): Observable<number> {
     return this.http.post<number>("http://localhost:8081/api/patients/makeConsulting/"+consId,patientId);
   }
+  public getConsultingsByPatient(patientId:string): Observable<Consulting[]> {
+    return this.http.get<Consulting[]>("http://localhost:8081/api/patients/getConsultingsByPatient/"+patientId);
+  }
 }

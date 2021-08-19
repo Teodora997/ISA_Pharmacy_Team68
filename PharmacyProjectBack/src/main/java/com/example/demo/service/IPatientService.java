@@ -12,4 +12,6 @@ public interface IPatientService {
     public Long makeExamination(String patientId,Long examinationId);
     public Long makeConsulting(String patientId,Long examinationId);
     public List<ConsultingDTO> getPharmaciesForConsulting(LocalDate date,String time);
+    public List<ConsultingDTO> getConsultingsByPatient(Long patientId);
+
 }
