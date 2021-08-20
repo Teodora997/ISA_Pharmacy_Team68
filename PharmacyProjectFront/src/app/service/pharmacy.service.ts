@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { Pharmacy } from "../model/pharmacy";
+import { PharmacyAndPriceForMedicine } from "../model/pharmacyAndPriceForMedicine";
 import { SearchPharmacy } from "../model/searchPharmacy";
 
 @Injectable()
@@ -21,5 +22,9 @@ export class PharmacyService {
   }
   public getPharmacy(id:number): Observable<Pharmacy> {
     return this.http.get<Pharmacy>("http://localhost:8081/api/pharmacies/getPharmacy/"+ id);
+  }
+
+  public getPharmaciesForMedicine(medicineId:String): Observable<PharmacyAndPriceForMedicine[]> {
+    return this.http.post<PharmacyAndPriceForMedicine[]>("http://localhost:8081/api/pharmacies/getPharmaciesForMedicine",medicineId);
   }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.repository.ExaminationRepository;
+import com.example.demo.repository.MedicinePLItemRepository;
 import com.example.demo.repository.PharmacyRepository;
 import com.example.demo.repository.UserRepository.PharmacyAdminRepository;
 
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.demo.dto.ExaminationDTO;
+import com.example.demo.dto.PhPriceForMedicineDTO;
 import com.example.demo.dto.SearchPharmacyDTO;
 import com.example.demo.model.*;
 import com.example.demo.model.Users.PharmacyAdmin;
@@ -21,6 +23,9 @@ public class PharmacyService implements IPharmacyService {
     PharmacyRepository pharmacyRepository;
    @Autowired
    PharmacyAdminRepository pharmacyAdminRepository;
+
+   @Autowired
+   MedicinePLItemRepository medicinePLItemRepository;
 
    
     @Autowired
@@ -143,4 +148,52 @@ System.out.println("REZULTAT"+ret);
         }
         return ret;
     }
+
+    @Override
+    public List<PhPriceForMedicineDTO> getPharmaciesForMedicine(String medicineId) {
+        System.out.println("U PHARMACY SERVISU SAM,TRAZIM APOTEKE ZA LIJEK SA ID: "+medicineId);
+        Long mId=Long.parseLong(medicineId);
+       List<MedicinePriceListItem> items=medicinePLItemRepository.findAll();
+       List<MedicinePriceListItem> items1=new ArrayList<MedicinePriceListItem>();
+       
+       List<PhPriceForMedicineDTO> ret=new ArrayList<PhPriceForMedicineDTO>();
+
+       for(MedicinePriceListItem i:items){
+           if(i.getMedicine().getId()==mId){
+                items1.add(i);
+           }
+       }
+       System.out.println("POKUPILO ITEME SA OVIM MEDICINE ID");
+
+    //   List<Long> priceListIds=new ArrayList<Long>();
+    //   for(MedicinePriceListItem p:items1){
+    //     priceListIds.add(p.getMedicinePriceList().getId());
+    //     System.out.println("u foru: "+p.getMedicine().getName());
+    //   }
+
+      System.out.println("POKUPILO ID CJENOVNIKA GDJE IMA LIJEK");
+
+        List<Pharmacy> pharmacies=pharmacyRepository.findAll();
+
+
+        for(MedicinePriceListItem i:items1){
+        for(Pharmacy p:pharmacies){
+            if(p.getMedicinePriceList().getId()==i.getMedicinePriceList().getId()){
+    
+                System.out.println("u foru 2: "+p.getName());
+                PhPriceForMedicineDTO php=new PhPriceForMedicineDTO();
+                php.setName(p.getName());
+                php.setAddress(p.getAddress());
+                php.setPrice(i.getPrice());
+
+                ret.add(php);
+                
+            }
+        }
+    }
+    System.out.println("NASLO APOTEKE GDJE IMA LIJEK");
+        return ret;
+    }
+   
+   
 }

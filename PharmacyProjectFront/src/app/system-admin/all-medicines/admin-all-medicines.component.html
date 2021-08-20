@@ -81,7 +81,52 @@
        <button (click)="filter()">Filter</button>
     </div>
     </div>
+    <br><br>
+    <div>
+    <div  *ngIf="previewDescription" >
+        <table class="table">
+            <thead class="text-success">
+               <th>Id</th>
+                <th>Name </th>
+                <th>Type </th>
+                <th>Form</th>
+                <th>Ingredients</th>
+                <th>Producer</th>
+                <th>Regime</th>
+                <th>Additional</th>
+            </thead>
+            <tbody>
+                   <td >{{selectedMedicine.id}}</td>
+                    <td >{{selectedMedicine.name}}</td>
+                    <td>{{selectedMedicine.type}}</td>
+                    <td >{{selectedMedicine.form}}</td>
+                    <td >{{selectedMedicine.ingredients}}</td>
+                    <td >{{selectedMedicine.producer}}</td>
+                    <td>{{selectedMedicine.regime}}</td>
+                    <td >{{selectedMedicine.additional}}</td>
+            </tbody>
+        </table>
+    </div>
+    </div>
 
+    <div>
+        <div  *ngIf="previewPharmacies" >
+            <table class="table">
+                <thead class="text-success">
+                   <th>Pharmacy name</th>
+                    <th>Address </th>
+                    <th>Price </th>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let p of pharmacies'>
+                         <td >{{p.name}}</td>
+                         <td>{{p.address}}</td>
+                         <td>{{p.price}}</td>
+                     </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
 
     <div class="card" style="margin-top: 150px;">
      
@@ -99,14 +144,14 @@
                     <td [routerLink]="[m.id]">{{m.id}}</td>
                      <td >{{m.name}}</td>
                      <td>{{m.type}}</td>
-                    <td><button>Pharmacies</button></td>
-                    <td><button > Description</button></td>
+                    <td><button (click)="seePharmacies(m)">Pharmacies</button></td>
+                    <td><button (click)="seeDescription(m)" > Description</button></td>
                  </tr>
              </tbody>
          </table>
      </div>
      
-     </ng-template>
+    
  </div>
 </div>
 </div>
