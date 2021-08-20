@@ -19,8 +19,8 @@ public class MedicineServiceImpl implements MedicineService{
 
     @Override
     public List<Medicine> findAllMedicines() {
-        // TODO Auto-generated method stub
-        return null;
+       List<Medicine> medicines=medicineRepository.findAll();
+       return medicines;
     }
 
     @Override
@@ -82,6 +82,54 @@ public class MedicineServiceImpl implements MedicineService{
 
 
         return null;
+    }
+
+    @Override
+    public List<Medicine> searchMedicines(String name) {
+        List<Medicine> medicines=findAllMedicines();
+        List<Medicine> ret=new ArrayList<>();
+        for(Medicine m1:medicines){
+            ret.add(m1);
+        }
+        System.out.println("PRETRAGA ->NAZIV "+name);
+        for(Medicine m:medicines){
+            if (!name.equals("all")) {
+                if (!m.getName().toLowerCase().equals(name.toLowerCase())) {
+                    // and it is in the ret list
+                    if (ret.contains(m)) {
+                        // remove it from the ret list
+                        ret.remove(m);
+                    }
+                }
+            }
+        }
+
+System.out.println("REZULTAT "+ret);
+        return ret;
+    }
+
+    @Override
+    public List<MedicineDTO> filterMedicines(List<MedicineDTO> medicines,String type) {
+        //List<Medicine> medicines=findAllMedicines();
+        List<MedicineDTO> ret=new ArrayList<>();
+        for(MedicineDTO m1:medicines){
+            ret.add(m1);
+        }
+        System.out.println("PRETRAGA ->TIP "+type);
+        for(MedicineDTO m:medicines){
+            if (!type.equals("all")) {
+                if (!m.getType().toLowerCase().equals(type.toLowerCase())) {
+                    // and it is in the ret list
+                    if (ret.contains(m)) {
+                        // remove it from the ret list
+                        ret.remove(m);
+                    }
+                }
+            }
+        }
+
+System.out.println("REZULTAT "+ret);
+        return ret;
     }
 
     

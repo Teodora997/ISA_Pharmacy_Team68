@@ -1,20 +1,18 @@
 package com.example.demo.model;
 
-import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @Table(name=" medicinePriceList")
 public class MedicinePriceList {
     
@@ -26,8 +24,6 @@ public class MedicinePriceList {
     //@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = " medicinePriceList")
     //private Set<MedicinePriceListItem>  medicinePriceList;
 
-    @OneToOne(mappedBy = "medicinePriceList")
-    private Pharmacy pharmacy;
 
     @Column(name="FromDate")
     private String fromDate;

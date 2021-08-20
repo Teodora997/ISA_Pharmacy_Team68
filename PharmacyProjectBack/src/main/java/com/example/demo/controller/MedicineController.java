@@ -49,4 +49,16 @@ public class MedicineController {
        List<Medicine> medicines=medicineRepository.findAll();
         return new ResponseEntity<>(medicines,HttpStatus.OK);
     }
+
+    @PostMapping(value = "/searchMedicines")
+    public ResponseEntity<List<Medicine>> searchMedicines(@RequestBody String name){
+        List<Medicine> medicines=medicineService.searchMedicines(name);
+        return new ResponseEntity<>(medicines,HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/filterMedicines/{type}")
+    public ResponseEntity<List<MedicineDTO>> filterMedicines(@RequestBody List<MedicineDTO> medicines,@PathVariable("type") String type){
+        List<MedicineDTO> m=medicineService.filterMedicines(medicines,type);
+        return new ResponseEntity<>(m,HttpStatus.OK);
+    }
 }

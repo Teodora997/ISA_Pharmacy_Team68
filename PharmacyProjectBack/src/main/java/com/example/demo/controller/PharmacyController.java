@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.dto.PhPriceForMedicineDTO;
 import com.example.demo.dto.SearchPharmacyDTO;
 import com.example.demo.model.Pharmacy;
 import com.example.demo.repository.PharmacyRepository;
@@ -56,6 +57,12 @@ public class PharmacyController {
     @GetMapping(value = "/getAvailablePharmacies")
     public ResponseEntity<List<Pharmacy>> getAvailablePharmacies(){
         List<Pharmacy> pharmacies=pharmacyService.getAvailablePharmacies();
+        return new ResponseEntity<>(pharmacies,HttpStatus.OK);
+    }
+    @PostMapping(value = "/getPharmaciesForMedicine")
+    public ResponseEntity<List<PhPriceForMedicineDTO>> getPharmaciesForMedicine(@RequestBody String medicineId){
+        System.out.println("U KONTROLERU SAM ZA TRAZENJE APOTEKA GDJE IMA LIJEK SA ID: "+medicineId);
+        List<PhPriceForMedicineDTO> pharmacies=pharmacyService.getPharmaciesForMedicine(medicineId);
         return new ResponseEntity<>(pharmacies,HttpStatus.OK);
     }
 }
