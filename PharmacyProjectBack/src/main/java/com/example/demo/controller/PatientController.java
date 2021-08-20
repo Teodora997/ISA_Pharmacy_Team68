@@ -1,17 +1,20 @@
 package com.example.demo.controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import com.example.demo.dto.ConsultingDTO;
 import com.example.demo.dto.ExaminationDTO;
-import com.example.demo.dto.ExaminationDTO;
+import com.example.demo.model.Consulting;
+import com.example.demo.model.Examination;
 import com.example.demo.model.Medicine;
 import com.example.demo.model.Users.Patient;
-import com.example.demo.model.Users.User;
 import com.example.demo.repository.MedicineRepository;
 import com.example.demo.repository.UserRepository.PatientRepository;
 import com.example.demo.service.PharmacyService;
+import com.example.demo.service.impl.EmailService;
 import com.example.demo.service.impl.PatientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +40,16 @@ public class PatientController {
     private MedicineRepository medicineRepository;
     @Autowired
     private PatientRepository patientRepository;
+    @Autowired
+    private EmailService emailService;
 
 public PatientController(PatientService patientService, PharmacyService pharmacyService,
-            MedicineRepository medicineRepository, PatientRepository patientRepository) {
+            MedicineRepository medicineRepository, PatientRepository patientRepository,EmailService emailService) {
         this.patientService = patientService;
         this.pharmacyService = pharmacyService;
         this.medicineRepository = medicineRepository;
         this.patientRepository = patientRepository;
+        this.emailService=emailService;
     }
 
 
@@ -86,9 +92,60 @@ public PatientController(PatientService patientService, PharmacyService pharmacy
     public ResponseEntity<Long> makeExamination(@RequestBody String patientId,@PathVariable("examinationId") Long examinationId){
 
        Long id=patientService.makeExamination(patientId,examinationId);
+       Patient p=patientRepository.findById(Long.parseLong(patientId)).get();
        if(id!=null){
         return new ResponseEntity<Long>(id,HttpStatus.OK);
     }
     return null;
+}
+@PostMapping(value="/makeConsulting/{consultingId}")
+    public ResponseEntity<Long> makeConsulting(@RequestBody String patientId,@PathVariable("consultingId") Long consultingId){
+        System.out.println("rezervise pregled kod farmaceuta -kontroler"+ consultingId+patientId);
+       Long id=patientService.makeConsulting(patientId,consultingId);
+       if(id!=null){
+        return new ResponseEntity<Long>(id,HttpStatus.OK);
+    }
+    return null;
+}
+@PostMapping(value = "/getPharmaciesForConsulting/{date}")
+    public ResponseEntity<List<ConsultingDTO>> getPharmaciesForConsulting(@RequestBody String time,@PathVariable("date") String date){
+       System.out.println("TRAZI APOTEKE SA ZADATIM PARAMETRIMA "+date+time);
+        List<ConsultingDTO> ret=patientService.getPharmaciesForConsulting(LocalDate.parse(date), time);
+        if(ret!=null){
+           //System.out.println(ret.get(0).getPharmacyName());
+        return new ResponseEntity<List<ConsultingDTO>>(ret,HttpStatus.OK);
+    }else{
+        return null;
+    }
+}
+@GetMapping(value = "/getConsultingsByPatient/{patientId}")
+    public ResponseEntity<List<ConsultingDTO>> getConsultingsByPatient(@PathVariable("patientId") String patientId){
+        System.out.println("TRAZI preglede pd "+patientId);
+        List<ConsultingDTO> ret=patientService.getConsultingsByPatient(Long.parseLong(patientId));
+        
+        return new ResponseEntity<List<ConsultingDTO>>(ret,HttpStatus.OK);
+}
+@PostMapping(value="/cancelConsulting")
+public ResponseEntity<?> cancelConsulting(@RequestBody Long consultingId){
+    Consulting c=patientService.cancelConsulting(consultingId);
+        return new ResponseEntity<Consulting>(c, HttpStatus.OK);
+    
+}
+@GetMapping(value = "/getExaminationsByPatient/{patientId}")
+    public ResponseEntity<List<ExaminationDTO>> getExaminationsByPatient(@PathVariable("patientId") String patientId){
+        System.out.println("TRAZI preglede pd "+patientId);
+        List<ExaminationDTO> ret=patientService.getExaminationsByPatient(Long.parseLong(patientId));
+        for(ExaminationDTO e:ret){
+            System.out.println(e.getExaminationStatus());
+        }
+        return new ResponseEntity<List<ExaminationDTO>>(ret,HttpStatus.OK);
+}
+@PostMapping(value="/cancelExamination")
+public ResponseEntity<?> cancelExamination(@RequestBody Long examinationId){
+    Examination c=patientService.cancelExamination(examinationId);
+    if(c!=null){
+    System.out.println(c.getDermatologist().getFirstName());}
+        return new ResponseEntity<Examination>(c, HttpStatus.OK);
+    
 }
 }

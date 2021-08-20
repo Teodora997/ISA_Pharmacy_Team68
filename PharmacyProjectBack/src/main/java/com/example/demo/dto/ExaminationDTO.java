@@ -37,6 +37,7 @@ public class ExaminationDTO {
         this.examinationStatus = examinationStatus;
         this.rated = rated;
     }
+    
     public Long getExaminationId() {
         return examinationId;
     }

@@ -50,37 +50,34 @@
     </nav>
 </div>	
 <div>
-    <h1 style="color: rgb(100, 98, 216);text-align: center;" > PHARMACY  {{pharmacy.name}} </h1>
-     <h4 >{{pharmacy.address}}</h4>
-     <h4>{{pharmacy.mark}}</h4>
-     <div class="card" style="margin-top: 100px;">
-        <div class="card-header card-header-success">
-            <h3  style="color: rgb(100, 98, 216);text-align: center;" class="card-title">Reserve Dermatologist Appointment</h3>
-            <p class="card-category" style="color: rgb(100, 98, 216)">This is the list of all the available appointments. You can reserve them here.</p>
-        </div>
-        <div class="card-content table-responsive table-full-width">
-            <table class="table">
-                <thead class="text-success">
-                    <th>Dermatologist Name</th>
-                    <th>Dermatologist Rate<i style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i> </th>
-                    <th>Date </th>
-                    <th>Time </th>
-                    <th>Price <i style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
-                    <th>Make Reservation </th>
-                </thead>
-                <tbody>
-                    <tr *ngFor='let aE of availableExaminations'>
-                        <td>{{aE.dermatologistName}}</td>
-                        <td>{{aE.dermatologistRate}}</td>
-                        <td>{{aE.date}}</td>
-                        <td>{{aE.time}}</td>
-                        <td>{{aE.price}}</td>
-                        <td><button  (click)="makeExamination(aE.examinationId)">Reserve</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-     
+    <h1 style="color: rgb(100, 98, 216);text-align: center;" > MY CONSULTINGS </h1>
+    <div class="card-content table-responsive table-full-width">
+        <table class="table">
+            <thead class="text-success">
+                <th>Pharmacy name</th>
+                <th>Pharmacy address</th>
+                <th>Pharmacy rate</th>
+                <th>Pharmacist name</th>
+                <th>Pharmacist rate</th>
+                <th>Consulting date</th>
+                <th>Consulting status</th>
+                <th>Price</th>
+                <th>Cancel</th>
+            </thead>
+            <tbody>
+                <tr *ngFor='let a of consultings'>
+                    <td>{{a.pharmacyName}}</td>
+                    <td>{{a.pharmacyAddress}}</td>
+                    <td>{{a.pharmacyRate}}</td>
+                    <td>{{a.pharmacistName}}</td>
+                    <td>{{a.pharmacistRate}}</td>
+                    <td>{{a.date}}</td>
+                    <td>{{a.examinationStatus}}</td>
+                    <td>{{a.price}}</td>
+                    <td><button (click)="cancelConsulting(a.consultingId)">Cancel</button></td>
+                </tr>
+            </tbody>
+        </table>
+           </div>
  </div>
 </div>

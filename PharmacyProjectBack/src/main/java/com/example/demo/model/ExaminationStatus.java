@@ -4,5 +4,6 @@ public enum ExaminationStatus {
     scheduled,
     canceled,
     didNotCome,
-    available;
+    available,
+    done;
 }
