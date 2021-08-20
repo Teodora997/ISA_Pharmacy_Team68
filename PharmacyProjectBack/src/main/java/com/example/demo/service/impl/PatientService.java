@@ -57,7 +57,16 @@ public class PatientService implements IPatientService{
 
     @Override
     public Long makeExamination(String patientId, Long examinationId) {
+        List<ConsultingDTO> cons=getConsultingsByPatient(Long.parseLong(patientId));
+        Boolean patientAvailable=true;
         Examination examination=examinationRepository.findById(examinationId).get();
+        for(ConsultingDTO cd:cons){
+            if(cd.getDate().isEqual(examination.getDate()) && cd.getTime().equals(examination.getTime())){
+                System.out.println("pacijent je zauzet EXAMINATIONS");
+                patientAvailable=false;
+            }
+        }
+        if(patientAvailable){
         examination.setStatus(ExaminationStatus.scheduled);
         Patient patient=patientRepository.findById(Long.parseLong(patientId)).get();
         examination.setPatient(patient);
@@ -74,6 +83,10 @@ public class PatientService implements IPatientService{
 
        emailService.sendEmail(mailMessage);
         return examinationId;
+        }else{
+            System.out.println("zauzet pacijent examinations");
+            return null;
+        }
     }
 
     @Override
@@ -109,14 +122,24 @@ public class PatientService implements IPatientService{
     }
 
     @Override
-    public Long makeConsulting(String patientId, Long consultingId) {
+    public Integer makeConsulting(String patientId, Long consultingId) {
         System.out.println("rezervacija pregleda kod farmaceuta servis ");
         Consulting consulting=consultingRepository.findById(consultingId).get();
-        consulting.setStatus(ExaminationStatus.scheduled);
+        List<ExaminationDTO> allEx=getExaminationsByPatient(Long.parseLong(patientId));
+        Boolean patientAvailable=true;
+        for(ExaminationDTO ex:allEx){
+            System.out.println("u foru "+ex.getDate()+" "+consulting.getDate()+ex.getTime()+" "+consulting.getTime());
+            if(ex.getDate().compareTo(consulting.getDate())==0 && ex.getTime().equals(consulting.getTime())){
+                System.out.println("pacijent je zauzet");
+                patientAvailable=false;
+            }
+        }
         Patient patient=patientRepository.findById(Long.parseLong(patientId)).get();
+        if(patientAvailable){
         if(consulting.getPatient()!=null){
             if(!consulting.getPatient().getId().equals(patient.getId()))
             {
+                    consulting.setStatus(ExaminationStatus.scheduled);               
                     consulting.setPatient(patient);
                     consultingRepository.save(consulting);
                     SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -129,11 +152,13 @@ public class PatientService implements IPatientService{
                 "patient:"+consulting.getPatient().getFirstName());
 
                 emailService.sendEmail(mailMessage);
+                return 1;
         }else{
             System.out.println("Ne moze opet zakazati u istom terminu jer je otkazao !");
             return null;
         }
             }else{
+                consulting.setStatus(ExaminationStatus.scheduled);               
                 consulting.setPatient(patient);
                 consultingRepository.save(consulting);
                 SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -146,9 +171,15 @@ public class PatientService implements IPatientService{
             "patient:"+consulting.getPatient().getFirstName());
 
             emailService.sendEmail(mailMessage);
+        
+                return 1;
             }
-                return consultingId;
-            }
+        }else{
+            System.out.println("Pacijent ima zakazan pregled tada!");
+            return null;
+        }
+    }
+
 
     @Override
     public List<ConsultingDTO> getConsultingsByPatient(Long patientId) {
@@ -210,6 +241,7 @@ public class PatientService implements IPatientService{
                     ExaminationDTO ed=new ExaminationDTO();
                     ed.setExaminationId(e.getId());
                     ed.setDate(e.getDate());
+                    ed.setTime(e.getTime());
                     ed.setDermatologistName(e.getDermatologist().getFirstName().concat(e.getDermatologist().getLastName()));
                     ed.setPharmacyName(e.getPharmacy().getName());
                     ed.setDermatologistRate(e.getDermatologist().getMark());
