@@ -1,0 +1,157 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<div>
+<div id="divHeaderGuest">
+    <nav>
+        <ul >
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/system-admin-homepage']" > <i class="material-icons">person</i>
+                    <p style="color: green; font-weight: 500;">My profile</p>
+                </a>
+            </li>
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/add-pharmacy']" > <i class="material-icons">store</i>
+                    <p style="color: green; font-weight: 500;">Add pharmacy</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/add-pharmacy-admin']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Add pharmacy admin</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/add-system-admin']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Add system admin</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/add-dermatologist']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Add dermatologist</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/add-supplier']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Add supplier</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/add-medicine']"> <i
+                        class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">Add medicine</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/admin-all-medicines']"> <i
+                        class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">All medicines</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>	
+<div>
+    <h1 style="color: rgb(100, 98, 216);"> All medicines</h1>
+     <div>
+         <div class="col-sm-6">
+             <div class="form-group">
+                 <input type="text" value="" placeholder="Name" class="form-control" name="name"
+                     #name="ngModel" [(ngModel)]="searchParameter" />
+             </div>
+         </div>
+        
+         <button (click)="pretraga()">Search</button>
+     </div>
+     <br>
+     <div>
+     <div class="col-sm-6">
+        <div class="form-group">
+           <select name="type" #type="ngModel" [(ngModel)]="filterParameter" >
+               <option value="ANTIBIOTIC">Antibiotic</option>
+               <option value="ANTIHISTAMINE">Antihistamine</option>
+               <option value="ANESTHETIC">Anesthetic</option>
+               <option value="ANALGETIC">Analgetic</option> 
+               <option value="ANTISEPTICS">Antiseptic</option>
+           </select>
+       </div>
+       <button (click)="filter()">Filter</button>
+    </div>
+    </div>
+    <br><br>
+    <div>
+    <div  *ngIf="previewDescription" >
+        <table class="table">
+            <thead class="text-success">
+               <th>Id</th>
+                <th>Name </th>
+                <th>Type </th>
+                <th>Form</th>
+                <th>Ingredients</th>
+                <th>Producer</th>
+                <th>Regime</th>
+                <th>Additional</th>
+            </thead>
+            <tbody>
+                   <td >{{selectedMedicine.id}}</td>
+                    <td >{{selectedMedicine.name}}</td>
+                    <td>{{selectedMedicine.type}}</td>
+                    <td >{{selectedMedicine.form}}</td>
+                    <td >{{selectedMedicine.ingredients}}</td>
+                    <td >{{selectedMedicine.producer}}</td>
+                    <td>{{selectedMedicine.regime}}</td>
+                    <td >{{selectedMedicine.additional}}</td>
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    <div>
+        <div  *ngIf="previewPharmacies" >
+            <table class="table">
+                <thead class="text-success">
+                   <th>Pharmacy name</th>
+                    <th>Address </th>
+                    <th>Price </th>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let p of pharmacies'>
+                         <td >{{p.name}}</td>
+                         <td>{{p.address}}</td>
+                         <td>{{p.price}}</td>
+                     </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+
+    <div class="card" style="margin-top: 150px;">
+     
+     <div class="card-content table-responsive table-full-width">
+         <table class="table">
+             <thead class="text-success">
+                <th>Id</th>
+                 <th>Name <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
+                 <th>Type <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
+                 <th>Pharmacies</th>
+                 <th>Description</th>
+             </thead>
+             <tbody>
+                 <tr *ngFor='let m of allMedicines'>
+                    <td [routerLink]="[m.id]">{{m.id}}</td>
+                     <td >{{m.name}}</td>
+                     <td>{{m.type}}</td>
+                    <td><button (click)="seePharmacies(m)">Pharmacies</button></td>
+                    <td><button (click)="seeDescription(m)" > Description</button></td>
+                 </tr>
+             </tbody>
+         </table>
+     </div>
+     
+    
+ </div>
+</div>
+</div>

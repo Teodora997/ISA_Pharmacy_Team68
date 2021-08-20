@@ -45,6 +45,12 @@
                     <p style="color: green; font-weight: 500;">Add medicine</p>
                 </a>
             </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/admin-all-medicines']"> <i
+                        class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">All medicines</p>
+                </a>
+            </li>
             
             <li routerLinkActive="active" >
                 <a [routerLink]="['/homepage']" (click)="logout()"> <i

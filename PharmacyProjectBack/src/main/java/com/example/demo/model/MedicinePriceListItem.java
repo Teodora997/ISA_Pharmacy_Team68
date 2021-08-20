@@ -34,6 +34,14 @@ public class MedicinePriceListItem {
 
     }
 
+    public Medicine getMedicine() {
+        return medicine;
+    }
+
+    public void setMedicine(Medicine medicine) {
+        this.medicine = medicine;
+    }
+
     public MedicinePriceListItem(String name, Double price) {
         this.name = name;
         this.price = price;

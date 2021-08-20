@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,8 +11,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 @Table(name = "Pharmacies")
 public class Pharmacy {
     @Id
@@ -28,11 +32,11 @@ public class Pharmacy {
     @Column(name="Mark")
     private Double mark;
 
-    @OneToOne(fetch =FetchType.LAZY )
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name="IdMedPriceList",referencedColumnName ="id" )
     private MedicinePriceList medicinePriceList;
 
-    @OneToOne(fetch =FetchType.LAZY )
+    @OneToOne(fetch =FetchType.EAGER )
     @JoinColumn(name="IdExPriceList",referencedColumnName ="id" )
     private MedicinePriceList ExaminationPriceList;
 
@@ -42,6 +46,31 @@ public class Pharmacy {
     }
     
     
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+
+    public MedicinePriceList getMedicinePriceList() {
+        return medicinePriceList;
+    }
+
+
+    public void setMedicinePriceList(MedicinePriceList medicinePriceList) {
+        this.medicinePriceList = medicinePriceList;
+    }
+
+
+    public MedicinePriceList getExaminationPriceList() {
+        return ExaminationPriceList;
+    }
+
+
+    public void setExaminationPriceList(MedicinePriceList examinationPriceList) {
+        ExaminationPriceList = examinationPriceList;
+    }
+
+
     public Long getId() {
         return id;
     }
