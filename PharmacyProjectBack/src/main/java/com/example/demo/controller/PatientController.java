@@ -8,6 +8,7 @@ import java.util.Set;
 import com.example.demo.dto.ConsultingDTO;
 import com.example.demo.dto.ExaminationDTO;
 import com.example.demo.model.Consulting;
+import com.example.demo.model.Examination;
 import com.example.demo.model.Medicine;
 import com.example.demo.model.Users.Patient;
 import com.example.demo.repository.MedicineRepository;
@@ -113,10 +114,33 @@ public PatientController(PatientService patientService, PharmacyService pharmacy
     }
 }
 @GetMapping(value = "/getConsultingsByPatient/{patientId}")
-    public ResponseEntity<List<ConsultingDTO>> getPharmaciesForConsulting(@PathVariable("patientId") String patientId){
+    public ResponseEntity<List<ConsultingDTO>> getConsultingsByPatient(@PathVariable("patientId") String patientId){
         System.out.println("TRAZI preglede pd "+patientId);
         List<ConsultingDTO> ret=patientService.getConsultingsByPatient(Long.parseLong(patientId));
         
         return new ResponseEntity<List<ConsultingDTO>>(ret,HttpStatus.OK);
+}
+@PostMapping(value="/cancelConsulting")
+public ResponseEntity<?> cancelConsulting(@RequestBody Long consultingId){
+    Consulting c=patientService.cancelConsulting(consultingId);
+        return new ResponseEntity<Consulting>(c, HttpStatus.OK);
+    
+}
+@GetMapping(value = "/getExaminationsByPatient/{patientId}")
+    public ResponseEntity<List<ExaminationDTO>> getExaminationsByPatient(@PathVariable("patientId") String patientId){
+        System.out.println("TRAZI preglede pd "+patientId);
+        List<ExaminationDTO> ret=patientService.getExaminationsByPatient(Long.parseLong(patientId));
+        for(ExaminationDTO e:ret){
+            System.out.println(e.getExaminationStatus());
+        }
+        return new ResponseEntity<List<ExaminationDTO>>(ret,HttpStatus.OK);
+}
+@PostMapping(value="/cancelExamination")
+public ResponseEntity<?> cancelExamination(@RequestBody Long examinationId){
+    Examination c=patientService.cancelExamination(examinationId);
+    if(c!=null){
+    System.out.println(c.getDermatologist().getFirstName());}
+        return new ResponseEntity<Examination>(c, HttpStatus.OK);
+    
 }
 }

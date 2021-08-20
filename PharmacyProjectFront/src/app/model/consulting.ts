@@ -12,5 +12,5 @@ export class Consulting{
     price!: number;
     patientName!: string;
     patientId!: number;
-    consultingStatus!: string;
+    examinationStatus!: string;
 }

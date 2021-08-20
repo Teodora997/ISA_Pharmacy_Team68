@@ -23,7 +23,7 @@
                 </a>
             </li>
             <li routerLinkActive="active" >
-                <a [routerLink]="['/dermatologist-apointments']"> <i
+                <a [routerLink]="['/patient-examinations']"> <i
                         class="material-icons">reorder</i>
                     <p style="color: green; font-weight: 500;">Dermatologist apointments</p>
                 </a>
@@ -59,6 +59,8 @@
                 <th>Pharmacy rate</th>
                 <th>Pharmacist name</th>
                 <th>Pharmacist rate</th>
+                <th>Consulting date</th>
+                <th>Consulting status</th>
                 <th>Price</th>
                 <th>Cancel</th>
             </thead>
@@ -69,8 +71,10 @@
                     <td>{{a.pharmacyRate}}</td>
                     <td>{{a.pharmacistName}}</td>
                     <td>{{a.pharmacistRate}}</td>
+                    <td>{{a.date}}</td>
+                    <td>{{a.examinationStatus}}</td>
                     <td>{{a.price}}</td>
-                    <td><button >Cancel</button></td>
+                    <td><button (click)="cancelConsulting(a.consultingId)">Cancel</button></td>
                 </tr>
             </tbody>
         </table>

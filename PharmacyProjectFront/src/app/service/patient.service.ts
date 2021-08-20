@@ -34,4 +34,13 @@ export class PatientService {
   public getConsultingsByPatient(patientId:string): Observable<Consulting[]> {
     return this.http.get<Consulting[]>("http://localhost:8081/api/patients/getConsultingsByPatient/"+patientId);
   }
+  public cancelConsulting(consultingId:number) :Observable<Object>{
+    return this.http.post<Object>("http://localhost:8081/api/patients/cancelConsulting",consultingId);
+  }
+  public getExaminationsByPatient(patientId:string): Observable<DermatologistExaminations[]> {
+    return this.http.get<DermatologistExaminations[]>("http://localhost:8081/api/patients/getExaminationsByPatient/"+patientId);
+  }
+  public cancelExamination(examinationId:number) :Observable<Object>{
+    return this.http.post<Object>("http://localhost:8081/api/patients/cancelExamination",examinationId);
+  }
 }

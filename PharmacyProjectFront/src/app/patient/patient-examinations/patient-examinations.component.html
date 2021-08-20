@@ -1,0 +1,79 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<div>
+<div id="divHeaderGuest">
+    <nav>
+        <ul >
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/patient-homepage']" > <i class="material-icons">person</i>
+                    <p style="color: green; font-weight: 500;">My profile</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/patient-pharmacies']"> <i
+                        class="material-icons">store</i>
+                    <p style="color: green; font-weight: 500;">Pharmacies</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/patient-consultings']"> <i
+                        class="material-icons">reorder</i>
+                    <p style="color: green; font-weight: 500;">Pharmacist consultings</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/patient-examinations']"> <i
+                        class="material-icons">reorder</i>
+                    <p style="color: green; font-weight: 500;">Dermatologist apointments</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/medicine-reservations']"> <i
+                        class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">Medicine reservations</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/make-consulting']"> <i
+                        class="material-icons">playlist_add</i>
+                    <p style="color: green; font-weight: 500;">Make consulting</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/homepage']" (click)="logout()"> <i
+                        class="material-icons">power_settings_new</i>
+                    <p style="color: green; font-weight: 500;">Logout</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>	
+<div>
+    <h1 style="color: rgb(100, 98, 216);text-align: center;" > MY EXAMINATIONS </h1>
+    <div class="card-content table-responsive table-full-width">
+        <table class="table">
+            <thead class="text-success">
+                <th>Pharmacy name</th>
+                <th>Dermatologist name</th>
+                <th>Dermatologist rate</th>
+                <th>Examination date</th>
+                <th>Examination status</th>
+                <th>Price</th>
+                <th>Cancel</th>
+            </thead>
+            <tbody>
+                <tr *ngFor='let a of examinations'>
+                    <td>{{a.pharmacyName}}</td>
+                    <td>{{a.dermatologistName}}</td>
+                    <td>{{a.dermatologistRate}}</td>
+                    <td>{{a.date}}</td>
+                    <td>{{a.examinationStatus}}</td>
+                    <td>{{a.price}}</td>
+                    <td><button (click)="cancelExamination(a.examinationId)">Cancel</button></td>
+                </tr>
+            </tbody>
+        </table>
+           </div>
+ </div>
+</div>

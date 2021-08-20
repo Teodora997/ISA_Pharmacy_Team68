@@ -20,11 +20,13 @@ export class PatientConsultingComponent implements OnInit {
 
     user: User;
     request!: Request;
-    consultings:Consulting[]
+    consultings:Consulting[];
+    consulting:Object;
   
     constructor(private router: Router, private loginService: LoginService,private userService:UserService,private patientService: PatientService) {
         this.user = new User();
        this.consultings=[];
+       this.consulting=new Object();
       }
       ngOnInit(): void {
        this.getUser();
@@ -36,9 +38,25 @@ export class PatientConsultingComponent implements OnInit {
             next: cons=>
             {
                 this.consultings=cons;
+                console.log(this.consultings);
             }
         })
       }
+
+      //**********OTKAZIVANJE PREGLEDA */
+      cancelConsulting(consultingId:number){
+        this.patientService.cancelConsulting(consultingId).subscribe({
+          next: cons=>{
+            this.consulting=cons;
+            if(this.consulting==null){
+              alert("Reservation can be canceled up to 24h before!");
+          } 
+              alert("Reservation successfully canceled!");
+          
+          }
+        })
+      }
+
 
       getUser() {
     

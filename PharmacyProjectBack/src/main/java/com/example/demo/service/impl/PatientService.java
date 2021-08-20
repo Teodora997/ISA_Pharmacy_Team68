@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Set;
 
 import com.example.demo.dto.ConsultingDTO;
+import com.example.demo.dto.ExaminationDTO;
 import com.example.demo.model.Consulting;
 import com.example.demo.model.Examination;
 import com.example.demo.model.ExaminationStatus;
 import com.example.demo.model.Medicine;
 import com.example.demo.model.Pharmacy;
 import com.example.demo.model.Users.Patient;
-import com.example.demo.model.Users.Pharmacist;
 import com.example.demo.repository.ConsultingRepository;
 import com.example.demo.repository.ExaminationRepository;
 import com.example.demo.repository.UserRepository.PatientRepository;
@@ -129,6 +129,10 @@ public class PatientService implements IPatientService{
                 cd.setPharmacistName(c.getPharmacist().getFirstName().concat(c.getPharmacist().getLastName()));
                 cd.setPharmaistRate(c.getPharmacist().getMark()); 
                 cd.setPatientId(patientId);
+                
+               cd.setExaminationStatus(c.getStatus());
+               System.out.println(cd.getExaminationStatus());
+                
                 ret.add(cd);
                 
             }
@@ -136,5 +140,52 @@ public class PatientService implements IPatientService{
     }
     System.out.println("pregledii "+ret);
         return ret;
+    }
+
+    @Override
+    public Consulting cancelConsulting(Long consultingId) {
+        Consulting c=consultingRepository.getOne(consultingId);
+        if(LocalDate.now().isAfter(c.getDate().minusDays(1))){
+            return null;
+        }
+        c.setStatus(ExaminationStatus.canceled);
+        consultingRepository.save(c);
+        return c;
+    }
+
+    @Override
+    public List<ExaminationDTO> getExaminationsByPatient(Long patientId) {
+        List<Examination> ex=examinationRepository.findAll();
+        List<ExaminationDTO> ret=new ArrayList<>();
+        for(Examination e:ex){
+            if(e.getPatient()!=null){
+                System.out.println("u prvom ifu");
+                if(e.getPatient().getId().equals(patientId)){
+                    ExaminationDTO ed=new ExaminationDTO();
+                    ed.setExaminationId(e.getId());
+                    ed.setDate(e.getDate());
+                    ed.setDermatologistName(e.getDermatologist().getFirstName().concat(e.getDermatologist().getLastName()));
+                    ed.setPharmacyName(e.getPharmacy().getName());
+                    ed.setDermatologistRate(e.getDermatologist().getMark());
+                    ed.setExaminationStatus(e.getStatus());
+                    System.out.println("ed status "+ed.getExaminationStatus());
+                    ed.setPrice(e.getPrice());
+                    ret.add(ed);
+                }
+            }
+        }
+        System.out.println("pronasao preglede kod pacijenta "+patientId+" "+ret);
+        return ret;
+    }
+
+    @Override
+    public Examination cancelExamination(Long examinationId) {
+        Examination ex=examinationRepository.findById(examinationId).get();
+        if(LocalDate.now().isAfter(ex.getDate().minusDays(1))){
+            return null;
+        }
+        ex.setStatus(ExaminationStatus.canceled);
+        examinationRepository.save(ex);
+        return null;
     }
 }

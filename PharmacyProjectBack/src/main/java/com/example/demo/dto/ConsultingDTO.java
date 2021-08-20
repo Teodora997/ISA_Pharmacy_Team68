@@ -8,7 +8,7 @@ public class ConsultingDTO {
     private Long consultingId;
     private Long pharmacistId;
     private String pharmacistName;
-    private double pharmaistRate;
+    private double pharmacistRate;
     private Long pharmacyId;
     private String pharmacyName;
     private String pharmacyAddress;
@@ -30,7 +30,7 @@ public class ConsultingDTO {
         this.consultingId = consultingId;
         this.pharmacistId = pharmacistId;
         this.pharmacistName = pharmacistName;
-        this.pharmaistRate = pharmaistRate;
+        this.pharmacistRate = pharmaistRate;
         this.pharmacyId = pharmacyId;
         this.pharmacyName = pharmacyName;
         this.pharmacyAddress = pharmacyAddress;
@@ -50,7 +50,7 @@ public class ConsultingDTO {
         this.consultingId = consultingId;
         this.pharmacistId = pharmacistId;
         this.pharmacistName = pharmacistName;
-        this.pharmaistRate = pharmaistRate;
+        this.pharmacistRate = pharmaistRate;
         this.pharmacyId = pharmacyId;
         this.pharmacyName = pharmacyName;
         this.pharmacyRate = pharmacyRate;
@@ -96,11 +96,11 @@ public class ConsultingDTO {
     }
 
     public double getPharmaistRate() {
-        return pharmaistRate;
+        return pharmacistRate;
     }
 
     public void setPharmaistRate(double pharmaistRate) {
-        this.pharmaistRate = pharmaistRate;
+        this.pharmacistRate = pharmaistRate;
     }
 
     public Long getPharmacyId() {

@@ -51,11 +51,12 @@ INSERT INTO `system_admins` (id) values (700);
 INSERT INTO `derm_pharmacy` (derm_id,pharmacy_id) values (400,1);
 INSERT INTO `derm_pharmacy` (derm_id,pharmacy_id) values (500,1);
 
-INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (1,'2021-08-22',0,0,3,'',400,200,1);
-INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (2,'2021-08-22',0,0,0,'',500,200,1);
+INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (1,'2021-08-22',0,0,3,'',400,null,1);
+INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (2,'2021-08-20',0,0,3,'',500,null,1);
 INSERT INTO `consulting` (id,date,duration,price,status,time,patient_id,pharmacist_id) values (1,'2021-08-22',0,800,3,'8:00',null,600);
 INSERT INTO `consulting` (id,date,duration,price,status,time,patient_id,pharmacist_id) values (2,'2021-08-22',0,800,0,'9:00',null,600);
 
+INSERT INTO `consulting` (id,date,duration,price,status,time,patient_id,pharmacist_id) values (3,'2021-08-20',0,800,3,'9:00',null,600);
 
 INSERT INTO `med_price_list_items` (id,name,price,medicine_id,medicine_price_list_id) values (1,'Ibuprofen',0,1,1);
 
