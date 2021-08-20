@@ -41,6 +41,7 @@ public class MedicineServiceImpl implements MedicineService{
             medicine.setRegime(m.getRegime());
             medicine.setProducer(m.getProducer());
             medicine.setAdditional(m.getAdditional());
+            medicine.setPoints(Integer.parseInt(m.getPoints()));
            
 
             medicineRepository.save(medicine);

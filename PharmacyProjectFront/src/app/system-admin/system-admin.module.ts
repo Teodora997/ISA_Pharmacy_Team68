@@ -10,6 +10,7 @@ import { AddPharmacyComponent } from './add-pharmacy/add-pharmacy.component';
 import { AddMedicineComponent } from './add-medicine/add-medicine.component';
 import { AddSystemAdminComponent } from './add-system-admin/add-system-admin.component';
 import { AdminAllMedicinesComponent } from './all-medicines/admin-all-medicines.component';
+import { LoyaltyProgramComponent } from './loyalty-program/loyalty-program.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { AdminAllMedicinesComponent } from './all-medicines/admin-all-medicines.
     AddPharmacyComponent,
     AddMedicineComponent,
     AddSystemAdminComponent,
-    AdminAllMedicinesComponent
+    AdminAllMedicinesComponent,
+    LoyaltyProgramComponent
   ],
   imports: [
     CommonModule,

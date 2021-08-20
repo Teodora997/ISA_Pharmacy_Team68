@@ -48,6 +48,23 @@ public class Medicine {
     @Column(name = "Additional")
     private String additional;
 
+    @Column(name = "Points")
+    private Integer points;
+
+    public Medicine(Long id, String name, String type, String form, String ingredients, String producer, String regime,
+            Set<Medicine> alternative, String additional, Integer points) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.form = form;
+        this.ingredients = ingredients;
+        this.producer = producer;
+        this.regime = regime;
+        this.alternative = alternative;
+        this.additional = additional;
+        this.points = points;
+    }
+
     public Medicine(){
 
     }
@@ -81,6 +98,14 @@ public class Medicine {
     }
 
    
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
 
     public Set<Medicine> getAlternative() {
         return alternative;
