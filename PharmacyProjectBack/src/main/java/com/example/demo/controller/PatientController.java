@@ -14,6 +14,7 @@ import com.example.demo.model.Users.Patient;
 import com.example.demo.repository.MedicineRepository;
 import com.example.demo.repository.UserRepository.PatientRepository;
 import com.example.demo.service.PharmacyService;
+import com.example.demo.service.impl.EmailService;
 import com.example.demo.service.impl.PatientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +40,16 @@ public class PatientController {
     private MedicineRepository medicineRepository;
     @Autowired
     private PatientRepository patientRepository;
+    @Autowired
+    private EmailService emailService;
 
 public PatientController(PatientService patientService, PharmacyService pharmacyService,
-            MedicineRepository medicineRepository, PatientRepository patientRepository) {
+            MedicineRepository medicineRepository, PatientRepository patientRepository,EmailService emailService) {
         this.patientService = patientService;
         this.pharmacyService = pharmacyService;
         this.medicineRepository = medicineRepository;
         this.patientRepository = patientRepository;
+        this.emailService=emailService;
     }
 
 
@@ -88,6 +92,7 @@ public PatientController(PatientService patientService, PharmacyService pharmacy
     public ResponseEntity<Long> makeExamination(@RequestBody String patientId,@PathVariable("examinationId") Long examinationId){
 
        Long id=patientService.makeExamination(patientId,examinationId);
+       Patient p=patientRepository.findById(Long.parseLong(patientId)).get();
        if(id!=null){
         return new ResponseEntity<Long>(id,HttpStatus.OK);
     }

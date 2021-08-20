@@ -58,9 +58,12 @@ export class MakeConsultingComponent implements OnInit {
             makeConsulting(consultingId: number){
                 this.patientService.makeConsulting(consultingId,this.user.id).subscribe({
                 next: exId=>{
-                    
+                  console.log(exId)
+                    if(exId==null){
+                      alert("Not succesifull!")
+                    }else{
                     alert("Examination scheduled!");
-                    
+                    }
                 }
                 })
                 //window.location.reload();

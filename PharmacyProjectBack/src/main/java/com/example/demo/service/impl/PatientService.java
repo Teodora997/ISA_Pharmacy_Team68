@@ -20,6 +20,7 @@ import com.example.demo.repository.UserRepository.PharmacistRepository;
 import com.example.demo.service.IPatientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,14 +35,17 @@ public class PatientService implements IPatientService{
     private ConsultingRepository consultingRepository;
     @Autowired
     private PharmacistRepository pharmacistRepository;
+    @Autowired
+    private EmailService emailService;
 
     
     public PatientService(PatientRepository patientRepository, ExaminationRepository examinationRepository,
-            ConsultingRepository consultingRepository, PharmacistRepository pharmacistRepository) {
+            ConsultingRepository consultingRepository, PharmacistRepository pharmacistRepository,EmailService emailService) {
         this.patientRepository = patientRepository;
         this.examinationRepository = examinationRepository;
         this.consultingRepository = consultingRepository;
         this.pharmacistRepository = pharmacistRepository;
+        this.emailService=emailService;
     }
 
     @Override
@@ -58,6 +62,17 @@ public class PatientService implements IPatientService{
         Patient patient=patientRepository.findById(Long.parseLong(patientId)).get();
         examination.setPatient(patient);
         examinationRepository.save(examination);
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+       mailMessage.setTo(patient.getEmail());
+       mailMessage.setSubject("Reserved examination!");
+       mailMessage.setFrom("isatim68@gmail.com");
+       mailMessage.setText("Examination succesifully reserved !:"+
+       "\ndermatologist:"+examination.getPharmacy().getName()+
+       "\ndermatologist:"+examination.getDermatologist().getFirstName()+
+       "\ndermatologist:"+examination.getDermatologist().getFirstName()+
+       "patient:"+examination.getPatient().getFirstName());
+
+       emailService.sendEmail(mailMessage);
         return examinationId;
     }
 
@@ -95,14 +110,45 @@ public class PatientService implements IPatientService{
 
     @Override
     public Long makeConsulting(String patientId, Long consultingId) {
-        System.out.println("rezervacija pregleda servis ");
+        System.out.println("rezervacija pregleda kod farmaceuta servis ");
         Consulting consulting=consultingRepository.findById(consultingId).get();
         consulting.setStatus(ExaminationStatus.scheduled);
         Patient patient=patientRepository.findById(Long.parseLong(patientId)).get();
-        consulting.setPatient(patient);
-        consultingRepository.save(consulting);
-        return consultingId;
-    }
+        if(consulting.getPatient()!=null){
+            if(!consulting.getPatient().getId().equals(patient.getId()))
+            {
+                    consulting.setPatient(patient);
+                    consultingRepository.save(consulting);
+                    SimpleMailMessage mailMessage = new SimpleMailMessage();
+                mailMessage.setTo(patient.getEmail());
+                mailMessage.setSubject("Reserved consulting!");
+                mailMessage.setFrom("isatim68@gmail.com");
+                mailMessage.setText("Consulting succesifully reserved !:"+
+                "\n pharmacist:"+consulting.getPharmacist().getFirstName()+
+                "\n patient:"+consulting.getPatient().getFirstName()+
+                "patient:"+consulting.getPatient().getFirstName());
+
+                emailService.sendEmail(mailMessage);
+        }else{
+            System.out.println("Ne moze opet zakazati u istom terminu jer je otkazao !");
+            return null;
+        }
+            }else{
+                consulting.setPatient(patient);
+                consultingRepository.save(consulting);
+                SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(patient.getEmail());
+            mailMessage.setSubject("Reserved consulting!");
+            mailMessage.setFrom("isatim68@gmail.com");
+            mailMessage.setText("Consulting succesifully reserved !:"+
+            "\n pharmacist:"+consulting.getPharmacist().getFirstName()+
+            "\n patient:"+consulting.getPatient().getFirstName()+
+            "patient:"+consulting.getPatient().getFirstName());
+
+            emailService.sendEmail(mailMessage);
+            }
+                return consultingId;
+            }
 
     @Override
     public List<ConsultingDTO> getConsultingsByPatient(Long patientId) {
