@@ -59,4 +59,7 @@ INSERT INTO `consulting` (id,date,duration,price,status,time,patient_id,pharmaci
 INSERT INTO `consulting` (id,date,duration,price,status,time,patient_id,pharmacist_id) values (3,'2021-08-20',0,800,3,'9:00',null,600);
 
 INSERT INTO `med_price_list_items` (id,name,price,medicine_id,medicine_price_list_id) values (1,'Ibuprofen',0,1,1);
+INSERT INTO `med_price_list_items` (id,name,price,medicine_id,medicine_price_list_id) values (2,'Rapten',200,2,1);
+INSERT INTO `pharmacy_storage`(id,in_stock,medicine_id,medicine_name,pharmacy_id,reserved) values(11,3,1,'Ibuprofen',1,1);
+INSERT INTO `pharmacy_storage`(id,in_stock,medicine_id,medicine_name,pharmacy_id,reserved) values(22,0,2,'Rapten',1,1);
 

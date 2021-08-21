@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { MedicineForReservation } from "../model/medicineForReservation";
 import { Pharmacy } from "../model/pharmacy";
 import { PharmacyAndPriceForMedicine } from "../model/pharmacyAndPriceForMedicine";
 import { SearchPharmacy } from "../model/searchPharmacy";
@@ -26,5 +27,8 @@ export class PharmacyService {
 
   public getPharmaciesForMedicine(medicineId:String): Observable<PharmacyAndPriceForMedicine[]> {
     return this.http.post<PharmacyAndPriceForMedicine[]>("http://localhost:8081/api/pharmacies/getPharmaciesForMedicine",medicineId);
+  }
+  public getPharmaciesForMedicineReservation(medicineId:String): Observable<MedicineForReservation[]> {
+    return this.http.post<MedicineForReservation[]>("http://localhost:8081/api/pharmacies/getPharmaciesForMedicineReservation",medicineId);
   }
 }

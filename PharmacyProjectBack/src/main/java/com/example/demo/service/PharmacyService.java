@@ -185,7 +185,7 @@ System.out.println("REZULTAT"+ret);
                 php.setName(p.getName());
                 php.setAddress(p.getAddress());
                 php.setPrice(i.getPrice());
-
+                php.setId(p.getId());
                 ret.add(php);
                 
             }
