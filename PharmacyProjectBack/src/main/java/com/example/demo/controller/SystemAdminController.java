@@ -1,7 +1,11 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
+import com.example.demo.model.LoyaltyProgram;
 import com.example.demo.model.Users.ConfirmationToken;
 import com.example.demo.model.Users.User;
+import com.example.demo.repository.LoyaltyProgramRepository;
 import com.example.demo.repository.UserRepository.ConfirmationTokenRepository;
 import com.example.demo.service.SystemAdminService;
 import com.example.demo.service.UserService;
@@ -15,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/systemAdmin")
+@RequestMapping("/api/systemAdmin")
 public class SystemAdminController {
     
     @Autowired
@@ -25,8 +29,16 @@ public class SystemAdminController {
     UserService userService;
 
     @Autowired
-    private ConfirmationTokenRepository confirmationTokenRepository;
+    LoyaltyProgramRepository loyaltyProgramRepository;
 
-    
+    @PostMapping(value = "/addLoyaltyProgram")
+    public ResponseEntity<LoyaltyProgram> addLoyaltyProgram(@RequestBody LoyaltyProgram program){
+        List<LoyaltyProgram> programs=loyaltyProgramRepository.findAll();
+        if(programs.isEmpty()==false){
+            loyaltyProgramRepository.deleteAll();
+        }
+       loyaltyProgramRepository.save(program);
+        return new ResponseEntity<>(program,HttpStatus.OK);
+    }
    
 }

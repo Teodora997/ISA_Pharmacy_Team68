@@ -51,6 +51,12 @@
                     <p style="color: green; font-weight: 500;">All medicines</p>
                 </a>
             </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/loyalty-program']"> <i
+                        class="material-icons">article</i>
+                    <p style="color: green; font-weight: 500;">Loyalty program</p>
+                </a>
+            </li>
         </ul>
     </nav>
 </div>	
@@ -118,6 +124,13 @@
                         <label>Additional</label>
                         <input type="text"  class="form-control"  
                            #additional="ngModel" name="additional" [(ngModel)]="newMedicine.additional"/>
+                       
+                    </div>
+
+                    <div class="form-group">
+                        <label>Points</label>
+                        <input type="text"  class="form-control"  
+                           #points="ngModel" name="points" [(ngModel)]="newMedicine.points"/>
                        
                     </div>
         

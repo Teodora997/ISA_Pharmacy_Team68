@@ -7,5 +7,6 @@ export class Medicine{
     producer!: string;
     regime!:string;
     additional!:string;
+    points!: string;
 
 }
