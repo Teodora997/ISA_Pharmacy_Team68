@@ -9,6 +9,7 @@ import com.example.demo.dto.ExaminationDTO;
 import com.example.demo.model.Consulting;
 import com.example.demo.model.Examination;
 import com.example.demo.model.Medicine;
+import com.example.demo.model.Pharmacy;
 
 public interface IPatientService {
     public Set<Medicine> getMyAllergies(String id);
@@ -19,4 +20,7 @@ public interface IPatientService {
     public Consulting cancelConsulting(Long consultingId);
     public List<ExaminationDTO> getExaminationsByPatient(Long patientId);
     public Examination cancelExamination(Long examinationId);
+    public Integer makeComplaint(String patientId,Long userId,String text);
+    public List<Pharmacy> getPharmaciesForComplaint(Long patientId);
+    public Integer makeComplaintPharmacy(String patientId,Long pharmacyId,String text);
 }

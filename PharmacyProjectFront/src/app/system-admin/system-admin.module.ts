@@ -11,6 +11,7 @@ import { AddMedicineComponent } from './add-medicine/add-medicine.component';
 import { AddSystemAdminComponent } from './add-system-admin/add-system-admin.component';
 import { AdminAllMedicinesComponent } from './all-medicines/admin-all-medicines.component';
 import { LoyaltyProgramComponent } from './loyalty-program/loyalty-program.component';
+import { ComplaintsComponent } from './complaints/complaints.component';
 
 
 @NgModule({
@@ -22,11 +23,12 @@ import { LoyaltyProgramComponent } from './loyalty-program/loyalty-program.compo
     AddMedicineComponent,
     AddSystemAdminComponent,
     AdminAllMedicinesComponent,
-    LoyaltyProgramComponent
+    LoyaltyProgramComponent,
+    ComplaintsComponent
   ],
   imports: [
     CommonModule,
-    SystemAdminRoutingModule, 
+    SystemAdminRoutingModule,  
     RouterModule,
     FormsModule,
     
