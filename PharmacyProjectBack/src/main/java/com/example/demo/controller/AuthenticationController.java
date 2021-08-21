@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,14 +70,14 @@ public class AuthenticationController {
       System.out.println("Nasao usera "+ user.getFirstName());
         return new ResponseEntity<UserDTO>(new UserDTO(user),HttpStatus.OK);
     }
-    // @PostMapping("/change-password")
-    // public ResponseEntity changePassword(@RequestBody PasswordChanger passwordChanger) {
-    //     userDetailsService.changePassword(passwordChanger.oldPassword, passwordChanger.newPassword, passwordChanger.email);
 
-    //     Map<String, String> result = new HashMap<>();
-    //     result.put("result", "success");
-    //     return ResponseEntity.accepted().body(result);
-    // }
+    @PostMapping("/change-password")
+    public ResponseEntity<UserDTO> changePassword(@RequestBody PasswordChanger passwordChanger) {
+        User user=userDetailsService.changePassword(passwordChanger.oldPassword, passwordChanger.newPassword, passwordChanger.email);
+
+        UserDTO u=new UserDTO(user);
+        return new ResponseEntity<UserDTO>(u,HttpStatus.OK);
+    }
 
 
 

@@ -62,8 +62,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     /* Change User's password */
-    public void
-    changePassword(String oldPassword, String newPassword, String email) {
+    public User changePassword(String oldPassword, String newPassword, String email) {
         User user2 = userService.findByEmail(email);
         String mail = user2.getEmail();
 
@@ -72,14 +71,17 @@ public class CustomUserDetailsService implements UserDetailsService {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(mail, oldPassword));
         } else {
             LOGGER.debug("No authentication manager set. can't change Password!");
-            return;
+            return null;
         }
 
         LOGGER.debug("Changing password for user '" + mail + "'");
 
         User user = (User) loadUserByUsername(mail);
         user.setPassword(passwordEncoder.encode(newPassword));
+        user.setFirstTimeLogin(false);
         userRepository.save(user);
+
+        return user;
     }
 
     public UserDTO login(JwtAuthenticationRequest authenticationRequest) {
@@ -116,6 +118,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         UserDTO userDto = new UserDTO(user);
         userDto.setToken(new UserTokenState(jwt, expiresIn));
+        
 
         return userDto;
     }

@@ -141,6 +141,7 @@ public class UserServiceImpl implements UserService {
             u.setEmail(newUser.getEmail());
             u.setTelephone(newUser.getTelephone());
             u.setIsActivated(true);
+            u.setFirstTimeLogin(false);
            // u.setPrviPutLogovan(true);
             u.setRole("ROLE_PATIENT");
 
@@ -165,6 +166,7 @@ public class UserServiceImpl implements UserService {
             dermatologist.setEmail(newUser.getEmail());
             dermatologist.setTelephone(newUser.getTelephone());
             dermatologist.setIsActivated(true);
+            dermatologist.setFirstTimeLogin(true);
            // u.setPrviPutLogovan(true);
            dermatologist.setRole("ROLE_DERMATOLOGIST");
 
@@ -192,6 +194,7 @@ public class UserServiceImpl implements UserService {
             supplier.setEmail(newUser.getEmail());
             supplier.setTelephone(newUser.getTelephone());
             supplier.setIsActivated(true);
+            supplier.setFirstTimeLogin(true);
            // u.setPrviPutLogovan(true);
            supplier.setRole("ROLE_SUPPLIER");
 
@@ -219,6 +222,7 @@ public class UserServiceImpl implements UserService {
             phAdmin.setEmail(newUser.getEmail());
             phAdmin.setTelephone(newUser.getTelephone());
             phAdmin.setIsActivated(true);
+            phAdmin.setFirstTimeLogin(true);
            // u.setPrviPutLogovan(true);
            phAdmin.setRole("ROLE_PH_ADMIN");
 
@@ -245,6 +249,7 @@ public class UserServiceImpl implements UserService {
             sysAdmin.setEmail(newUser.getEmail());
             sysAdmin.setTelephone(newUser.getTelephone());
             sysAdmin.setIsActivated(true);
+            sysAdmin.setFirstTimeLogin(true);
            // u.setPrviPutLogovan(true);
            sysAdmin.setRole("ROLE_SYS_ADMIN");
 

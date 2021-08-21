@@ -65,7 +65,8 @@ public class User implements UserDetails{
     @Column(name="isActivated")
     private boolean isActivated;
 
-
+    @Column(name = "firstTimeLogin")
+    private boolean firstTimeLogin;
     
     @ManyToMany()
     @JoinTable(name = "user_authority",
@@ -79,6 +80,8 @@ public class User implements UserDetails{
 
     }
 
+
+
     public User(Long id,String firstName,String lastName,String password,String address,String city,String email,String telephone){
         this.id=id;
         this.FirstName=firstName;
@@ -89,8 +92,20 @@ public class User implements UserDetails{
         this.email=email;
         this.telephone=telephone;
     }
+
+    public User(Long id,String firstName,String lastName,String password,String address,String city,String email,String telephone,boolean firstTimeLogin){
+        this.id=id;
+        this.FirstName=firstName;
+        this.LastName=lastName;
+        this.password=password;
+        this.address=address;
+        this.city=city;
+        this.email=email;
+        this.telephone=telephone;
+        this.firstTimeLogin=firstTimeLogin;
+    }
     public User(Long id2, String firstName2, String lastName2, String email2, String address2, String city2,
-            String telephone2, String password2, String role2,Boolean isActivated) {
+            String telephone2, String password2, String role2,Boolean isActivated,boolean firstTimeLogin) {
         this.id=id2;
         this.FirstName=firstName2;
         this.LastName=lastName2;
@@ -101,6 +116,7 @@ public class User implements UserDetails{
         this.telephone=telephone2;
         this.role=role2;
         this.isActivated=isActivated;
+        this.firstTimeLogin=firstTimeLogin;
     }
 
     public String getFirstName(){
@@ -122,6 +138,16 @@ public class User implements UserDetails{
         this.id=id;
     }
    
+    public boolean isFirstTimeLogin() {
+        return firstTimeLogin;
+    }
+
+
+    public void setFirstTimeLogin(boolean firstTimeLogin) {
+        this.firstTimeLogin = firstTimeLogin;
+    }
+
+
     public String getEmail(){
         return email;
     }

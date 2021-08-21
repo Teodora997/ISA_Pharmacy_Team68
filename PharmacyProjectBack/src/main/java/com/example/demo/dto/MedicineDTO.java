@@ -10,12 +10,14 @@ public class MedicineDTO {
     public String regime;
     //public String alternative;
     public String additional;
+    public String points;
 
     public MedicineDTO() {
     }
 
+
     public MedicineDTO(String id, String name, String type, String form, String ingredients, String producer,
-            String regime, String additional) {
+            String regime, String additional,String points) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -24,6 +26,7 @@ public class MedicineDTO {
         this.producer = producer;
         this.regime = regime;
         this.additional = additional;
+        this.points=points;
     }
 
     public String getId() {
@@ -34,6 +37,13 @@ public class MedicineDTO {
         this.id = id;
     }
 
+    public String getPoints() {
+        return points;
+    }
+
+    public void setPoints(String points) {
+        this.points = points;
+    }
     public String getName() {
         return name;
     }

@@ -55,7 +55,7 @@ public class Patient extends User {
     public Patient(Long id2, String firstName2, String lastName2, String email2, String address2, String city2,
             String telephone2, String password2, String role2, Boolean isActivated, Set<Medicine> allergies,
             Integer points, String category, Integer penals) {
-        super(id2, firstName2, lastName2, email2, address2, city2, telephone2, password2, role2, isActivated);
+        super(id2, firstName2, lastName2, email2, address2, city2, telephone2, password2, role2, isActivated, isActivated);
         this.allergies = allergies;
         this.points = points;
         this.category = category;

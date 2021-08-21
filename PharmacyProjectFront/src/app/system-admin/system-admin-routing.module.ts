@@ -7,6 +7,7 @@ import { AddPharmacyComponent } from './add-pharmacy/add-pharmacy.component';
 import { AddSupplierComponent } from './add-supplier/add-supplier.component';
 import { AddSystemAdminComponent } from './add-system-admin/add-system-admin.component';
 import { AdminAllMedicinesComponent } from './all-medicines/admin-all-medicines.component';
+import { LoyaltyProgramComponent } from './loyalty-program/loyalty-program.component';
 import { SystemAdminHomepageComponent } from './system-admin-homepage/system-admin-homepage.component';
 
 
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'add-pharmacy', component: AddPharmacyComponent},
   { path: 'add-medicine', component: AddMedicineComponent},
   { path: 'admin-all-medicines', component: AdminAllMedicinesComponent},
+  { path: 'loyalty-program', component: LoyaltyProgramComponent},
   
 ];
 
