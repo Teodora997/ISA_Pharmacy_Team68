@@ -10,6 +10,7 @@ import com.example.demo.dto.ExaminationDTO;
 import com.example.demo.model.Consulting;
 import com.example.demo.model.Examination;
 import com.example.demo.model.Medicine;
+import com.example.demo.model.Pharmacy;
 import com.example.demo.model.Users.Patient;
 import com.example.demo.repository.MedicineRepository;
 import com.example.demo.repository.UserRepository.PatientRepository;
@@ -147,5 +148,30 @@ public ResponseEntity<?> cancelExamination(@RequestBody Long examinationId){
     System.out.println(c.getDermatologist().getFirstName());}
         return new ResponseEntity<Examination>(c, HttpStatus.OK);
     
+}
+@PostMapping(value="/makeComplaint/{patientId}/{userId}")
+    public ResponseEntity<Integer> makeComplaint(@PathVariable("patientId") String patientId,@PathVariable("userId") Long userId,@RequestBody String text){
+        System.out.println("kontroler za ppisanje zalbe,pise "+ userId);
+       Integer id=patientService.makeComplaint(patientId,userId,text);
+       if(id!=null){
+        return new ResponseEntity<Integer>(id,HttpStatus.OK);
+       }
+       return null;
+}
+@PostMapping(value="/makeComplaintPharmacy/{patientId}/{pharmacyId}")
+    public ResponseEntity<Integer> makeComplaintPharmacy(@PathVariable("patientId") String patientId,@PathVariable("pharmacyId") Long pharmacyId,@RequestBody String text){
+        System.out.println("kontroler za ppisanje zalbe za apoteku,pise "+ pharmacyId);
+       Integer id=patientService.makeComplaintPharmacy(patientId,pharmacyId,text);
+       if(id!=null){
+        return new ResponseEntity<Integer>(id,HttpStatus.OK);
+       }
+       return null;
+}
+@GetMapping(value = "/getPharmaciesForComplaint/{patientId}")
+    public ResponseEntity<List<Pharmacy>> getPharmaciesForComplaint(@PathVariable("patientId") String patientId){
+        System.out.println("TRAZI apoteke za zalbu pd "+patientId);
+        List<Pharmacy> ret=patientService.getPharmaciesForComplaint(Long.parseLong(patientId));
+        
+        return new ResponseEntity<List<Pharmacy>>(ret,HttpStatus.OK);
 }
 }

@@ -43,4 +43,14 @@ export class PatientService {
   public cancelExamination(examinationId:number) :Observable<Object>{
     return this.http.post<Object>("http://localhost:8081/api/patients/cancelExamination",examinationId);
   }
+
+  public makeComplaint(patientId:string,userId:number,complaintText:string): Observable<number> {
+    return this.http.post<number>("http://localhost:8081/api/patients/makeComplaint/"+ patientId +"/"+ userId,complaintText);
+  }
+  public getPharmaciesForComplaint(patientId:string): Observable<Pharmacy[]> {
+    return this.http.get<Pharmacy[]>("http://localhost:8081/api/patients/getPharmaciesForComplaint/"+patientId);
+  }
+  public makeComplaintPharmacy(patientId:string,pharmacyId:number,complaintText:string): Observable<number> {
+    return this.http.post<number>("http://localhost:8081/api/patients/makeComplaintPharmacy/"+ patientId +"/"+ pharmacyId,complaintText);
+  }  
 }

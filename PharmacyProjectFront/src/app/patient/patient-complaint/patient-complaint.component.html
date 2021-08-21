@@ -56,37 +56,85 @@
     </nav>
 </div>	
 <div>
-    <h1 style="color: rgb(100, 98, 216);text-align: center;" > PHARMACY  {{pharmacy.name}} </h1>
-     <h4 >{{pharmacy.address}}</h4>
-     <h4>{{pharmacy.mark}}</h4>
-     <div class="card" style="margin-top: 100px;">
-        <div class="card-header card-header-success">
-            <h3  style="color: rgb(100, 98, 216);text-align: center;" class="card-title">Reserve Dermatologist Appointment</h3>
-            <p class="card-category" style="color: rgb(100, 98, 216)">This is the list of all the available appointments. You can reserve them here.</p>
+    <h1 style="color: rgb(100, 98, 216);text-align: center;" > Complaint </h1>
+
+    <div  *ngIf="previewText" >
+        <div class="col-md-6 offset-md-3">
+            <h2>Write complaint</h2>
+            <form  #registrationForm="ngForm" (ngSubmit)="sendComplaint()">
+              <div class="form-group">
+                  <label>Text</label>
+                  <input type="text" class="form-control"  
+                    #t="ngModel" name="t" [(ngModel)]="complaintText"/>
+              </div>
+                
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary" >Send</button>                     
+                 </div>
+            </form>
         </div>
-        <div class="card-content table-responsive table-full-width">
+    </div>
+
+    <div  *ngIf="previewTextP" >
+        <div class="col-md-6 offset-md-3">
+            <h2>Write complaint</h2>
+            <form  #registrationForm="ngForm" (ngSubmit)="sendComplaintPharmacy()">
+              <div class="form-group">
+                  <label>Text</label>
+                  <input type="text" class="form-control"  
+                    #t="ngModel" name="t" [(ngModel)]="complaintText"/>
+              </div>
+                
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary" >Send</button>                     
+                 </div>
+            </form>
+        </div>
+    </div>
+    
+   <br><br>
+            <div >
             <table class="table">
                 <thead class="text-success">
-                    <th>Dermatologist Name</th>
-                    <th>Dermatologist Rate<i style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i> </th>
-                    <th>Date </th>
-                    <th>Time </th>
-                    <th>Price <i style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
-                    <th>Make Reservation </th>
+                    <th>Pharmacists</th> 
                 </thead>
                 <tbody>
-                    <tr *ngFor='let aE of availableExaminations'>
-                        <td>{{aE.dermatologistName}}</td>
-                        <td>{{aE.dermatologistRate}}</td>
-                        <td>{{aE.date}}</td>
-                        <td>{{aE.time}}</td>
-                        <td>{{aE.price}}</td>
-                        <td><button  (click)="makeExamination(aE.examinationId)">Reserve</button></td>
+                    <tr *ngFor='let c of consultings'>
+                        <td>{{c.pharmacistName}}</td>
+                        <td><button (click)="writeComplaint(c.pharmacistId)">Write complaint</button></td>
                     </tr>
                 </tbody>
             </table>
+           </div>
+           <br><br>
+
+            <div >
+            <table class="table">
+                <thead class="text-success">
+                    <th>Dermatologists</th> 
+                </thead>
+                <tbody>
+                    <tr *ngFor='let e of examinations'>
+                        <td>{{e.dermatologistName}}</td>
+                        <td><button (click)="writeComplaint(e.dermatologistId)">Write complaint</button></td>
+                    </tr>
+                </tbody>
+            </table>
+           </div>
+           <br><br>
+            <div >
+            <table class="table">
+                <thead class="text-success">
+                    <th>Pharmacies</th> 
+                </thead>
+                <tbody>
+                    <tr *ngFor='let c of pharmacies'>
+                        <td>{{c.name}}</td>
+                        <td><button (click)="writeComplaintPharmacy(c.id)">Write complaint</button></td>
+                    </tr>
+                </tbody> 
+            </table>
+           </div>
         </div>
-    </div>
-     
  </div>
-</div>
+

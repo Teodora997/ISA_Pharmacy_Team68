@@ -8,6 +8,7 @@ import { PatientPharmacyComponent } from './patient-pharmacy/patient-pharmacy.co
 import { MakeConsultingComponent } from './make-consulting/make-consulting.component';
 import { PatientConsultingComponent } from './patient-consultings/patient-consultings.component';
 import { PatientExaminationComponent } from './patient-examinations/patient-examinations.component';
+import { PatientComplaintComponent } from './patient-complaint/patient-complaint.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { PatientExaminationComponent } from './patient-examinations/patient-exam
     PatientPharmacyComponent,
     MakeConsultingComponent,
     PatientConsultingComponent,
-    PatientExaminationComponent
+    PatientExaminationComponent,
+    PatientComplaintComponent
     
   ],
   imports: [

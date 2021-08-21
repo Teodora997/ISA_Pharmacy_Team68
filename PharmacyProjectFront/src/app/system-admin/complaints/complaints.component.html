@@ -1,7 +1,7 @@
 <head>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
-<div >
+<div>
 <div id="divHeaderGuest">
     <nav>
         <ul >
@@ -67,27 +67,37 @@
     </nav>
 </div>	
 <div>
-    <div >
-             <div class="col-md-6 offset-md-3">
-                 <h2>Add pharmacy</h2>
-                 <form  #registrationForm="ngForm" (ngSubmit)="addPharmacy()">
-                   <div class="form-group">
-                       <label>Name</label>
-                       <input type="text" class="form-control"  
-                         #name="ngModel" name="name" [(ngModel)]="newPharmacy.name"/>
-                   </div>
-                     <div class="form-group">
-                       <label>Address</label>
-                       <input type="text"  class="form-control"  
-                         #address="ngModel" name="address" [(ngModel)]="newPharmacy.address"/>
-                       
-                     </div>
-                     <div class="form-group">
-                       <button type="submit" class="btn btn-primary" >Add</button>                     
-                      </div>
-                 </form>
-             </div>
-         </div>
+    <h1 style="color: rgb(100, 98, 216);"> All complaints</h1>
+     
+     
+    <div class="card" style="margin-top: 150px;">
+     
+        <div class="card-content table-responsive table-full-width">
+            <table class="table">
+                <thead class="text-success">
+                   <th>Id of complaint</th>
+                    <th>For</th>
+                    <th>Text</th>
+                    <th>Date</th>
+                    <th>Patient email </th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let c of complaints'>
+                       <td [routerLink]="[c.id]">{{c.id}}</td>
+                        <td >{{c.name}}</td>
+                        <td>{{c.text}}</td>
+                        <td>{{c.date}}</td>
+                        <td>{{c.email}}</td>
+                        <td><input type="text" value="" placeholder="reply" class="form-control" required
+                            name="reply" #reply="ngModel" [(ngModel)]="c.complaintReply" /></td>
+                        <td><button (click)="replyComplaint(c)">Reply</button></td>
+             
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     
 </div>
-</div>	  
+</div>
