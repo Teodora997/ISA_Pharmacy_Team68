@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MakeConsultingComponent } from './make-consulting/make-consulting.component';
+import { MedicineReservationComponent } from './medicine-reservation/medicine-reservation.component';
 import { PatientConsultingComponent } from './patient-consultings/patient-consultings.component';
 import { PatientExaminationComponent } from './patient-examinations/patient-examinations.component';
 import { PatientHomepageComponent } from './patient-homepage/patient-homepage.component';
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'patient-pharmacies/:id', component: PatientPharmacyComponent },
   { path: 'make-consulting', component: MakeConsultingComponent }, 
   { path: 'patient-consultings', component: PatientConsultingComponent },
-  { path: 'patient-examinations', component: PatientExaminationComponent }
+  { path: 'patient-examinations', component: PatientExaminationComponent },
+  { path: 'medicine-reservations', component: MedicineReservationComponent }
 
 
 ];

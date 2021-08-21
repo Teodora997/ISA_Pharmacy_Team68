@@ -45,6 +45,7 @@ export class PatientConsultingComponent implements OnInit {
 
       //**********OTKAZIVANJE PREGLEDA */
       cancelConsulting(consultingId:number){
+        
         this.patientService.cancelConsulting(consultingId).subscribe({
           next: cons=>{
             this.consulting=cons;
@@ -56,7 +57,7 @@ export class PatientConsultingComponent implements OnInit {
           }
         })
       }
-
+    
 
       getUser() {
     

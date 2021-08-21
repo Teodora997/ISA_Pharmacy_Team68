@@ -1,0 +1,181 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<div>
+<div id="divHeaderGuest">
+    <nav>
+        <ul >
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/patient-homepage']" > <i class="material-icons">person</i>
+                    <p style="color: green; font-weight: 500;">My profile</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/patient-pharmacies']"> <i
+                        class="material-icons">store</i>
+                    <p style="color: green; font-weight: 500;">Pharmacies</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/patient-consultings']"> <i
+                        class="material-icons">reorder</i>
+                    <p style="color: green; font-weight: 500;">Pharmacist consultings</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/patient-examinations']"> <i
+                        class="material-icons">reorder</i>
+                    <p style="color: green; font-weight: 500;">Dermatologist apointments</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/medicine-reservations']"> <i
+                        class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">Medicine reservations</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/make-consulting']"> <i
+                        class="material-icons">playlist_add</i>
+                    <p style="color: green; font-weight: 500;">Make consulting</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/homepage']" (click)="logout()"> <i
+                        class="material-icons">power_settings_new</i>
+                    <p style="color: green; font-weight: 500;">Logout</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>	
+<div>
+    <div>
+        <h1 style="color: rgb(100, 98, 216);text-align: center;"> My medicine reservations</h1>
+        <table class="table">
+            <thead class="text-success">
+                <th>Code</th>
+                <th>Medicine </th>
+                <th>Pharmacy </th>
+                <th>Pick up date</th>
+                <th>Status</th>
+                <th>Cancel reservation</th>
+            </thead>
+            <tbody>
+                <tr *ngFor='let r of reservations'>
+                     <td >{{r.code}}</td>
+                     <td>{{r.medicineName}}</td>
+                     <td>{{r.pharmacyName}}</td>
+                     <td>{{r.date}}</td>
+                     <td>{{r.status}}</td>
+                     <td><button (click)="cancelReservation(r)">Cancel</button></td>
+                 </tr>
+            </tbody>
+        </table>
+        <h1 style="color: rgb(100, 98, 216)">-----------------------------------------------------------</h1>
+    </div>
+    <h1 style="color: rgb(100, 98, 216);"> All medicines</h1>
+    <p>Here you can choose medicine for reservation.</p>
+     <div>
+         <div class="col-sm-6">
+             <div class="form-group">
+                 <input type="text" value="" placeholder="Name" class="form-control" name="name"
+                     #name="ngModel" [(ngModel)]="searchParameter" />
+             </div>
+         </div>
+        
+         <button (click)="pretraga()">Search</button>
+     </div>
+     <br>
+     <div>
+     <div class="col-sm-6">
+        <div class="form-group">
+           <select name="type" #type="ngModel" [(ngModel)]="filterParameter" >
+               <option value="ANTIBIOTIC">Antibiotic</option>
+               <option value="ANTIHISTAMINE">Antihistamine</option>
+               <option value="ANESTHETIC">Anesthetic</option>
+               <option value="ANALGETIC">Analgetic</option> 
+               <option value="ANTISEPTICS">Antiseptic</option>
+           </select>
+       </div>
+       <button (click)="filter()">Filter</button>
+    </div>
+    </div>
+    <br><br>
+    <div>
+    <div  *ngIf="previewDescription" >
+        <table class="table">
+            <thead class="text-success">
+               <th>Id</th>
+                <th>Name </th>
+                <th>Type </th>
+                <th>Form</th>
+                <th>Ingredients</th>
+                <th>Producer</th>
+                <th>Regime</th>
+                <th>Additional</th>
+            </thead>
+            <tbody>
+                   <td >{{selectedMedicine.id}}</td>
+                    <td >{{selectedMedicine.name}}</td>
+                    <td>{{selectedMedicine.type}}</td>
+                    <td >{{selectedMedicine.form}}</td>
+                    <td >{{selectedMedicine.ingredients}}</td>
+                    <td >{{selectedMedicine.producer}}</td>
+                    <td>{{selectedMedicine.regime}}</td>
+                    <td >{{selectedMedicine.additional}}</td>
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    <div>
+        <div  *ngIf="previewPharmacies" >
+            <table class="table">
+                <thead class="text-success">
+                   <th>Pharmacy name</th>
+                    <th>Address </th>
+                    <th>Price </th>
+                    <th>Pick up date</th>
+                    <th>Make reservation</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let p of pharmacies'>
+                         <td >{{p.pharmacyName}}</td>
+                         <td>{{p.pharmacyAddress}}</td>
+                         <td>{{p.price}}</td>
+                         <td><input type="date" name="date" #date="ngModel" [(ngModel)]="p.date" /></td>
+                         <td><button (click)="makeReservation(p)">Reserve</button></td>
+                     </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+
+    <div class="card" style="margin-top: 150px;">
+     
+     <div class="card-content table-responsive table-full-width">
+         <table class="table">
+             <thead class="text-success">
+                <th>Id</th>
+                 <th>Name <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
+                 <th>Type <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
+                 <th>Pharmacies</th>
+                 <th>Description</th>
+             </thead>
+             <tbody>
+                 <tr *ngFor='let m of allMedicines'>
+                    <td [routerLink]="[m.id]">{{m.id}}</td>
+                     <td >{{m.name}}</td>
+                     <td>{{m.type}}</td>
+                    <td><button (click)="seePharmacies(m)">Pharmacies</button></td>
+                    <td><button (click)="seeDescription(m)" > Description</button></td>
+                 </tr>
+             </tbody>
+         </table>
+     </div>
+     
+    
+ </div>
+</div>
+</div>

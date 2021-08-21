@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.dto.MedicineReservationDTO;
 import com.example.demo.dto.PhPriceForMedicineDTO;
 import com.example.demo.dto.SearchPharmacyDTO;
 import com.example.demo.model.Pharmacy;
@@ -64,5 +66,22 @@ public class PharmacyController {
         System.out.println("U KONTROLERU SAM ZA TRAZENJE APOTEKA GDJE IMA LIJEK SA ID: "+medicineId);
         List<PhPriceForMedicineDTO> pharmacies=pharmacyService.getPharmaciesForMedicine(medicineId);
         return new ResponseEntity<>(pharmacies,HttpStatus.OK);
+    }
+    @PostMapping(value = "/getPharmaciesForMedicineReservation")
+    public ResponseEntity<List<MedicineReservationDTO>> getPharmaciesForMedicineReservation(@RequestBody String medicineId){
+        System.out.println("****RESERVATION U KONTROLERU SAM ZA TRAZENJE APOTEKA GDJE IMA LIJEK SA ID: "+medicineId);
+        List<MedicineReservationDTO> ret=new ArrayList<>();
+        List<PhPriceForMedicineDTO> pharmacies=pharmacyService.getPharmaciesForMedicine(medicineId);
+        for(PhPriceForMedicineDTO ph:pharmacies){
+            MedicineReservationDTO md=new MedicineReservationDTO();
+            md.setMedicineId(Long.parseLong(medicineId));
+            md.setPharmacyAddress(ph.getAddress());
+            md.setPharmacyName(ph.getName());
+            md.setPharmacyId(ph.getId());
+            md.setPrice(ph.getPrice());
+            ret.add(md);
+
+        }
+        return new ResponseEntity<>(ret,HttpStatus.OK);
     }
 }
