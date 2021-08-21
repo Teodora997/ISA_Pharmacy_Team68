@@ -2,22 +2,30 @@ package com.example.demo.service.impl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import com.example.demo.dto.ConsultingDTO;
 import com.example.demo.dto.ExaminationDTO;
+import com.example.demo.model.Complaint;
 import com.example.demo.model.Consulting;
 import com.example.demo.model.Examination;
 import com.example.demo.model.ExaminationStatus;
 import com.example.demo.model.Medicine;
 import com.example.demo.model.Pharmacy;
 import com.example.demo.model.Users.Patient;
+import com.example.demo.model.Users.User;
+import com.example.demo.repository.ComplaintRepository;
 import com.example.demo.repository.ConsultingRepository;
 import com.example.demo.repository.ExaminationRepository;
+import com.example.demo.repository.PharmacyRepository;
 import com.example.demo.repository.UserRepository.PatientRepository;
 import com.example.demo.repository.UserRepository.PharmacistRepository;
 import com.example.demo.service.IPatientService;
+import com.example.demo.service.PharmacyService;
+import com.example.demo.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -37,6 +45,15 @@ public class PatientService implements IPatientService{
     private PharmacistRepository pharmacistRepository;
     @Autowired
     private EmailService emailService;
+
+    @Autowired 
+    UserService userService;
+
+    @Autowired
+    ComplaintRepository complaintRepository;
+
+    @Autowired
+    PharmacyRepository pharmacyRepository;
 
     
     public PatientService(PatientRepository patientRepository, ExaminationRepository examinationRepository,
@@ -240,8 +257,10 @@ public class PatientService implements IPatientService{
                 if(e.getPatient().getId().equals(patientId)){
                     ExaminationDTO ed=new ExaminationDTO();
                     ed.setExaminationId(e.getId());
+                    ed.setDermatologistId(e.getDermatologist().getId());
                     ed.setDate(e.getDate());
                     ed.setTime(e.getTime());
+                    ed.setPharmacyId(e.getPharmacy().getId());
                     ed.setDermatologistName(e.getDermatologist().getFirstName().concat(e.getDermatologist().getLastName()));
                     ed.setPharmacyName(e.getPharmacy().getName());
                     ed.setDermatologistRate(e.getDermatologist().getMark());
@@ -264,6 +283,71 @@ public class PatientService implements IPatientService{
         }
         ex.setStatus(ExaminationStatus.canceled);
         examinationRepository.save(ex);
-        return null;
+        return null;   
+    }
+
+    @Override
+    public Integer makeComplaint(String patientId, Long userId,String text) {
+        //Long uId=Long.parseLong(userId);
+        Long pId=Long.parseLong(patientId);
+        User u=userService.findById(userId);
+
+        Patient p=(Patient)userService.findById(pId);
+        System.out.println("PACIJENT SERVIS PISANJE ZALBE PACIJENT: "+p.getFirstName() +" ZA: "+u.getFirstName());
+        Complaint complaint= new Complaint();
+        complaint.setDate(LocalDate.now());
+        complaint.setIsAnswered(false);
+        complaint.setName(u.getFirstName()+" "+u.getLastName());
+        complaint.setText(text);
+        complaint.setPatient(p);
+
+        complaintRepository.save(complaint);
+
+        return 1;
+    }
+
+    @Override
+    public List<Pharmacy> getPharmaciesForComplaint(Long patientId) {
+       System.out.println("U SERVISU ZA APOTEKE ZA ZALBY: "+ patientId);
+       List<ConsultingDTO> cons=getConsultingsByPatient(patientId);
+       List<ExaminationDTO> exams=getExaminationsByPatient(patientId);
+
+       List<Pharmacy> pharmacies=new ArrayList<Pharmacy>();
+
+       for(ConsultingDTO c:cons){
+           Pharmacy p=pharmacyRepository.findById(c.getPharmacyId()).get();
+            System.out.println("u prvom foru: "+c.getPharmacyId()+" "+c.getPharmacyName());
+           pharmacies.add(p);
+       }
+       for(ExaminationDTO e:exams){
+        Pharmacy p=pharmacyRepository.findById(e.getPharmacyId()).get();
+        System.out.println("u drugom foru: "+e.getPharmacyId()+" "+e.getPharmacyName());
+        pharmacies.add(p);
+        }
+
+        List<Pharmacy> pharmacies1= new ArrayList<>(new HashSet<>(pharmacies));
+
+        
+
+        return pharmacies1;
+    }
+
+    @Override
+    public Integer makeComplaintPharmacy(String patientId, Long pharmacyId, String text) {
+        Long pId=Long.parseLong(patientId);
+        Pharmacy ph=pharmacyRepository.findById(pharmacyId).get();
+
+        Patient p=(Patient)userService.findById(pId);
+        System.out.println("PACIJENT SERVIS PISANJE ZALBE PACIJENT: "+p.getFirstName() +" ZA: "+ ph.getName());
+        Complaint complaint= new Complaint();
+        complaint.setDate(LocalDate.now());
+        complaint.setIsAnswered(false);
+        complaint.setName(ph.getName());
+        complaint.setText(text);
+        complaint.setPatient(p);
+
+        complaintRepository.save(complaint);
+
+        return 1;
     }
 }

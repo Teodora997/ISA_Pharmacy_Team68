@@ -1,10 +1,14 @@
 package com.example.demo.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import com.example.demo.TimeProvider;
+import com.example.demo.dto.ComplaintDTO;
+import com.example.demo.model.Complaint;
 import com.example.demo.model.Users.User;
+import com.example.demo.repository.ComplaintRepository;
 import com.example.demo.repository.UserRepository.AuthorityRepository;
 import com.example.demo.repository.UserRepository.ConfirmationTokenRepository;
 import com.example.demo.repository.UserRepository.UserRepository;
@@ -31,6 +35,9 @@ public class SystemAdminServiceImpl implements SystemAdminService {
 
     @Autowired
     private TimeProvider timeProvider;
+
+    @Autowired
+    private ComplaintRepository complaintRepository;
     
     @Override
     public User findById(Long id) {
@@ -64,6 +71,40 @@ public class SystemAdminServiceImpl implements SystemAdminService {
     public void remove(User u) {
         // TODO Auto-generated method stub
         
+    }
+
+    @Override
+    public List<ComplaintDTO> getComplaints() {
+       List<Complaint> complaints=complaintRepository.findAll();
+       List<ComplaintDTO> c=new ArrayList<ComplaintDTO>();
+       
+       for(Complaint c1:complaints){
+            if(c1.getIsAnswered()==false){
+                
+                ComplaintDTO dto=new ComplaintDTO();
+                dto.setId(c1.getId());
+                dto.setDate(c1.getDate());
+                dto.setEmail(c1.getPatient().getEmail());
+                dto.setName(c1.getName());
+                dto.setPatientId(c1.getPatient().getId());
+                dto.setText(c1.getText());
+                c.add(dto);
+            }
+       }
+
+
+        return c;
+    }
+
+    @Override
+    public Complaint replyComplaint(Long id) {
+       
+       Complaint c=complaintRepository.findById(id).get();
+       c.setIsAnswered(true);
+       
+       complaintRepository.save(c);
+
+       return c;
     }
 
    
