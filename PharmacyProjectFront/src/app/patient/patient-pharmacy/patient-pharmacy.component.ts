@@ -20,6 +20,7 @@ export class PatientPharmacyComponent implements OnInit {
     user:User;
     request!: Request;
     availableExaminations:DermatologistExaminations[];
+    num!: number;
     
 
     constructor(private router: Router, private pharmacyService: PharmacyService,private route: ActivatedRoute,private loginService:LoginService,private patientService:PatientService) {
@@ -61,17 +62,17 @@ export class PatientPharmacyComponent implements OnInit {
     //******** REZERVISE PREGLED KOD DERMATOLOGA ********
     makeExamination(examinationId: number){
       this.patientService.makeExamination(examinationId,this.user.id).subscribe({
-        next: exId=>{
-          if(exId==null){
-            alert("Not succesifull")
-          }else{
-            window.location.reload();
+        next: exId=>{;
+          this.num=exId
+          if(this.num==null){
+            alert("Not succesifull!Patient already has examination for this date ad time!");
+          }
+          else{
+            
             alert("Examination scheduled!");
           }
         }
       })
-      //window.location.reload();
-      //alert("Examination scheduled!");
     }
     //****** NALAZI ULOGOVANOG ********
     getUser() {

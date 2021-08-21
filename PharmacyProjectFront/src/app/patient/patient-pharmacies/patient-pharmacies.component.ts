@@ -14,6 +14,7 @@ import { User } from 'src/app/user';
 
 export class PatientPharmaciesComponent implements OnInit {
   allPharmacies : Pharmacy[] = [];
+  filteredPharmacies : Pharmacy[] = [];
   previewSearch:boolean;  
   searchParameters: SearchPharmacy;
   user: User;
@@ -30,11 +31,22 @@ ngOnInit(): void {
     this.pharmacyService.getAllPhamracies().subscribe({
         next: pharmacies => {
             this.allPharmacies = pharmacies;
-            
+            this.filteredPharmacies=this.allPharmacies;
         }
 
     });
 
+}
+filter(){
+  this.filteredPharmacies=[];
+  for(let p of this.allPharmacies){
+    
+    if(this.searchParameters.markFrom.toString()==" " && this.searchParameters.markTo.toString()==" "){
+      this.filteredPharmacies=this.allPharmacies;
+     }else if(p.mark>=this.searchParameters.markFrom && p.mark<=this.searchParameters.markTo){
+      this.filteredPharmacies.push(p);
+    }
+  }
 }
 pretraga(){
   console.log(this.searchParameters.name);
@@ -51,25 +63,13 @@ pretraga(){
             sp.address = this.searchParameters.address;
         }
 
-        if(this.searchParameters.markFrom == undefined){
-           sp.markFrom = -123456789;
-        } else {
-            sp.markFrom = this.searchParameters.markFrom;
-        }
-
-        if(this.searchParameters.markTo == undefined){
-            sp.markTo = 123456789;
-        } else {
-            sp.markFrom = this.searchParameters.markFrom;
-        }
-
 
         console.log(this.searchParameters);
         console.log(sp);
 
         this.pharmacyService.searchPharmacies(sp).subscribe({
             next: pharmacies => {
-                this.allPharmacies = pharmacies;
+                this.filteredPharmacies = pharmacies;
             }
 
         });

@@ -64,6 +64,13 @@
              </div>
          </div>
          <button (click)="pretraga()">Search</button>
+         <div>
+         <label>Mark from</label>
+         <input type="number" name="markFrom" #markFrom="ngModel" [(ngModel)]="searchParameters.markFrom"/>
+         <label>Mark to</label>
+         <input type="number" name="markTo" #markTo="ngModel" [(ngModel)]="searchParameters.markTo"/>
+         <button (click)="filter()">Filter</button>
+        </div>
      </div>
     <div class="card" style="margin-top: 150px;">
      
@@ -76,7 +83,7 @@
                  <th>Address</th>
              </thead>
              <tbody>
-                 <tr *ngFor='let k of allPharmacies'>
+                 <tr *ngFor='let k of filteredPharmacies'>
                     <td [routerLink]="[k.id]">{{k.id}}</td>
                      <td >{{k.name}}</td>
                      <td>{{k.mark}}</td>

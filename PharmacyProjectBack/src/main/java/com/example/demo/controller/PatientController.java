@@ -99,13 +99,13 @@ public PatientController(PatientService patientService, PharmacyService pharmacy
     return null;
 }
 @PostMapping(value="/makeConsulting/{consultingId}")
-    public ResponseEntity<Long> makeConsulting(@RequestBody String patientId,@PathVariable("consultingId") Long consultingId){
+    public ResponseEntity<Integer> makeConsulting(@RequestBody String patientId,@PathVariable("consultingId") Long consultingId){
         System.out.println("rezervise pregled kod farmaceuta -kontroler"+ consultingId+patientId);
-       Long id=patientService.makeConsulting(patientId,consultingId);
+       Integer id=patientService.makeConsulting(patientId,consultingId);
        if(id!=null){
-        return new ResponseEntity<Long>(id,HttpStatus.OK);
-    }
-    return null;
+        return new ResponseEntity<Integer>(id,HttpStatus.OK);
+       }
+       return null;
 }
 @PostMapping(value = "/getPharmaciesForConsulting/{date}")
     public ResponseEntity<List<ConsultingDTO>> getPharmaciesForConsulting(@RequestBody String time,@PathVariable("date") String date){

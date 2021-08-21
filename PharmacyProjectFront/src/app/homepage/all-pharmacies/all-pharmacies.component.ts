@@ -44,17 +44,7 @@ pretraga(){
             sp.address = this.searchParameters.address;
         }
 
-        if(this.searchParameters.markFrom == undefined){
-           sp.markFrom = -123456789;
-        } else {
-            sp.markFrom = this.searchParameters.markFrom;
-        }
 
-        if(this.searchParameters.markTo == undefined){
-            sp.markTo = 123456789;
-        } else {
-            sp.markFrom = this.searchParameters.markFrom;
-        }
 
 
         console.log(this.searchParameters);

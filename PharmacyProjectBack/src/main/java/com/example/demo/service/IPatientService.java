@@ -13,7 +13,7 @@ import com.example.demo.model.Medicine;
 public interface IPatientService {
     public Set<Medicine> getMyAllergies(String id);
     public Long makeExamination(String patientId,Long examinationId);
-    public Long makeConsulting(String patientId,Long examinationId);
+    public Integer makeConsulting(String patientId,Long examinationId);
     public List<ConsultingDTO> getPharmaciesForConsulting(LocalDate date,String time);
     public List<ConsultingDTO> getConsultingsByPatient(Long patientId);
     public Consulting cancelConsulting(Long consultingId);
