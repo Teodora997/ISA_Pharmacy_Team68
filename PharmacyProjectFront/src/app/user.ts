@@ -8,4 +8,5 @@ export class User{
      telephone!: string;
      password!: string;
      role!: string;
+     firstTimeLogin!: boolean;
 }

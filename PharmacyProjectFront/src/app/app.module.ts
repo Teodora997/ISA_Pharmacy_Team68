@@ -21,6 +21,8 @@ import { PatientModule } from './patient/patient.module';
 import { PatientHomepageComponent } from './patient/patient-homepage/patient-homepage.component';
 import { PatientService } from './service/patient.service';
 import { MedicineService } from './service/medicine.service';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { LoginModule } from './login/login.module';
 
 @NgModule({
   declarations: [
@@ -30,8 +32,9 @@ import { MedicineService } from './service/medicine.service';
     HomePageComponent,
     AllMedicinesComponent,
     AllPharmaciesComponent,
-    SystemAdminHomepageComponent,
-    PatientHomepageComponent
+   
+    PatientHomepageComponent,
+    
   ],
   imports: [
     AppRoutingModule,
@@ -40,8 +43,9 @@ import { MedicineService } from './service/medicine.service';
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
-    SystemAdminModule,
-    PatientModule
+    
+    PatientModule,
+    LoginModule
   ],
   providers: [
   LoginService,
@@ -50,7 +54,7 @@ import { MedicineService } from './service/medicine.service';
   PharmacyService,
   ApiService,
   ConfigService,
-  SystemAdminService,
+  
   PatientService,
   MedicineService
 
