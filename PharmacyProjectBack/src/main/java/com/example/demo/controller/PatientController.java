@@ -15,7 +15,6 @@ import com.example.demo.model.Users.Patient;
 import com.example.demo.repository.MedicineRepository;
 import com.example.demo.repository.UserRepository.PatientRepository;
 import com.example.demo.service.PharmacyService;
-import com.example.demo.service.impl.EmailService;
 import com.example.demo.service.impl.PatientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,15 +41,13 @@ public class PatientController {
     @Autowired
     private PatientRepository patientRepository;
     @Autowired
-    private EmailService emailService;
 
 public PatientController(PatientService patientService, PharmacyService pharmacyService,
-            MedicineRepository medicineRepository, PatientRepository patientRepository,EmailService emailService) {
+            MedicineRepository medicineRepository, PatientRepository patientRepository) {
         this.patientService = patientService;
         this.pharmacyService = pharmacyService;
         this.medicineRepository = medicineRepository;
         this.patientRepository = patientRepository;
-        this.emailService=emailService;
     }
 
 
@@ -173,5 +170,27 @@ public ResponseEntity<?> cancelExamination(@RequestBody Long examinationId){
         List<Pharmacy> ret=patientService.getPharmaciesForComplaint(Long.parseLong(patientId));
         
         return new ResponseEntity<List<Pharmacy>>(ret,HttpStatus.OK);
+}
+
+@PostMapping(value="/rateUser/{userId}")
+public ResponseEntity<Double> rateUser(@PathVariable Long userId,@RequestBody String mark){
+    System.out.println("kontroler za  ocjenjivanje");
+    Double m=patientService.rateUser(userId,Double.parseDouble(mark));
+
+    return new ResponseEntity<Double>(m,HttpStatus.OK);
+}
+@PostMapping(value="/rateMedicine/{medicineId}")
+public ResponseEntity<Double> rateMedciine(@PathVariable Long medicineId,@RequestBody String mark){
+    System.out.println("kontroler za  ocjenjivanje - medicine");
+    Double m=patientService.rateMedicine(medicineId,Double.parseDouble(mark));
+
+    return new ResponseEntity<Double>(m,HttpStatus.OK);
+}
+@PostMapping(value="/ratePharmacy/{pharmacyId}")
+public ResponseEntity<Double> ratePharmacy(@PathVariable Long pharmacyId,@RequestBody String mark){
+    System.out.println("kontroler za  ocjenjivanje-pharmacy");
+    Double m=patientService.ratePharmacy(pharmacyId,Double.parseDouble(mark));
+
+    return new ResponseEntity<Double>(m,HttpStatus.OK);
 }
 }

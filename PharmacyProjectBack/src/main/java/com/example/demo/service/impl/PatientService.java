@@ -3,7 +3,6 @@ package com.example.demo.service.impl;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -15,16 +14,19 @@ import com.example.demo.model.Examination;
 import com.example.demo.model.ExaminationStatus;
 import com.example.demo.model.Medicine;
 import com.example.demo.model.Pharmacy;
+import com.example.demo.model.Users.Dermatologist;
 import com.example.demo.model.Users.Patient;
+import com.example.demo.model.Users.Pharmacist;
 import com.example.demo.model.Users.User;
 import com.example.demo.repository.ComplaintRepository;
 import com.example.demo.repository.ConsultingRepository;
 import com.example.demo.repository.ExaminationRepository;
+import com.example.demo.repository.MedicineRepository;
 import com.example.demo.repository.PharmacyRepository;
+import com.example.demo.repository.UserRepository.DermatologistRepository;
 import com.example.demo.repository.UserRepository.PatientRepository;
 import com.example.demo.repository.UserRepository.PharmacistRepository;
 import com.example.demo.service.IPatientService;
-import com.example.demo.service.PharmacyService;
 import com.example.demo.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,8 @@ public class PatientService implements IPatientService{
     @Autowired
     private PharmacistRepository pharmacistRepository;
     @Autowired
+    private MedicineRepository medicineRepository;
+    @Autowired
     private EmailService emailService;
 
     @Autowired 
@@ -54,6 +58,9 @@ public class PatientService implements IPatientService{
 
     @Autowired
     PharmacyRepository pharmacyRepository;
+
+    @Autowired
+    DermatologistRepository dermatologistRepository;
 
     
     public PatientService(PatientRepository patientRepository, ExaminationRepository examinationRepository,
@@ -349,5 +356,42 @@ public class PatientService implements IPatientService{
         complaintRepository.save(complaint);
 
         return 1;
+    }
+
+    @Override
+    public Double rateUser(Long userId, Double mark) {
+        Pharmacist ph=pharmacistRepository.findById(userId).orElse(null);
+        Dermatologist d=dermatologistRepository.findById(userId).orElse(null);
+        Double newMark;
+        if(ph!=null){
+            newMark=(ph.getMark()+mark)/2;
+            ph.setMark(newMark);
+            pharmacistRepository.save(ph);
+        }else{
+            newMark=(d.getMark()+mark)/2;
+            d.setMark(newMark);
+            dermatologistRepository.save(d);
+        }
+        return newMark;
+    }
+
+    @Override
+    public Double rateMedicine(Long medicineId, Double mark) {
+        Medicine m=medicineRepository.findById(medicineId).get();
+        Double newMark;
+        newMark=(m.getMark()+mark)/2;
+        m.setMark(newMark);
+        medicineRepository.save(m);
+        return newMark;
+    }
+
+    @Override
+    public Double ratePharmacy(Long pharmacyId, Double mark) {
+        Pharmacy p=pharmacyRepository.findById(pharmacyId).get();
+        Double newMark;
+        newMark=(p.getMark()+mark)/2;
+        p.setMark(newMark);
+        pharmacyRepository.save(p);
+        return newMark;
     }
 }

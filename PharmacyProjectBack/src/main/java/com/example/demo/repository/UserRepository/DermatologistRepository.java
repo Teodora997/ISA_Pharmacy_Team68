@@ -4,6 +4,6 @@ import com.example.demo.model.Users.Dermatologist;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface DermatologistRepository extends JpaRepository<Dermatologist, Integer> {
+public interface DermatologistRepository extends JpaRepository<Dermatologist, Long> {
     
 }

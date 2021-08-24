@@ -23,4 +23,7 @@ public interface IPatientService {
     public Integer makeComplaint(String patientId,Long userId,String text);
     public List<Pharmacy> getPharmaciesForComplaint(Long patientId);
     public Integer makeComplaintPharmacy(String patientId,Long pharmacyId,String text);
+    public Double rateUser(Long userId,Double mark);
+    public Double rateMedicine(Long medicineId,Double mark);
+    public Double ratePharmacy(Long pharmacyId,Double mark);
 }

@@ -53,4 +53,13 @@ export class PatientService {
   public makeComplaintPharmacy(patientId:string,pharmacyId:number,complaintText:string): Observable<number> {
     return this.http.post<number>("http://localhost:8081/api/patients/makeComplaintPharmacy/"+ patientId +"/"+ pharmacyId,complaintText);
   }  
+  public rateUser(userId:number,mark:string): Observable<number >{
+    return this.http.post<number>("http://localhost:8081/api/patients/rateUser/"+ userId,mark);
+  }
+  public ratePharmacy(pharmacyId:number,mark:string): Observable<number >{
+    return this.http.post<number>("http://localhost:8081/api/patients/ratePharmacy/"+ pharmacyId,mark);
+  }
+  public rateMedicine(medicineId:number,mark:string): Observable<number >{
+    return this.http.post<number>("http://localhost:8081/api/patients/rateMedicine/"+ medicineId,mark);
+  }
 }
