@@ -62,4 +62,13 @@ export class PatientService {
   public rateMedicine(medicineId:number,mark:string): Observable<number >{
     return this.http.post<number>("http://localhost:8081/api/patients/rateMedicine/"+ medicineId,mark);
   }
+  public getSubscribedPharmacies(patientId:string): Observable<Pharmacy[]> {
+    return this.http.get<Pharmacy[]>("http://localhost:8081/api/patients/getSubscribedPharmacies/"+patientId);
+  }
+  public subscribe(patientId:string,pharmacyId:number): Observable<Pharmacy >{
+    return this.http.post<Pharmacy>("http://localhost:8081/api/patients/subscribe/"+ patientId,pharmacyId);
+  }
+  public unsubscribe(patientId:string,pharmacyId:number): Observable<Pharmacy >{
+    return this.http.post<Pharmacy>("http://localhost:8081/api/patients/unsubscribe/"+ patientId,pharmacyId);
+  }
 }

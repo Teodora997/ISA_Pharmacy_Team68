@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -193,4 +194,33 @@ public ResponseEntity<Double> ratePharmacy(@PathVariable Long pharmacyId,@Reques
 
     return new ResponseEntity<Double>(m,HttpStatus.OK);
 }
+
+@GetMapping(value="/getSubscribedPharmacies/{patientId}")
+public ResponseEntity<Set<Pharmacy>> getSubscribedPharmacies(@PathVariable String patientId){
+    Set<Pharmacy> pharmacies=new HashSet<>();
+    
+    pharmacies=patientService.getSubscribedPharmacies(Long.parseLong(patientId));
+    return new ResponseEntity<Set<Pharmacy>>(pharmacies,HttpStatus.OK);
+    
+}
+@PostMapping(value="/subscribe/{patientId}")
+public ResponseEntity<Pharmacy> subscribe(@PathVariable String patientId,@RequestBody Long pharmacyId){
+    System.out.println("KONTROLER SUBSCRIBE");
+        Pharmacy p=patientService.subscribe(Long.parseLong(patientId), pharmacyId);
+        if(p!=null){
+        return new ResponseEntity<Pharmacy>(p,HttpStatus.OK);
+    }
+        return null;
+    }
+
+
+@PostMapping(value="/unsubscribe/{patientId}")
+public ResponseEntity<Pharmacy> unsubscribe(@PathVariable String patientId,@RequestBody Long pharmacyId){
+    System.out.println("KONTROLER SUBSCRIBE");
+        Pharmacy p=patientService.unsubscribe(Long.parseLong(patientId), pharmacyId);
+        if(p!=null){
+        return new ResponseEntity<Pharmacy>(p,HttpStatus.OK);
+    }
+        return null;
+    }
 }

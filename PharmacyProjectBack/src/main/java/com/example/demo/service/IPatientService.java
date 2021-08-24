@@ -26,4 +26,7 @@ public interface IPatientService {
     public Double rateUser(Long userId,Double mark);
     public Double rateMedicine(Long medicineId,Double mark);
     public Double ratePharmacy(Long pharmacyId,Double mark);
+    public Set<Pharmacy> getSubscribedPharmacies(Long patientId);
+    public Pharmacy subscribe(Long patientId,Long pharmacyId);
+    public Pharmacy unsubscribe(Long patientId,Long pharmacyId);
 }

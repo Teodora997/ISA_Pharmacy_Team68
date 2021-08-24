@@ -394,4 +394,41 @@ public class PatientService implements IPatientService{
         pharmacyRepository.save(p);
         return newMark;
     }
+
+    @Override
+    public Set<Pharmacy> getSubscribedPharmacies(Long patientId) {
+        Patient p=patientRepository.findById(patientId).get();
+        Set<Pharmacy> pharmacies=p.getSubPharmacies();
+        return pharmacies;
+    }
+
+    @Override
+    public Pharmacy subscribe(Long patientId, Long pharmacyId) {
+        System.out.println("SERVIS SUBSCRIBE");
+        Patient p=patientRepository.findById(patientId).get();
+        Pharmacy ps=pharmacyRepository.findById(pharmacyId).get();
+        Set<Pharmacy> subPharmacies=p.getSubPharmacies();
+        for(Pharmacy ph:subPharmacies){
+            if(ph.getId().equals(pharmacyId)){
+                System.out.println("Vec pretplacen!");
+                return null;
+            }
+        }
+                subPharmacies.add(ps);
+                p.setSubPharmacies(subPharmacies);
+                patientRepository.save(p);
+         return ps;
+    }
+
+    @Override
+    public Pharmacy unsubscribe(Long patientId, Long pharmacyId) {
+        System.out.println("UNSUBSCRIBE");
+        Patient p=patientRepository.findById(patientId).get();
+        Pharmacy ps=pharmacyRepository.findById(pharmacyId).get();
+        Set<Pharmacy> subPharmacies=p.getSubPharmacies();      
+        subPharmacies.remove(ps);
+        p.setSubPharmacies(subPharmacies);
+        patientRepository.save(p);
+        return ps;
+    }
 }
