@@ -4,6 +4,7 @@ import { MakeConsultingComponent } from './make-consulting/make-consulting.compo
 import { MedicineReservationComponent } from './medicine-reservation/medicine-reservation.component';
 import { PatientComplaintComponent } from './patient-complaint/patient-complaint.component';
 import { PatientConsultingComponent } from './patient-consultings/patient-consultings.component';
+import { PatientEprescriptionComponent } from './patient-eprescription/patient-eprescription.component';
 import { PatientExaminationComponent } from './patient-examinations/patient-examinations.component';
 import { PatientHomepageComponent } from './patient-homepage/patient-homepage.component';
 import { PatientPharmaciesComponent } from './patient-pharmacies/patient-pharmacies.component';
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'patient-consultings', component: PatientConsultingComponent },
   { path: 'patient-examinations', component: PatientExaminationComponent },
   { path: 'medicine-reservations', component: MedicineReservationComponent },
-  { path: 'patient-complaint', component: PatientComplaintComponent }
+  { path: 'patient-complaint', component: PatientComplaintComponent },
+  { path: 'patient-eprescription', component: PatientEprescriptionComponent }
 
 
 ];

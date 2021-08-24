@@ -61,49 +61,67 @@
     </nav>
 </div>	
 <div>
-    <h1 style="color: rgb(100, 98, 216);"> PHARMACIES</h1>
-     <div>
-         <div class="col-sm-6">
-             <div class="form-group">
-                 <input type="text" value="" placeholder="Name" class="form-control" name="name"
-                     #name="ngModel" [(ngModel)]="searchParameters.name" />
-             </div>
-         </div>
-         <div class="col-sm-6">
-             <div class="form-group">
-                 <input type="text" value="" placeholder="Address" class="form-control" name="address"
-                     #address="ngModel" [(ngModel)]="searchParameters.address" />
-             </div>
-         </div>
-         <button (click)="pretraga()">Search</button>
-         <div>
-         <label>Mark from</label>
-         <input type="number" name="markFrom" #markFrom="ngModel" [(ngModel)]="searchParameters.markFrom"/>
-         <label>Mark to</label>
-         <input type="number" name="markTo" #markTo="ngModel" [(ngModel)]="searchParameters.markTo"/>
-         <button (click)="filter()">Filter</button>
-        </div>
-     </div>
-    <div class="card" style="margin-top: 150px;">
+    <h1 style="color: rgb(100, 98, 216);"> ePrescription</h1>
      
-     <div class="card-content table-responsive table-full-width">
-         <table class="table">
-             <thead class="text-success">
-                <th>Id</th>
-                 <th>Name <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
-                 <th>Mark <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
-                 <th>Address</th>
-             </thead>
-             <tbody>
-                 <tr *ngFor='let k of filteredPharmacies'>
-                    <td [routerLink]="[k.id]">{{k.id}}</td>
-                     <td >{{k.name}}</td>
-                     <td>{{k.mark}}</td>
-                     <td>{{k.address}}</td>
-                 </tr>
-             </tbody>
-         </table>
-     </div>
- </div>
+      
+
+<div class = "col-8">
+        <div>
+            <h3>Upload your QR code</h3>
+               <div class="form-group">
+                   <div class="row">
+                        
+                           <div class="col">
+                               <input type="file" (change)="onFileChanged($event)" />
+                           </div> 
+                            <div> 
+                                <button type="button" (click)="onUpload()"> Upload</button>
+                            </div> 
+
+                   </div>
+               </div>
+       </div>
+</div>
+
+<div >
+    <h3>Medicines from QR</h3>
+    <table class="table">
+        <thead class="text-success">
+            <th>Name</th> 
+            <th>Amount</th> 
+        </thead>
+        <tbody>
+            <tr *ngFor='let c of response.medicines'>
+                <td>{{c.name}}</td>
+                <td>{{c.amount}}</td>
+            </tr>
+        </tbody>
+    </table>
+   </div>
+
+   <br><br>
+
+   <div >
+    <h3>Medicines available in pharmacies:</h3>
+    <table class="table">
+       
+        <thead class="text-success">
+            <th>Name</th> 
+            <th>Address</th> 
+            <th>Total price</th>
+        </thead>
+        <tbody>
+            <tr *ngFor='let c of response.pharmacies'>
+                <td>{{c.name}}</td>
+                <td>{{c.address}}</td>
+                <td>{{c.totalPrice}}</td> 
+                <td><button (click)="buy(c.id,response.prescriptionId)"> Buy</button> </td>
+            </tr>
+        </tbody>
+    </table>
+   </div>
+
+
+
 </div>
 </div>
