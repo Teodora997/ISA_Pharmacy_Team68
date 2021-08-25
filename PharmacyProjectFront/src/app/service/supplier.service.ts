@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { DisplayOffer } from "../model/displayOffer";
 import { Offer } from "../model/offer";
 import { Order } from "../model/order";
 import { OrderItem } from "../model/orderItem";
@@ -17,8 +18,10 @@ export class SupplierService {
     return this.http.post<OrderItem[]>("http://localhost:8081/api/supplier/getItemsFromOrder",orderId);
   }
 
-  public sendOffer(orderId:number,offer:Offer): Observable<any> {
-    return this.http.post<any>("http://localhost:8081/api/supplier/sendOffer/"+ orderId,offer);
+  public sendOffer(userId:string,orderId:number,offer:Offer): Observable<any> {
+    return this.http.post<any>("http://localhost:8081/api/supplier/sendOffer/"+ userId+"/"+orderId,offer);
   }
-  
+  public getOffers(userId:string): Observable<DisplayOffer[]> {
+    return this.http.post<DisplayOffer[]>("http://localhost:8081/api/supplier/getOffers",userId);
+  }
 }

@@ -3,11 +3,16 @@ package com.example.demo.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import com.example.demo.dto.OrderMedicinesDTO;
+
 import com.example.demo.model.OrderItem;
 import com.example.demo.model.OrderMedicines;
 import com.example.demo.model.OrderOfferStatus;
+
+import com.example.demo.repository.OfferRepository;
 import com.example.demo.repository.OrderRepository;
+import com.example.demo.repository.UserRepository.UserRepository;
 import com.example.demo.service.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +23,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    OfferRepository offerRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public List<OrderMedicinesDTO> getWaitingOrders() {
@@ -44,6 +55,8 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItem> items= order.getOrderItems();
         return items;
     }
+
+    
 
     
 }

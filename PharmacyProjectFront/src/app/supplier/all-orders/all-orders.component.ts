@@ -22,6 +22,7 @@ export class AllOrdersComponent implements OnInit {
   previewOffer:boolean; 
   user: User;
   orders: Order[]=[];
+  orders1: Order[]=[];
   orderItems: OrderItem[]=[]; 
   order : Order;
   offer : Offer;
@@ -43,15 +44,7 @@ ngOnInit(): void {
 
 }
 
-sendOffer(){
-  this.supplierService.sendOffer(this.order.id,this.offer).subscribe({
-    next: t => {
-      this.response = t;
-      console.log(this.response);
-    }
 
-  });
-}
 
 getOrders() {
     
@@ -59,6 +52,13 @@ getOrders() {
     next: t => {
       this.orders = t;
       console.log(this.orders);
+      let d1=new Date();
+      for(let o of this.orders){
+        let d2=new Date(o.timeLimit);
+        if(d2>d1){
+          this.orders1.push(o);
+      }
+    }
     }
 
   });
@@ -66,21 +66,32 @@ getOrders() {
 }
 
 seeItems(o:Order) {
+  this.order=o;
   this.previewOrderItems = !this.previewOrderItems;
   this.supplierService.getItemsFromOrder(o.id).subscribe({
     next: t => {
       this.orderItems = t;
-      console.log(this.orders);
+      //console.log(this.orders);
+    }
+
+  });
+}
+sendOffer(){
+  
+  if(this.offer.deliveryDate==null || this.offer.totalPrice==null){
+    alert("Fields cant be empty!");
+  }
+  console.log(this.order.id);
+  console.log(this.offer);
+  this.supplierService.sendOffer(this.user.id,this.order.id,this.offer).subscribe({
+    next: t => {
+      this.response = t;
+      alert("Offer is sent!");
     }
 
   });
 }
 
-writeOffer(o:Order){
-  this.previewOffer=!this.previewOffer;
-  
-  this.order=o;
-}
 
 getUser() {
     
