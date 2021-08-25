@@ -5,6 +5,7 @@ import com.example.demo.repository.MedicinePLItemRepository;
 import com.example.demo.repository.PharmacyRepository;
 import com.example.demo.repository.UserRepository.PharmacyAdminRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,19 +122,21 @@ System.out.println("REZULTAT"+ret);
         List<ExaminationDTO> availableExaminations=new ArrayList<>();
         List<Examination> examinations=getExaminationsByPharmacy(pharmacyId);
         for(Examination e:examinations){
-            if(e.getStatus()==ExaminationStatus.available|| e.getStatus().equals(ExaminationStatus.canceled)){
-                ExaminationDTO ea=new ExaminationDTO();
-                ea.setExaminationId(e.getId());
-                ea.setDermatologistId(e.getDermatologist().getId());
-                ea.setDermatologistName(e.getDermatologist().getFirstName());
-                ea.setDermatologistRate(e.getDermatologist().getMark());
-                ea.setPrice(e.getPrice());
-                ea.setDate(e.getDate());
-                ea.setTime(e.getTime());
-                availableExaminations.add(ea);
+            if(e.getDate().isAfter(LocalDate.now())){
+                if(e.getStatus()==ExaminationStatus.available|| e.getStatus().equals(ExaminationStatus.canceled)){
+                    ExaminationDTO ea=new ExaminationDTO();
+                    ea.setExaminationId(e.getId());
+                    ea.setDermatologistId(e.getDermatologist().getId());
+                    ea.setDermatologistName(e.getDermatologist().getFirstName());
+                    ea.setDermatologistRate(e.getDermatologist().getMark());
+                    ea.setPrice(e.getPrice());
+                    ea.setDate(e.getDate());
+                    ea.setTime(e.getTime());
+                    availableExaminations.add(ea);
 
-            }
+                }
         }
+    }
         return availableExaminations;
     }
 

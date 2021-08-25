@@ -60,7 +60,7 @@ export class MakeConsultingComponent implements OnInit {
                 next: exId=>{
                   console.log(exId)
                     if(exId==null){
-                      alert("Not succesifull!Patient already has consulting for this date and time!")
+                      alert("Not succesifull!Patient already has consulting/examination for this date and time!")
                     }else{
                     alert("Consulting scheduled!");
                     }

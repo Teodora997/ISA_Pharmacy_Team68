@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +16,6 @@ import com.example.demo.model.Users.Patient;
 import com.example.demo.repository.MedicineRepository;
 import com.example.demo.repository.UserRepository.PatientRepository;
 import com.example.demo.service.PharmacyService;
-import com.example.demo.service.impl.EmailService;
 import com.example.demo.service.impl.PatientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,15 +42,13 @@ public class PatientController {
     @Autowired
     private PatientRepository patientRepository;
     @Autowired
-    private EmailService emailService;
 
 public PatientController(PatientService patientService, PharmacyService pharmacyService,
-            MedicineRepository medicineRepository, PatientRepository patientRepository,EmailService emailService) {
+            MedicineRepository medicineRepository, PatientRepository patientRepository) {
         this.patientService = patientService;
         this.pharmacyService = pharmacyService;
         this.medicineRepository = medicineRepository;
         this.patientRepository = patientRepository;
-        this.emailService=emailService;
     }
 
 
@@ -174,4 +172,67 @@ public ResponseEntity<?> cancelExamination(@RequestBody Long examinationId){
         
         return new ResponseEntity<List<Pharmacy>>(ret,HttpStatus.OK);
 }
+
+@PostMapping(value="/rateUser/{userId}")
+public ResponseEntity<Double> rateUser(@PathVariable Long userId,@RequestBody String mark){
+    System.out.println("kontroler za  ocjenjivanje");
+    Double m=patientService.rateUser(userId,Double.parseDouble(mark));
+
+    return new ResponseEntity<Double>(m,HttpStatus.OK);
+}
+@PostMapping(value="/rateMedicine/{medicineId}")
+public ResponseEntity<Double> rateMedciine(@PathVariable Long medicineId,@RequestBody String mark){
+    System.out.println("kontroler za  ocjenjivanje - medicine");
+    Double m=patientService.rateMedicine(medicineId,Double.parseDouble(mark));
+
+    return new ResponseEntity<Double>(m,HttpStatus.OK);
+}
+@PostMapping(value="/ratePharmacy/{pharmacyId}")
+public ResponseEntity<Double> ratePharmacy(@PathVariable Long pharmacyId,@RequestBody String mark){
+    System.out.println("kontroler za  ocjenjivanje-pharmacy");
+    Double m=patientService.ratePharmacy(pharmacyId,Double.parseDouble(mark));
+
+    return new ResponseEntity<Double>(m,HttpStatus.OK);
+}
+
+@GetMapping(value="/getSubscribedPharmacies/{patientId}")
+public ResponseEntity<Set<Pharmacy>> getSubscribedPharmacies(@PathVariable String patientId){
+    Set<Pharmacy> pharmacies=new HashSet<>();
+    
+    pharmacies=patientService.getSubscribedPharmacies(Long.parseLong(patientId));
+    return new ResponseEntity<Set<Pharmacy>>(pharmacies,HttpStatus.OK);
+    
+}
+@PostMapping(value="/subscribe/{patientId}")
+public ResponseEntity<Pharmacy> subscribe(@PathVariable String patientId,@RequestBody Long pharmacyId){
+    System.out.println("KONTROLER SUBSCRIBE");
+        Pharmacy p=patientService.subscribe(Long.parseLong(patientId), pharmacyId);
+        if(p!=null){
+        return new ResponseEntity<Pharmacy>(p,HttpStatus.OK);
+    }
+        return null;
+    }
+
+
+@PostMapping(value="/unsubscribe/{patientId}")
+public ResponseEntity<Pharmacy> unsubscribe(@PathVariable String patientId,@RequestBody Long pharmacyId){
+    System.out.println("KONTROLER SUBSCRIBE");
+        Pharmacy p=patientService.unsubscribe(Long.parseLong(patientId), pharmacyId);
+        if(p!=null){
+        return new ResponseEntity<Pharmacy>(p,HttpStatus.OK);
+    }
+        return null;
+    }
+    @PostMapping(value = "/sort/{sortType}")
+    public Object sortPharmacy(@RequestBody ArrayList<ExaminationDTO> sortExaminations, @PathVariable("sortType") String sortType) {
+
+        return patientService.sort(sortExaminations, sortType);
+    }
+
+    @GetMapping(value="/getPenalties/{patientId}")
+    public ResponseEntity<Integer> getPenalties(@PathVariable String patientId){
+        Patient p=patientRepository.findById(Long.parseLong(patientId)).get();
+        Integer penalties=p.getPenals();
+        return new ResponseEntity<Integer>(penalties,HttpStatus.OK);
+    }
 }

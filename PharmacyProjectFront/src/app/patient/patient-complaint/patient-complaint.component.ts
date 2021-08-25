@@ -5,8 +5,10 @@ import { LoginService } from 'src/app/login/login.service';
 import { Consulting } from 'src/app/model/consulting';
 import { DermatologistExaminations } from 'src/app/model/dermatologistExamination';
 import { Medicine } from 'src/app/model/medicine';
+import { MedicineForReservation } from 'src/app/model/medicineForReservation';
 import { Pharmacy } from 'src/app/model/pharmacy';
 import { UserService } from 'src/app/service';
+import { MedicineService } from 'src/app/service/medicine.service';
 import { PatientService } from 'src/app/service/patient.service';
 import { User } from 'src/app/user';
 
@@ -32,11 +34,18 @@ export class PatientComplaintComponent implements OnInit {
     consultings1: Consulting[]=[];
     examinations1: DermatologistExaminations[]=[];
     pharmacies:Pharmacy[]=[];
+    mark:string;
+    marks:string[]=[];
+    s!: number;
+    medicines:MedicineForReservation[]=[];
+    medicines1:MedicineForReservation[]=[];
     
-    constructor(private router: Router, private loginService: LoginService,private userService:UserService,private patientService: PatientService) {
+    constructor(private router: Router, private loginService: LoginService,private userService:UserService,private patientService: PatientService,private medicineService: MedicineService) {
         this.user = new User();
        this.previewText=false;
        this.previewTextP=false;
+       this.mark="";
+       this.marks=["0","1","2","3","4","5","6","7","8","9","10"];
       }
 
       ngOnInit(): void {
@@ -141,6 +150,49 @@ export class PatientComplaintComponent implements OnInit {
       })
 
       }
+      //******* OCJENJIVANJE *********/
+      rateUser(userId:number){
+        console.log(userId);
+        this.patientService.rateUser(userId,this.mark).subscribe({
+          next: s=>{
+            this.s=s;
+            console.log(this.s);
+          }
+        });
+      }
+      ratePharmacy(pharmacyId:number){
+        console.log(pharmacyId);
+        this.patientService.ratePharmacy(pharmacyId,this.mark).subscribe({
+          next: s=>{
+            this.s=s;
+            console.log(this.s);
+          }
+        })
+      }
+
+      getReservationsByPatient(){
+        this.medicineService.getReservationsByPatient(this.user.id).subscribe({
+            next: res=>{
+                this.medicines=res;
+                for(let r of this.medicines){
+                  if(r.status=="DONE"){
+                    this.medicines1.push(r);
+                  }
+                }
+            }
+        })
+    }
+    rateMedicine(medicineId:number){
+      this.patientService.rateMedicine(medicineId,this.mark).subscribe({
+        next: s=>{
+          this.s=s;
+          console.log(this.s);
+        }
+      })
+    }
+
+
+
 
       getUser() {
         
@@ -151,6 +203,7 @@ export class PatientComplaintComponent implements OnInit {
             this.getConsultingsByPatient();
             this.getExaminationsByPatient();
             this.getPharmacies();
+            this.getReservationsByPatient();
           }
     
         });
