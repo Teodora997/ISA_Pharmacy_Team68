@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -29,4 +30,5 @@ public interface IPatientService {
     public Set<Pharmacy> getSubscribedPharmacies(Long patientId);
     public Pharmacy subscribe(Long patientId,Long pharmacyId);
     public Pharmacy unsubscribe(Long patientId,Long pharmacyId);
+    public ArrayList<ExaminationDTO> sort(ArrayList<ExaminationDTO> sortAppointments, String sortType);
 }

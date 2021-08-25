@@ -2,6 +2,7 @@ package com.example.demo.service.impl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -81,10 +82,19 @@ public class PatientService implements IPatientService{
 
     @Override
     public Long makeExamination(String patientId, Long examinationId) {
-        List<ConsultingDTO> cons=getConsultingsByPatient(Long.parseLong(patientId));
+        
+        List<ExaminationDTO> ex=getExaminationsByPatient(Long.parseLong(patientId));
         Boolean patientAvailable=true;
         Examination examination=examinationRepository.findById(examinationId).get();
+        List<ConsultingDTO> cons=getConsultingsByPatient(Long.parseLong(patientId));
         for(ConsultingDTO cd:cons){
+            if(cd.getDate().isEqual(examination.getDate()) && cd.getTime().equals(examination.getTime())){
+                System.out.println("pacijent je zauzet EXAMINATIONS");
+                patientAvailable=false;
+            }
+        }
+
+        for(ExaminationDTO cd:ex){
             if(cd.getDate().isEqual(examination.getDate()) && cd.getTime().equals(examination.getTime())){
                 System.out.println("pacijent je zauzet EXAMINATIONS");
                 patientAvailable=false;
@@ -115,6 +125,9 @@ public class PatientService implements IPatientService{
 
     @Override
     public List<ConsultingDTO> getPharmaciesForConsulting(LocalDate date, String time) {
+        if(date.isBefore(LocalDate.now())){
+            return null;
+        }
         List<Consulting> allConsultings=new ArrayList<>();
         allConsultings=consultingRepository.findAll();
         System.out.println("svi pregledi "+allConsultings+date);
@@ -155,6 +168,14 @@ public class PatientService implements IPatientService{
             System.out.println("u foru "+ex.getDate()+" "+consulting.getDate()+ex.getTime()+" "+consulting.getTime());
             if(ex.getDate().compareTo(consulting.getDate())==0 && ex.getTime().equals(consulting.getTime())){
                 System.out.println("pacijent je zauzet");
+                patientAvailable=false;
+            }
+        }
+
+        List<ConsultingDTO> cons=getConsultingsByPatient(Long.parseLong(patientId));
+        for(ConsultingDTO cd:cons){
+            if(cd.getDate().isEqual(consulting.getDate()) && cd.getTime().equals(consulting.getTime())){
+                System.out.println("pacijent je zauzet EXAMINATIONS");
                 patientAvailable=false;
             }
         }
@@ -430,5 +451,18 @@ public class PatientService implements IPatientService{
         p.setSubPharmacies(subPharmacies);
         patientRepository.save(p);
         return ps;
+    }
+
+    @Override
+    public ArrayList<ExaminationDTO> sort(ArrayList<ExaminationDTO> sortAppointments, String sortType) {
+       
+        if(sortType.equals("RATE")){
+            sortAppointments.sort(Comparator.comparingDouble(ExaminationDTO:: getDermatologistRate));
+            return sortAppointments;
+        }else if(sortType.equals("PRICE")){
+            sortAppointments.sort(Comparator.comparingDouble(ExaminationDTO:: getPrice));
+            return sortAppointments;
+        }
+        return null;
     }
 }

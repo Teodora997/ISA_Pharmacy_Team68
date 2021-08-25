@@ -223,4 +223,16 @@ public ResponseEntity<Pharmacy> unsubscribe(@PathVariable String patientId,@Requ
     }
         return null;
     }
+    @PostMapping(value = "/sort/{sortType}")
+    public Object sortPharmacy(@RequestBody ArrayList<ExaminationDTO> sortExaminations, @PathVariable("sortType") String sortType) {
+
+        return patientService.sort(sortExaminations, sortType);
+    }
+
+    @GetMapping(value="/getPenalties/{patientId}")
+    public ResponseEntity<Integer> getPenalties(@PathVariable String patientId){
+        Patient p=patientRepository.findById(Long.parseLong(patientId)).get();
+        Integer penalties=p.getPenals();
+        return new ResponseEntity<Integer>(penalties,HttpStatus.OK);
+    }
 }
