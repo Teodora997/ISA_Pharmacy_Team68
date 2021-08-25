@@ -10,9 +10,11 @@ import com.example.demo.dto.ConsultingDTO;
 import com.example.demo.dto.ExaminationDTO;
 import com.example.demo.model.Consulting;
 import com.example.demo.model.Examination;
+import com.example.demo.model.LoyaltyProgram;
 import com.example.demo.model.Medicine;
 import com.example.demo.model.Pharmacy;
 import com.example.demo.model.Users.Patient;
+import com.example.demo.repository.LoyaltyProgramRepository;
 import com.example.demo.repository.MedicineRepository;
 import com.example.demo.repository.UserRepository.PatientRepository;
 import com.example.demo.service.PharmacyService;
@@ -20,6 +22,7 @@ import com.example.demo.service.impl.PatientService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,6 +45,9 @@ public class PatientController {
     @Autowired
     private PatientRepository patientRepository;
     @Autowired
+    private LoyaltyProgramRepository loyaltyRepository;
+    
+    
 
 public PatientController(PatientService patientService, PharmacyService pharmacyService,
             MedicineRepository medicineRepository, PatientRepository patientRepository) {
@@ -232,7 +238,38 @@ public ResponseEntity<Pharmacy> unsubscribe(@PathVariable String patientId,@Requ
     @GetMapping(value="/getPenalties/{patientId}")
     public ResponseEntity<Integer> getPenalties(@PathVariable String patientId){
         Patient p=patientRepository.findById(Long.parseLong(patientId)).get();
-        Integer penalties=p.getPenals();
+        Integer penalties=patientService.getPenals(p.getId());
         return new ResponseEntity<Integer>(penalties,HttpStatus.OK);
+    }
+    @GetMapping(value="/getPoints/{patientId}")
+    public ResponseEntity<Integer> getPoints(@PathVariable String patientId){
+        Patient p=patientRepository.findById(Long.parseLong(patientId)).get();
+        Integer points=p.getPoints();
+        return new ResponseEntity<Integer>(points,HttpStatus.OK);
+    }
+    @GetMapping(value="/getCategory/{patientId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public int getCategory(@PathVariable String patientId){
+        Patient p=patientRepository.findById(Long.parseLong(patientId)).get();
+        Integer points=p.getPoints();
+        String category="REGULAR";
+        List<LoyaltyProgram> lp=loyaltyRepository.findAll();
+        LoyaltyProgram l=lp.get(0);
+        Integer silver=l.getSilverPoints();
+        Integer gold=l.getGoldPoints();
+        if(points>=gold){
+            category="GOLD";
+            p.setCategory(category);
+            patientRepository.save(p);
+            return 2;
+        }else if(points>=silver){
+            category="SILVER";
+            p.setCategory(category);
+            patientRepository.save(p);
+            return 1;
+        }
+        
+        p.setCategory(category);
+        patientRepository.save(p);
+        return 0;
     }
 }

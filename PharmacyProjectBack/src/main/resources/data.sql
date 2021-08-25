@@ -25,7 +25,7 @@ INSERT INTO `user_authority` (user_id, authority_id) VALUES (700, 2);
 INSERT INTO `work_time` (id,from_date,shift,to_date) values (1,'',1,'');
 INSERT INTO `work_time` (id,from_date,shift,to_date) values (2,'',2,'');
 
-INSERT INTO `patients` (category,penals,points,id) values ('Kategorija',1,10,200);
+INSERT INTO `patients` (category,penals,points,id) values ('Kategorija',0,50,200);
 INSERT INTO `patients` (category,penals,points,id) values ('Kategorija',4,10,300);
 
 INSERT INTO `dermatologists` (mark,id,work_time_id) values (10,400,1);
@@ -68,4 +68,7 @@ INSERT INTO `pharmacy_storage`(id,in_stock,medicine_id,medicine_name,pharmacy_id
 INSERT INTO `pharmacy_storage`(id,in_stock,medicine_id,medicine_name,pharmacy_id,reserved) values(22,0,2,'Rapten',1,1);
 INSERT INTO `pharmacy_storage`(id,in_stock,medicine_id,medicine_name,pharmacy_id,reserved) values(33,2,2,'Rapten',2,1);
 
-
+insert into `loyalty`(id,consulting_points,examination_points,gold_points,regular_points,silver_points) values(11,3,3,50,0,30);
+insert into `medicine_reservation`(id,medicine_id,medicine_name,patient_email,patient_id,pharmacy_id,pharmacy_name,pick_up_date,reservation_code,status)values (100,1,'Ibuprofen','pacijent1@gmail.com',200,1,'Benu','2021-08-20','a1a1a1a1adf',0);
+insert into `medicine_reservation`(id,medicine_id,medicine_name,patient_email,patient_id,pharmacy_id,pharmacy_name,pick_up_date,reservation_code,status)values (300,1,'Ibuprofen','pacijent1@gmail.com',200,1,'Benu','2021-08-21','a1a1a1jjjja1adf',1);
+insert into `medicine_reservation`(id,medicine_id,medicine_name,patient_email,patient_id,pharmacy_id,pharmacy_name,pick_up_date,reservation_code,status)values (200,1,'Ibuprofen','pacijent1@gmail.com',200,1,'Benu','2021-07-21','a1a1a1jjjja1adf',0)

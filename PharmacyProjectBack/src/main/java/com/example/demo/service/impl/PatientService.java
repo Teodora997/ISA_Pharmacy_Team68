@@ -1,8 +1,11 @@
 package com.example.demo.service.impl;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -71,6 +74,10 @@ public class PatientService implements IPatientService{
 
     @Autowired
     MedicineService medicineService;
+
+    @Autowired
+    MedicineServiceImpl medicineServiceImpl;
+
     @Autowired
     EPrescriptionServiceImpl ePrescriptionService;
     
@@ -349,7 +356,7 @@ public class PatientService implements IPatientService{
        System.out.println("U SERVISU ZA APOTEKE ZA ZALBY: "+ patientId);
        List<ConsultingDTO> cons=getConsultingsByPatient(patientId);
        List<ExaminationDTO> exams=getExaminationsByPatient(patientId);
-        List<MedicineReservationDTO> medRes=medicineService.getReservationsByPatient(patientId);
+        List<MedicineReservationDTO> medRes=medicineServiceImpl.getReservationsByPatient(patientId);
         List<EPrescription> ep=ePrescriptionService.gEPrescriptionByPatient(patientId);
        List<Pharmacy> pharmacies=new ArrayList<Pharmacy>();
 
@@ -492,4 +499,70 @@ public class PatientService implements IPatientService{
         }
         return null;
     }
+
+    @Override
+    public Integer getPenals(Long patientId) {
+        LocalDate start = YearMonth.now().atDay(1);
+        System.out.println("PRVI AVGUST BU TREBAO"+start);
+        LocalDate end   = YearMonth.now().atEndOfMonth();
+        Patient p=patientRepository.findById(patientId).get();
+        List<MedicineReservationDTO> allRes=medicineServiceImpl.getReservationsByPatient(patientId);
+        List<ExaminationDTO> allEx=getExaminationsByPatient(patientId);
+        List<ConsultingDTO> allCons=getConsultingsByPatient(patientId);
+        Integer penals=0;
+        for(MedicineReservationDTO md:allRes){
+            if(md.getDate().isAfter(start)){//u ovom mjesecu
+                System.out.println("prvi if-znaci u ovom mjesecu je");
+                if(md.getDate().isBefore(LocalDate.now())){//prosao rok za preuzimanje
+                    System.out.println("prosao rok za preuzimanje");
+                    if(md.getStatus().equals(MedicineReservationStatus.RESERVED)) {
+                        System.out.println("ni otkazan ni preuzeto");
+                        penals++;
+                }
+            }
+        }
+        }
+        for(ConsultingDTO md:allCons){
+            if(md.getDate().isAfter(start)){//u ovom mjesecu
+                System.out.println("prvi if-znaci u ovom mjesecu je-consultings");
+                if(md.getDate().isBefore(LocalDate.now())){//prosao termin
+                    System.out.println("prosao termin");
+                    if(md.getExaminationStatus().equals(ExaminationStatus.didNotCome)) {
+                        System.out.println("nije se pojavio");
+                        penals++;
+                }
+            }
+        }
+        }
+        for(ExaminationDTO md:allEx){
+            if(md.getDate().isAfter(start)){//u ovom mjesecu
+                System.out.println("prvi if-znaci u ovom mjesecu je-examinations");
+                if(md.getDate().isBefore(LocalDate.now())){//prosao termin
+                    System.out.println("prosao termin");
+                    if(md.getExaminationStatus().equals(ExaminationStatus.didNotCome)) {
+                        System.out.println("nije se pojavio");
+                        penals++;
+                }
+            }
+        }
+        }
+        
+
+        return penals;
+    }
+
+    private Date getFirstDateInMonth() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        return calendar.getTime();
+    }
+
+    private Date getLastDateInMonth() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DATE));
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        return calendar.getTime();
+    }
+
 }

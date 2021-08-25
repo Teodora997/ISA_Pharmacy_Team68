@@ -2,7 +2,7 @@ export class Consulting{
     consultingId!: number;
     pharmacistId!: number;
     pharmacistName!: string;
-    pharmacistRate!: number;
+    pharmaistRate!: number;
     pharmacyId!: number;
     pharmacyName!: string;
     pharmacyAddress!: string;

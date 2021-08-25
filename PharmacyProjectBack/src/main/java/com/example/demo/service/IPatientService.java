@@ -31,4 +31,5 @@ public interface IPatientService {
     public Pharmacy subscribe(Long patientId,Long pharmacyId);
     public Pharmacy unsubscribe(Long patientId,Long pharmacyId);
     public ArrayList<ExaminationDTO> sort(ArrayList<ExaminationDTO> sortAppointments, String sortType);
+    public Integer getPenals(Long patientId);
 }

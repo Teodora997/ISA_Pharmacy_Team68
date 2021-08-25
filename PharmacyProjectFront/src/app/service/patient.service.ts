@@ -86,4 +86,10 @@ export class PatientService {
   public getMyPenalty(patientId: string): Observable<number> {
     return this.http.get<number>("http://localhost:8081/api/patients/getPenalties/" + patientId);
   }
+  public getCategory(patientId: string): Observable<number> {
+    return this.http.get<number>("http://localhost:8081/api/patients/getCategory/" + patientId,{responseType:'json'});
+  }
+  public getPoints(patientId: string): Observable<number> {
+    return this.http.get<number>("http://localhost:8081/api/patients/getPoints/" + patientId);
+  }
 }
