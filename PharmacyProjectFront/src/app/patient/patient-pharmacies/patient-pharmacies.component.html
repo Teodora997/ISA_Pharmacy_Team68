@@ -93,6 +93,7 @@
                  <th>Name <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
                  <th>Mark <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
                  <th>Address</th>
+                 <th>Subscribe</th>
              </thead>
              <tbody>
                  <tr *ngFor='let k of filteredPharmacies'>
@@ -100,10 +101,32 @@
                      <td >{{k.name}}</td>
                      <td>{{k.mark}}</td>
                      <td>{{k.address}}</td>
+                     <td><button (click)="subscribe(k.id)">Subscribe</button></td>
                  </tr>
              </tbody>
          </table>
      </div>
+     <div class="card-content table-responsive table-full-width">
+        <h1 style="color: rgb(100, 98, 216);"> My subscriptions</h1>
+        <table class="table">
+            <thead class="text-success">
+               <th>Id</th>
+                <th>Name <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
+                <th>Mark <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
+                <th>Address</th>
+                <th>Unsubscribe</th>
+            </thead>
+            <tbody>
+                <tr *ngFor='let k of subscribedPharmacies'>
+                    <td>{{k.id}}</td>
+                    <td >{{k.name}}</td>
+                    <td>{{k.mark}}</td>
+                    <td>{{k.address}}</td>
+                    <td><button (click)="unsubscribe(k.id)">Unsubscribe</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
  </div>
 </div>
 </div>

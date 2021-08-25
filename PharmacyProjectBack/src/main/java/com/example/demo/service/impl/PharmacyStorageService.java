@@ -37,6 +37,19 @@ public class PharmacyStorageService implements IPharmacyStorageService {
         for(PharmacyStorage p:ps){
             if(p.getMedicineId()==medId && p.getPharmacyId()==phId){
                p.setInStock(p.getInStock()-1);
+               pharmacyStorageRepository.save(p);
+                }
+            }
+        
+    }
+
+    @Override
+    public void updateAfterCancel(Long medId, Long phId) {
+        List<PharmacyStorage> ps=pharmacyStorageRepository.findAll();
+        for(PharmacyStorage p:ps){
+            if(p.getMedicineId()==medId && p.getPharmacyId()==phId){
+               p.setInStock(p.getInStock()+1);
+               pharmacyStorageRepository.save(p);
                 }
             }
         

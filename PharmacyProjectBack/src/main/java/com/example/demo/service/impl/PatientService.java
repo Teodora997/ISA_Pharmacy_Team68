@@ -2,8 +2,8 @@ package com.example.demo.service.impl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -15,16 +15,19 @@ import com.example.demo.model.Examination;
 import com.example.demo.model.ExaminationStatus;
 import com.example.demo.model.Medicine;
 import com.example.demo.model.Pharmacy;
+import com.example.demo.model.Users.Dermatologist;
 import com.example.demo.model.Users.Patient;
+import com.example.demo.model.Users.Pharmacist;
 import com.example.demo.model.Users.User;
 import com.example.demo.repository.ComplaintRepository;
 import com.example.demo.repository.ConsultingRepository;
 import com.example.demo.repository.ExaminationRepository;
+import com.example.demo.repository.MedicineRepository;
 import com.example.demo.repository.PharmacyRepository;
+import com.example.demo.repository.UserRepository.DermatologistRepository;
 import com.example.demo.repository.UserRepository.PatientRepository;
 import com.example.demo.repository.UserRepository.PharmacistRepository;
 import com.example.demo.service.IPatientService;
-import com.example.demo.service.PharmacyService;
 import com.example.demo.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +47,8 @@ public class PatientService implements IPatientService{
     @Autowired
     private PharmacistRepository pharmacistRepository;
     @Autowired
+    private MedicineRepository medicineRepository;
+    @Autowired
     private EmailService emailService;
 
     @Autowired 
@@ -54,6 +59,9 @@ public class PatientService implements IPatientService{
 
     @Autowired
     PharmacyRepository pharmacyRepository;
+
+    @Autowired
+    DermatologistRepository dermatologistRepository;
 
     
     public PatientService(PatientRepository patientRepository, ExaminationRepository examinationRepository,
@@ -74,10 +82,19 @@ public class PatientService implements IPatientService{
 
     @Override
     public Long makeExamination(String patientId, Long examinationId) {
-        List<ConsultingDTO> cons=getConsultingsByPatient(Long.parseLong(patientId));
+        
+        List<ExaminationDTO> ex=getExaminationsByPatient(Long.parseLong(patientId));
         Boolean patientAvailable=true;
         Examination examination=examinationRepository.findById(examinationId).get();
+        List<ConsultingDTO> cons=getConsultingsByPatient(Long.parseLong(patientId));
         for(ConsultingDTO cd:cons){
+            if(cd.getDate().isEqual(examination.getDate()) && cd.getTime().equals(examination.getTime())){
+                System.out.println("pacijent je zauzet EXAMINATIONS");
+                patientAvailable=false;
+            }
+        }
+
+        for(ExaminationDTO cd:ex){
             if(cd.getDate().isEqual(examination.getDate()) && cd.getTime().equals(examination.getTime())){
                 System.out.println("pacijent je zauzet EXAMINATIONS");
                 patientAvailable=false;
@@ -108,6 +125,9 @@ public class PatientService implements IPatientService{
 
     @Override
     public List<ConsultingDTO> getPharmaciesForConsulting(LocalDate date, String time) {
+        if(date.isBefore(LocalDate.now())){
+            return null;
+        }
         List<Consulting> allConsultings=new ArrayList<>();
         allConsultings=consultingRepository.findAll();
         System.out.println("svi pregledi "+allConsultings+date);
@@ -148,6 +168,14 @@ public class PatientService implements IPatientService{
             System.out.println("u foru "+ex.getDate()+" "+consulting.getDate()+ex.getTime()+" "+consulting.getTime());
             if(ex.getDate().compareTo(consulting.getDate())==0 && ex.getTime().equals(consulting.getTime())){
                 System.out.println("pacijent je zauzet");
+                patientAvailable=false;
+            }
+        }
+
+        List<ConsultingDTO> cons=getConsultingsByPatient(Long.parseLong(patientId));
+        for(ConsultingDTO cd:cons){
+            if(cd.getDate().isEqual(consulting.getDate()) && cd.getTime().equals(consulting.getTime())){
+                System.out.println("pacijent je zauzet EXAMINATIONS");
                 patientAvailable=false;
             }
         }
@@ -349,5 +377,92 @@ public class PatientService implements IPatientService{
         complaintRepository.save(complaint);
 
         return 1;
+    }
+
+    @Override
+    public Double rateUser(Long userId, Double mark) {
+        Pharmacist ph=pharmacistRepository.findById(userId).orElse(null);
+        Dermatologist d=dermatologistRepository.findById(userId).orElse(null);
+        Double newMark;
+        if(ph!=null){
+            newMark=(ph.getMark()+mark)/2;
+            ph.setMark(newMark);
+            pharmacistRepository.save(ph);
+        }else{
+            newMark=(d.getMark()+mark)/2;
+            d.setMark(newMark);
+            dermatologistRepository.save(d);
+        }
+        return newMark;
+    }
+
+    @Override
+    public Double rateMedicine(Long medicineId, Double mark) {
+        Medicine m=medicineRepository.findById(medicineId).get();
+        Double newMark;
+        newMark=(m.getMark()+mark)/2;
+        m.setMark(newMark);
+        medicineRepository.save(m);
+        return newMark;
+    }
+
+    @Override
+    public Double ratePharmacy(Long pharmacyId, Double mark) {
+        Pharmacy p=pharmacyRepository.findById(pharmacyId).get();
+        Double newMark;
+        newMark=(p.getMark()+mark)/2;
+        p.setMark(newMark);
+        pharmacyRepository.save(p);
+        return newMark;
+    }
+
+    @Override
+    public Set<Pharmacy> getSubscribedPharmacies(Long patientId) {
+        Patient p=patientRepository.findById(patientId).get();
+        Set<Pharmacy> pharmacies=p.getSubPharmacies();
+        return pharmacies;
+    }
+
+    @Override
+    public Pharmacy subscribe(Long patientId, Long pharmacyId) {
+        System.out.println("SERVIS SUBSCRIBE");
+        Patient p=patientRepository.findById(patientId).get();
+        Pharmacy ps=pharmacyRepository.findById(pharmacyId).get();
+        Set<Pharmacy> subPharmacies=p.getSubPharmacies();
+        for(Pharmacy ph:subPharmacies){
+            if(ph.getId().equals(pharmacyId)){
+                System.out.println("Vec pretplacen!");
+                return null;
+            }
+        }
+                subPharmacies.add(ps);
+                p.setSubPharmacies(subPharmacies);
+                patientRepository.save(p);
+         return ps;
+    }
+
+    @Override
+    public Pharmacy unsubscribe(Long patientId, Long pharmacyId) {
+        System.out.println("UNSUBSCRIBE");
+        Patient p=patientRepository.findById(patientId).get();
+        Pharmacy ps=pharmacyRepository.findById(pharmacyId).get();
+        Set<Pharmacy> subPharmacies=p.getSubPharmacies();      
+        subPharmacies.remove(ps);
+        p.setSubPharmacies(subPharmacies);
+        patientRepository.save(p);
+        return ps;
+    }
+
+    @Override
+    public ArrayList<ExaminationDTO> sort(ArrayList<ExaminationDTO> sortAppointments, String sortType) {
+       
+        if(sortType.equals("RATE")){
+            sortAppointments.sort(Comparator.comparingDouble(ExaminationDTO:: getDermatologistRate));
+            return sortAppointments;
+        }else if(sortType.equals("PRICE")){
+            sortAppointments.sort(Comparator.comparingDouble(ExaminationDTO:: getPrice));
+            return sortAppointments;
+        }
+        return null;
     }
 }

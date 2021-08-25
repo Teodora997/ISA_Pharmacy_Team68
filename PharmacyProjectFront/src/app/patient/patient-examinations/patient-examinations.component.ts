@@ -21,11 +21,13 @@ export class PatientExaminationComponent implements OnInit {
     request!: Request;
     examinations:DermatologistExaminations[];
     examination:Object;
+   
   
     constructor(private router: Router, private loginService: LoginService,private userService:UserService,private patientService: PatientService) {
         this.user = new User();
        this.examinations=[];
        this.examination=new Object();
+       
       }
       ngOnInit(): void {
        this.getUser();
@@ -57,6 +59,19 @@ export class PatientExaminationComponent implements OnInit {
         })
       }
 
+
+      //**********SORTIRANJE *******/
+      sort(sortType: string) {
+        console.log(sortType);
+        this.patientService.sortExaminations(this.examinations, sortType).subscribe({
+            next: ex => {
+                this.examinations = ex;
+            }
+
+        });
+    }
+
+    
 
       getUser() {
     
