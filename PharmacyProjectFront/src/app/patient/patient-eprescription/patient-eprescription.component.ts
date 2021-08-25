@@ -63,9 +63,13 @@ export class PatientEprescriptionComponent implements OnInit {
         next: t => {
           this.r = t;
 
-          
-            alert("Succesufully!"); 
-          
+          if(this.r==1){
+            alert("Patient is allergic to a prescription drug !"); 
+          }else if(this.r==2){
+            alert("Successufully!"); 
+          }else{
+            alert("This prescription is already closed!");
+          }
             this.refresh(); 
                    
           }

@@ -61,7 +61,7 @@ public class EPrescriptionController {
     public ResponseEntity<?> searchDrugsBasedOnQRCode(@PathVariable("userId") String userId ,@RequestParam("file") MultipartFile file) throws IOException, NotFoundException, javassist.NotFoundException {
         
         EPrescription ep=new EPrescription();
-        Set<Medicine> allergies=patientService.getMyAllergies(userId);
+        
 
         if (!file.isEmpty()) {
             try {
@@ -76,29 +76,23 @@ public class EPrescriptionController {
                 } else {
                     String code = ePrescriptionService.getEPrescriptionId(decodedText);
                     System.out.println("ID EPRESCRIPTION : "+code);
-                    // EPrescription ePrescription = ePrescriptionService.findById(code);
-                    // if(ePrescription!=null) {
-                    //     throw new IllegalArgumentException("This ePrescription is already used!");
-                    // }
                     
                     List<MedFromQRDTO> medicines= ePrescriptionService.getMedicinesFromQRcode(decodedText);
                     
-                    for(Medicine a:allergies){
-                    for(MedFromQRDTO med:medicines){
-                        if(a.getId()==Long.parseLong(med.getMedicineId())){
-                            return new ResponseEntity<>("Patient have allergies",HttpStatus.OK);
-                        }
-                    }
-                }
+                   
+
+                if(ePrescriptionRepository.findById(Long.parseLong(code)).orElse(null) ==null){
                 for(MedFromQRDTO med:medicines){
                     medFromQRRepository.save(med);
                 }
+            }
 
 
                     List<PharmaciesEPrescriptionDTO> pharmacies=ePrescriptionService.getPharmaciesForEprecsription(medicines);
 
                     AvailabiltyInPhEPrescriptionDTO e=new AvailabiltyInPhEPrescriptionDTO(Long.parseLong(code),medicines,pharmacies);
-                 
+
+                 if(ePrescriptionRepository.findById(Long.parseLong(code)).orElse(null) ==null){
                     ep.setId(Long.parseLong(code));
 
                     ep.setPatient(patientRepository.findById(Long.parseLong(userId)).get());
@@ -106,6 +100,7 @@ public class EPrescriptionController {
                     ep.setMedicines(medicines);
 
                     ePrescriptionRepository.save(ep);
+                 }
 
                    return new ResponseEntity<>(e,HttpStatus.OK);
                 }
@@ -116,10 +111,23 @@ public class EPrescriptionController {
     }
 	
     @PostMapping("/buyEprescription/{pharmacyId}")
-    public ResponseEntity<?> buyEprescription(@PathVariable("pharmacyId") Long pharmacyId ,@RequestBody Long prescriptionId)  {
+    public int buyEprescription(@PathVariable("pharmacyId") Long pharmacyId ,@RequestBody Long prescriptionId)  {
         EPrescription e=ePrescriptionRepository.findById(prescriptionId).get();
+        Set<Medicine> allergies=patientService.getMyAllergies(String.valueOf(e.getPatient().getId()));
 
+        for(Medicine a:allergies){
+            for(MedFromQRDTO med:e.getMedicines()){
+                if(a.getId()==Long.parseLong(med.getMedicineId())){
+                    return 1;
+                }
+            }
+        }
+
+        if(e.isPurchased()==false){
         ePrescriptionService.buyEprescription(pharmacyId,prescriptionId);
-           return new ResponseEntity<>(HttpStatus.OK);
+        return 2;
+        }else{
+           return 0;
+        }
     }
 }
