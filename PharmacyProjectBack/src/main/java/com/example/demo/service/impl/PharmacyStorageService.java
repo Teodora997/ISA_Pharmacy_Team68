@@ -54,5 +54,20 @@ public class PharmacyStorageService implements IPharmacyStorageService {
             }
         
     }
+
+    @Override
+    public Boolean checkAmount(Long medId, Long phId, int amount) {
+        PharmacyStorage ret=new PharmacyStorage();
+       List<PharmacyStorage> ps=pharmacyStorageRepository.findAll();
+       for(PharmacyStorage p:ps){
+           if(p.getMedicineId()==medId && p.getPharmacyId()==phId){
+               if(p.getInStock()>=amount){
+                   return true;
+               }
+           }
+       }
+        return false;
+       
+    }
     
 }

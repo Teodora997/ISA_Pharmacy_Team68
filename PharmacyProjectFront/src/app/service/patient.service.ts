@@ -1,8 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { AvailabilityEPrescription } from "../model/availabilityEprescription";
 import { Consulting } from "../model/consulting";
 import { DermatologistExaminations } from "../model/dermatologistExamination";
+import { MedFromQR } from "../model/medFromQR";
 import { Medicine } from "../model/medicine";
 import { Pharmacy } from "../model/pharmacy";
 import { User } from "../user";
@@ -53,6 +55,13 @@ export class PatientService {
   public makeComplaintPharmacy(patientId:string,pharmacyId:number,complaintText:string): Observable<number> {
     return this.http.post<number>("http://localhost:8081/api/patients/makeComplaintPharmacy/"+ patientId +"/"+ pharmacyId,complaintText);
   }  
+  public getEprescription(userId:string,formData: FormData): Observable<AvailabilityEPrescription> {
+    return this.http.post<AvailabilityEPrescription>("http://localhost:8081/api/eprescription/getEprescription/"+userId,formData);
+  }
+  public buyEprescription(pharmacyId:number,prescriptionId:number): Observable<any> {
+    return this.http.post<any>("http://localhost:8081/api/eprescription/buyEprescription/"+pharmacyId,prescriptionId);
+  }
+
   public rateUser(userId:number,mark:string): Observable<number >{
     return this.http.post<number>("http://localhost:8081/api/patients/rateUser/"+ userId,mark);
   }
