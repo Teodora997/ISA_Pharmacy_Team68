@@ -1,6 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { Complaint } from "../model/complaint";
+import { LoyaltyProgram } from "../model/loyaltyProgram";
 import { Medicine } from "../model/medicine";
 import { Pharmacy } from "../model/pharmacy";
 import { User } from "../user";
@@ -45,4 +47,14 @@ public addAlternatives(alternatives: string[], medicineId:string) {
 public getAllMedicines():Observable<Medicine[]>{
     return this.http.get<Medicine[]>("http://localhost:8081/api/medicines/getAllMedicines");
   }
+  public addLoyaltyProgram(program:LoyaltyProgram) {
+    return this.http.post<LoyaltyProgram>("http://localhost:8081/api/systemAdmin/addLoyaltyProgram", program);
+}
+public getComplaints():Observable<Complaint[]>{
+    return this.http.get<Complaint[]>("http://localhost:8081/api/systemAdmin/getComplaints");
+  }
+  public replyComplaint(cId:number,complaintReply:string){
+    return this.http.post("http://localhost:8081/api/systemAdmin/replyComplaint/"+cId,complaintReply); 
+
+}
 }

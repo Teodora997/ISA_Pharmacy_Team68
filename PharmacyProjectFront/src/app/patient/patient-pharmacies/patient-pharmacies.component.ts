@@ -4,6 +4,7 @@ import { USERNAME_KEY, USER_ID_KEY, USER_ROLE_KEY, USER_TOKEN_KEY } from 'src/ap
 import { LoginService } from 'src/app/login/login.service';
 import { Pharmacy } from 'src/app/model/pharmacy';
 import { SearchPharmacy } from 'src/app/model/searchPharmacy';
+import { PatientService } from 'src/app/service/patient.service';
 import { PharmacyService } from 'src/app/service/pharmacy.service';
 import { User } from 'src/app/user';
 
@@ -14,12 +15,15 @@ import { User } from 'src/app/user';
 
 export class PatientPharmaciesComponent implements OnInit {
   allPharmacies : Pharmacy[] = [];
+  ph!: Pharmacy;
+  filteredPharmacies : Pharmacy[] = [];
+  subscribedPharmacies : Pharmacy[] = [];
   previewSearch:boolean;  
   searchParameters: SearchPharmacy;
   user: User;
   request!: Request;
 
-  constructor(private router: Router, private pharmacyService: PharmacyService,private loginService:LoginService) {
+  constructor(private router: Router, private pharmacyService: PharmacyService,private loginService:LoginService,private patientService: PatientService) {
     this.searchParameters = new SearchPharmacy();
     this.previewSearch=false;
     this.user=new User();
@@ -30,11 +34,53 @@ ngOnInit(): void {
     this.pharmacyService.getAllPhamracies().subscribe({
         next: pharmacies => {
             this.allPharmacies = pharmacies;
-            
+            this.filteredPharmacies=this.allPharmacies;
         }
 
     });
 
+}
+//******VRACA APOTEKE NA KOJE JE PACIJENT PRETPLACEN */
+getSubscribedPharmacies(){
+  this.patientService.getSubscribedPharmacies(this.user.id).subscribe({
+    next: subs=>{
+      this.subscribedPharmacies=subs;
+    }
+  })
+}
+
+//*********PRETPLATA NA ODABRANU APOTEKU */
+subscribe(pharmacyId:number){
+  this.patientService.subscribe(this.user.id,pharmacyId).subscribe({
+    next: p=>{
+      this.ph=p;
+      if(this.ph==null){
+        alert("Already subscribed!");
+      }else{
+      alert("Succesifully subscribed!");
+    }
+  }
+  })
+}
+unsubscribe(pharmacyId:number){
+  this.patientService.unsubscribe(this.user.id,pharmacyId).subscribe({
+    next: p=>{
+      this.ph=p;
+      alert("Succesifully unsubscribed!");
+    }
+  })
+}
+
+filter(){
+  this.filteredPharmacies=[];
+  for(let p of this.allPharmacies){
+    
+    if(this.searchParameters.markFrom.toString()==" " && this.searchParameters.markTo.toString()==" "){
+      this.filteredPharmacies=this.allPharmacies;
+     }else if(p.mark>=this.searchParameters.markFrom && p.mark<=this.searchParameters.markTo){
+      this.filteredPharmacies.push(p);
+    }
+  }
 }
 pretraga(){
   console.log(this.searchParameters.name);
@@ -51,25 +97,13 @@ pretraga(){
             sp.address = this.searchParameters.address;
         }
 
-        if(this.searchParameters.markFrom == undefined){
-           sp.markFrom = -123456789;
-        } else {
-            sp.markFrom = this.searchParameters.markFrom;
-        }
-
-        if(this.searchParameters.markTo == undefined){
-            sp.markTo = 123456789;
-        } else {
-            sp.markFrom = this.searchParameters.markFrom;
-        }
-
 
         console.log(this.searchParameters);
         console.log(sp);
 
         this.pharmacyService.searchPharmacies(sp).subscribe({
             next: pharmacies => {
-                this.allPharmacies = pharmacies;
+                this.filteredPharmacies = pharmacies;
             }
 
         });
@@ -79,7 +113,8 @@ getUser() {
     this.loginService.getLoggedUser().subscribe({
       next: t => {
         this.user = t;
-        console.log(this.user.city);
+        this.getSubscribedPharmacies();
+        console.log(this.user.firstName);
       }
 
     });

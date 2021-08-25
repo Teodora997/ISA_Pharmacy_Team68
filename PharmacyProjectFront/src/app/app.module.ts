@@ -21,7 +21,9 @@ import { PatientModule } from './patient/patient.module';
 import { PatientHomepageComponent } from './patient/patient-homepage/patient-homepage.component';
 import { PatientService } from './service/patient.service';
 import { SupplierModule } from './supplier/supplier.module';
-import { SupplierHomepageComponent } from './supplier/supplier-homepage/supplier-homepage.component';
+import { MedicineService } from './service/medicine.service';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { LoginModule } from './login/login.module';
 
 @NgModule({
   declarations: [
@@ -31,9 +33,8 @@ import { SupplierHomepageComponent } from './supplier/supplier-homepage/supplier
     HomePageComponent,
     AllMedicinesComponent,
     AllPharmaciesComponent,
-    SystemAdminHomepageComponent,
     PatientHomepageComponent,
-    SupplierHomepageComponent
+    
   ],
   imports: [
     AppRoutingModule,
@@ -42,9 +43,8 @@ import { SupplierHomepageComponent } from './supplier/supplier-homepage/supplier
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
-    SystemAdminModule,
     PatientModule,
-    SupplierModule
+    LoginModule
   ],
   providers: [
   LoginService,
@@ -53,8 +53,9 @@ import { SupplierHomepageComponent } from './supplier/supplier-homepage/supplier
   PharmacyService,
   ApiService,
   ConfigService,
-  SystemAdminService,
-  PatientService
+  
+  PatientService,
+  MedicineService
 
 
 ],

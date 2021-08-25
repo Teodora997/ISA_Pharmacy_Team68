@@ -94,6 +94,7 @@ public class UserController {
         
         Dermatologist user = userService.registerDermatologist(newUser);
         User u=new User(user.getId(),user.getFirstName(),user.getLastName(),user.getPassword(), user.getAddress(),user.getCity(),user.getEmail(),user.getTelephone());
+        u.setFirstTimeLogin(true);
         if(user != null) {
 
             ConfirmationToken confirmationToken = new ConfirmationToken(user);
@@ -112,6 +113,7 @@ public class UserController {
         
         Supplier user = userService.registerSupplier(newUser);
         User u=new User(user.getId(),user.getFirstName(),user.getLastName(),user.getPassword(), user.getAddress(),user.getCity(),user.getEmail(),user.getTelephone());
+        u.setFirstTimeLogin(true);
         if(user != null) {
 
             ConfirmationToken confirmationToken = new ConfirmationToken(user);
@@ -130,6 +132,7 @@ public class UserController {
         
         PharmacyAdmin user = userService.registerPharmacyAdmin(newUser);
         User u=new User(user.getId(),user.getFirstName(),user.getLastName(),user.getPassword(), user.getAddress(),user.getCity(),user.getEmail(),user.getTelephone());
+        u.setFirstTimeLogin(true);
         if(user != null) {
 
             ConfirmationToken confirmationToken = new ConfirmationToken(user);
@@ -157,6 +160,7 @@ public class UserController {
         
         SystemAdmin user = userService.registerSystemAdmin(newUser);
         User u=new User(user.getId(),user.getFirstName(),user.getLastName(),user.getPassword(), user.getAddress(),user.getCity(),user.getEmail(),user.getTelephone());
+        u.setFirstTimeLogin(true);
         if(user != null) {
 
             ConfirmationToken confirmationToken = new ConfirmationToken(user);

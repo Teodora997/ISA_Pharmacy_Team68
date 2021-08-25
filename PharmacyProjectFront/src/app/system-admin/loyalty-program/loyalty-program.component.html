@@ -1,0 +1,107 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<div >
+<div id="divHeaderGuest">
+    <nav>
+        <ul >
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/system-admin-homepage']" > <i class="material-icons">person</i>
+                    <p style="color: green; font-weight: 500;">My profile</p>
+                </a>
+            </li>
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/add-pharmacy']" > <i class="material-icons">store</i>
+                    <p style="color: green; font-weight: 500;">Add pharmacy</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/add-pharmacy-admin']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Add pharmacy admin</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/add-system-admin']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Add system admin</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/add-dermatologist']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Add dermatologist</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/add-supplier']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Add supplier</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/add-medicine']"> <i
+                        class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">Add medicine</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/admin-all-medicines']"> <i
+                        class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">All medicines</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/loyalty-program']"> <i
+                        class="material-icons">article</i>
+                    <p style="color: green; font-weight: 500;">Loyalty program</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/complaints']"> <i
+                        class="material-icons">article</i>
+                    <p style="color: green; font-weight: 500;">Complaints</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>	
+<div>
+    <div >
+             <div class="col-md-6 offset-md-3">
+                 <h2>Create loyalty program</h2>
+                 <form  #registrationForm="ngForm" (ngSubmit)="addLoyaltyProgram()">
+                   <div class="form-group">
+                       <label>Examination points</label>
+                       <input type="text" class="form-control"  
+                         #ex="ngModel" name="ex" [(ngModel)]="newLoyalty.examinationPoints"/>
+                   </div>
+                     <div class="form-group">
+                       <label>Consulting points</label>
+                       <input type="text"  class="form-control"  
+                         #con="ngModel" name="con" [(ngModel)]="newLoyalty.consultingPoints"/>
+                     </div>
+                     <div class="form-group">
+                        <label>Max points for regular category</label>
+                        <input type="text"  class="form-control"  
+                          #reg="ngModel" name="reg" [(ngModel)]="newLoyalty.regularPoints"/>
+                      </div>
+                      <div class="form-group">
+                        <label>Max points for silver category</label>
+                        <input type="text"  class="form-control"  
+                          #sil="ngModel" name="sil" [(ngModel)]="newLoyalty.silverPoints"/>
+                      </div>
+                      <div class="form-group">
+                        <label>Max points for gold category</label>
+                        <input type="text"  class="form-control"  
+                          #g="ngModel" name="g" [(ngModel)]="newLoyalty.goldPoints"/>
+                      </div>
+                     <div class="form-group">
+                       <button type="submit" class="btn btn-primary" >Add</button>                     
+                      </div>
+                 </form>
+             </div>
+         </div>
+    
+</div>
+</div>	  

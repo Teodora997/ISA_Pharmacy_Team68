@@ -24,6 +24,7 @@ export class PatientHomepageComponent implements OnInit {
     allMedicines: Medicine[];
     newAllergy!: string;
     poruka:String;
+    penalties:number;
   
     constructor(private router: Router, private loginService: LoginService,private userService:UserService,private patientService: PatientService) {
         this.user = new User();
@@ -31,9 +32,19 @@ export class PatientHomepageComponent implements OnInit {
         this.editedUser=new User();
         this.allMedicines= [];
         this.poruka="";
+
+        this.penalties=0;
       }
       ngOnInit(): void {
        this.getUser();
+      }
+        //**********PENALI */
+      getMyPenalties(){
+        this.patientService.getMyPenalty(this.user.id).subscribe({
+          next: p=>{
+            this.penalties=p;
+          }
+        })
       }
       //********PATIENT ALERGIES*******
       getMyAllergies() {
@@ -79,6 +90,7 @@ export class PatientHomepageComponent implements OnInit {
             console.log(this.user.city);
             this.getMyAllergies();
             this.getAllMedicines();
+            this.getMyPenalties();
           }
     
         });

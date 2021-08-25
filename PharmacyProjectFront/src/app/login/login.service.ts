@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { USER_ID_KEY, USER_ROLE_KEY } from '../config/localStorageKeys';
+import { PasswordChanger } from '../model/passwordChanger';
+import { User } from '../user';
 import { Login } from './login';
 
 @Injectable({
@@ -26,4 +28,7 @@ export class LoginService {
     const userId=localStorage.getItem(USER_ID_KEY);
     return this.http.post<any>(this.url2,userId);
   }
+  public changePassword(passwordChanger:PasswordChanger){
+    return this.http.post<User>("http://localhost:8081/auth/change-password",passwordChanger);
+}
 }

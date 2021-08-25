@@ -1,0 +1,173 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<div>
+<div id="divHeaderGuest">
+    <nav>
+        <ul >
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/patient-homepage']" > <i class="material-icons">person</i>
+                    <p style="color: green; font-weight: 500;">My profile</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/patient-pharmacies']"> <i
+                        class="material-icons">store</i>
+                    <p style="color: green; font-weight: 500;">Pharmacies</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/patient-consultings']"> <i
+                        class="material-icons">reorder</i>
+                    <p style="color: green; font-weight: 500;">Pharmacist consultings</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/patient-examinations']"> <i
+                        class="material-icons">reorder</i>
+                    <p style="color: green; font-weight: 500;">Dermatologist apointments</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/medicine-reservations']"> <i
+                        class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">Medicine reservations</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/make-consulting']"> <i
+                        class="material-icons">playlist_add</i>
+                    <p style="color: green; font-weight: 500;">Make consulting</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/patient-complaint']"> <i
+                        class="material-icons">playlist_add</i>
+                    <p style="color: green; font-weight: 500;">Make complaint</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/patient-eprescription']"> <i
+                        class="material-icons">playlist_add</i>
+                    <p style="color: green; font-weight: 500;"> ePrescription</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/homepage']" (click)="logout()"> <i
+                        class="material-icons">power_settings_new</i>
+                    <p style="color: green; font-weight: 500;">Logout</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>	
+<div>
+    <h1 style="color: rgb(100, 98, 216);text-align: center;" > Complaint </h1>
+
+    <div  *ngIf="previewText" >
+        <div class="col-md-6 offset-md-3">
+            <h2>Write complaint</h2>
+            <form  #registrationForm="ngForm" (ngSubmit)="sendComplaint()">
+              <div class="form-group">
+                  <label>Text</label>
+                  <input type="text" class="form-control"  
+                    #t="ngModel" name="t" [(ngModel)]="complaintText"/>
+              </div>
+                
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary" >Send</button>                     
+                 </div>
+            </form>
+        </div>
+    </div>
+
+    <div  *ngIf="previewTextP" >
+        <div class="col-md-6 offset-md-3">
+            <h2>Write complaint</h2>
+            <form  #registrationForm="ngForm" (ngSubmit)="sendComplaintPharmacy()">
+              <div class="form-group">
+                  <label>Text</label>
+                  <input type="text" class="form-control"  
+                    #t="ngModel" name="t" [(ngModel)]="complaintText"/>
+              </div>
+                
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary" >Send</button>                     
+                 </div>
+            </form>
+        </div>
+    </div>
+    
+   <br><br>
+            <div >
+            <table class="table">
+                <thead class="text-success">
+                    <th>Pharmacists</th> 
+                </thead>
+                <tbody>
+                    <tr *ngFor='let c of consultings'>
+                        <td>{{c.pharmacistName}}</td>
+                        <td><button (click)="writeComplaint(c.pharmacistId)">Write complaint</button></td>
+                        <td> <select name="mark" [(ngModel)]='mark'>
+                            <option *ngFor='let m of marks' >{{m}}</option>
+                        </select><button (click)="rateUser(c.pharmacistId)">Rate</button></td>
+                    </tr>
+                </tbody>
+            </table>
+           </div>
+           <br><br>
+
+            <div >
+            <table class="table">
+                <thead class="text-success">
+                    <th>Dermatologists</th> 
+                </thead>
+                <tbody>
+                    <tr *ngFor='let e of examinations'>
+                        <td>{{e.dermatologistName}}</td>
+                        <td><button (click)="writeComplaint(e.dermatologistId)">Write complaint</button></td>
+                        <td> <select name="mark" [(ngModel)]='mark'>
+                            <option *ngFor='let m of marks' >{{m}}</option>
+                        </select><button (click)="rateUser(e.dermatologistId)">Rate</button></td>
+                    </tr>
+                </tbody>
+            </table>
+           </div>
+           <br><br>
+            <div >
+            <table class="table">
+                <thead class="text-success">
+                    <th>Pharmacies</th> 
+                </thead>
+                <tbody>
+                    <tr *ngFor='let c of pharmacies'>
+                        <td>{{c.name}}</td>
+                        <td><button (click)="writeComplaintPharmacy(c.id)">Write complaint</button></td>
+                        <td> <select name="mark" [(ngModel)]='mark'>
+                            <option *ngFor='let m of marks' >{{m}}</option>
+                        </select><button (click)="ratePharmacy(c.id)">Rate</button></td>
+
+                    </tr>
+                </tbody> 
+            </table>
+           </div>
+           <br><br>
+            <div >
+            <table class="table">
+                <thead class="text-success">
+                    <th>Medicines</th> 
+                </thead>
+                <tbody>
+                    <tr *ngFor='let c of medicines1'>
+                        <td>{{c.medicineName}}</td>
+                        <td> <select name="mark" [(ngModel)]='mark'>
+                            <option *ngFor='let m of marks' >{{m}}</option>
+                        </select><button (click)="rateMedicine(c.medicineId)">Rate</button></td>
+
+                    </tr>
+                </tbody> 
+            </table>
+           </div>
+        </div>
+ </div>
+

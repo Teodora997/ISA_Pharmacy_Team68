@@ -21,6 +21,7 @@ public class UserDTO {
     private boolean isActivated;
     private UserTokenState token;
     private List<String> authorities;
+    private boolean firstTimeLogin;
 
 
     public UserDTO(){
@@ -42,6 +43,22 @@ public class UserDTO {
         this.token = token;
         
     }
+    public UserDTO(Long id, String firstName, String lastName, String email, String password,
+            String telephone, String address, String city,String role, boolean isActivated, UserTokenState token,boolean firstTimeLogin) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.telephone = telephone;
+        this.address = address;
+        this.city = city;
+        this.role=role;
+        this.isActivated = isActivated;
+        this.token = token;
+        this.firstTimeLogin=firstTimeLogin;
+        
+    }
 
     public UserDTO(User user){
         id=user.getId();
@@ -54,6 +71,7 @@ public class UserDTO {
         role=user.getRole();
         city=user.getCity();
         isActivated=user.getIsActivated();
+        firstTimeLogin=user.isFirstTimeLogin();
         token=null;
         this.authorities=user.getAuthorities().stream().map(authority-> ((Authority)authority).getName()).collect(Collectors.toList());
 
@@ -65,6 +83,14 @@ public class UserDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public boolean isFirstTimeLogin() {
+        return firstTimeLogin;
+    }
+
+    public void setFirstTimeLogin(boolean firstTimeLogin) {
+        this.firstTimeLogin = firstTimeLogin;
     }
 
     public String getFirstName() {

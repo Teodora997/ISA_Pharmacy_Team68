@@ -7,7 +7,8 @@ import {AllMedicinesComponent} from './homepage/all-medicines/all-medicines.comp
 import {AllPharmaciesComponent} from './homepage/all-pharmacies/all-pharmacies.component'
 import { SystemAdminModule } from './system-admin/system-admin.module';
 import { PatientModule } from './patient/patient.module';
-import { SupplierModule } from './supplier/supplier.module';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { LoginModule } from './login/login.module';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -17,13 +18,14 @@ const routes: Routes = [
   { path: 'medicines', component: AllMedicinesComponent },
   { path: '', redirectTo: 'homepage', pathMatch: 'full',}, 
   { path: '**', redirectTo: 'homepage', pathMatch: 'full'},
+  //{ path: 'change-password', component: ChangePasswordComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes),
-  SystemAdminModule,
+  
   PatientModule,
-  SupplierModule
+  LoginModule
   ],
   exports: [RouterModule]
 })

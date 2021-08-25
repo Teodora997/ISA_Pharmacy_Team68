@@ -80,6 +80,22 @@ public class Pharmacist  extends User{
         this.mark = mark;
     }
 
+    public WorkTime getWorkTime() {
+        return workTime;
+    }
+
+    public void setWorkTime(WorkTime workTime) {
+        this.workTime = workTime;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
+
     
     
 }

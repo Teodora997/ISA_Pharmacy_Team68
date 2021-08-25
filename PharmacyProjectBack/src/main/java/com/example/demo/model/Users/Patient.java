@@ -11,6 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.example.demo.model.Medicine;
+import com.example.demo.model.Pharmacy;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="Patients")
@@ -33,6 +35,9 @@ public class Patient extends User {
     @Column(name="Penals")
     private Integer penals;
 
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Pharmacy> subPharmacies = new HashSet<Pharmacy>();
 
     
     public Patient(){
@@ -40,6 +45,20 @@ public class Patient extends User {
     }
     
    
+
+    public Patient(Long id2, String firstName2, String lastName2, String email2, String address2, String city2,
+    String telephone2, String password2, String role2, Boolean isActivated,Set<Medicine> allergies, Integer points, String category, Integer penals,
+            Set<Pharmacy> subPharmacies) {
+      super(id2, firstName2, lastName2, email2, address2, city2, telephone2, password2, role2, isActivated, isActivated);
+
+        this.allergies = allergies;
+        this.points = points;
+        this.category = category;
+        this.penals = penals;
+        this.subPharmacies = subPharmacies;
+    }
+
+
 
     public Patient(Long id, String firstName, String lastName, String password, String address, String city,
             String email, String telephone, Set<Medicine> allergies, Integer points, String category, Integer penals) {
@@ -55,11 +74,23 @@ public class Patient extends User {
     public Patient(Long id2, String firstName2, String lastName2, String email2, String address2, String city2,
             String telephone2, String password2, String role2, Boolean isActivated, Set<Medicine> allergies,
             Integer points, String category, Integer penals) {
-        super(id2, firstName2, lastName2, email2, address2, city2, telephone2, password2, role2, isActivated);
+        super(id2, firstName2, lastName2, email2, address2, city2, telephone2, password2, role2, isActivated, isActivated);
         this.allergies = allergies;
         this.points = points;
         this.category = category;
         this.penals = penals;
+    }
+
+
+
+    public Set<Pharmacy> getSubPharmacies() {
+        return subPharmacies;
+    }
+
+
+
+    public void setSubPharmacies(Set<Pharmacy> subPharmacies) {
+        this.subPharmacies = subPharmacies;
     }
 
 

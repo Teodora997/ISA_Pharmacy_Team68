@@ -1,0 +1,103 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<div>
+<div id="divHeaderGuest">
+    <nav>
+        <ul >
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/system-admin-homepage']" > <i class="material-icons">person</i>
+                    <p style="color: green; font-weight: 500;">My profile</p>
+                </a>
+            </li>
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/add-pharmacy']" > <i class="material-icons">store</i>
+                    <p style="color: green; font-weight: 500;">Add pharmacy</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/add-pharmacy-admin']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Add pharmacy admin</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/add-system-admin']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Add system admin</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/add-dermatologist']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Add dermatologist</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a [routerLink]="['/add-supplier']"> <i
+                        class="material-icons">person_add</i>
+                    <p style="color: green; font-weight: 500;">Add supplier</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/add-medicine']"> <i
+                        class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">Add medicine</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/admin-all-medicines']"> <i
+                        class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">All medicines</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/loyalty-program']"> <i
+                        class="material-icons">article</i>
+                    <p style="color: green; font-weight: 500;">Loyalty program</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/complaints']"> <i
+                        class="material-icons">article</i>
+                    <p style="color: green; font-weight: 500;">Complaints</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>	
+<div>
+    <h1 style="color: rgb(100, 98, 216);"> All complaints</h1>
+     
+     
+    <div class="card" style="margin-top: 150px;">
+     
+        <div class="card-content table-responsive table-full-width">
+            <table class="table">
+                <thead class="text-success">
+                   <th>Id of complaint</th>
+                    <th>For</th>
+                    <th>Text</th>
+                    <th>Date</th>
+                    <th>Patient email </th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <tr *ngFor='let c of complaints'>
+                       <td [routerLink]="[c.id]">{{c.id}}</td>
+                        <td >{{c.name}}</td>
+                        <td>{{c.text}}</td>
+                        <td>{{c.date}}</td>
+                        <td>{{c.email}}</td>
+                        <td><input type="text" value="" placeholder="reply" class="form-control" required
+                            name="reply" #reply="ngModel" [(ngModel)]="c.complaintReply" /></td>
+                        <td><button (click)="replyComplaint(c)">Reply</button></td>
+             
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+</div>

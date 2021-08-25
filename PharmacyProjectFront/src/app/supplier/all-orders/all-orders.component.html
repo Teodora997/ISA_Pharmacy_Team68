@@ -25,41 +25,61 @@
 </div>	
 <div>
     <h1 style="color: rgb(100, 98, 216);"> All orders</h1>
-     <div>
-         <div class="col-sm-6">
-             <div class="form-group">
-                 <input type="text" value="" placeholder="Name" class="form-control" name="name"
-                     #name="ngModel" [(ngModel)]="searchParameters.name" />
-             </div>
-         </div>
-         <div class="col-sm-6">
-             <div class="form-group">
-                 <input type="text" value="" placeholder="Address" class="form-control" name="address"
-                     #address="ngModel" [(ngModel)]="searchParameters.address" />
-             </div>
-         </div>
-         <button (click)="pretraga()">Search</button>
-     </div>
-    <div class="card" style="margin-top: 150px;">
+
+    <div  *ngIf="previewOrderItems" >
+        <table class="table">
+            <thead class="text-success">
+               <th>Id</th>
+                <th>Name </th>
+                <th>Amount </th>
+            </thead>
+            <tbody>
+                <tr *ngFor='let i of orderItems'>
+                    <td >{{i.medicine.id}}</td>
+                     <td >{{i.medicine.name}}</td>
+                     <td>{{i.amount}}</td>
+                 </tr>
+            </tbody>
+        </table>
+    </div>
+    <div  *ngIf="previewOffer" >
+        <div class="col-md-6 offset-md-3">
+            <h2>Write offer</h2>
+            <form  #registrationForm="ngForm" (ngSubmit)="sendOffer()">
+              <div class="form-group">
+                  <label>Total price:</label>
+                  <input type="number" class="form-control"  
+                    #t="ngModel" name="t" [(ngModel)]="offer.totalPrice"/>
+                    <label>Delivery date:</label>
+                  <input type="date" class="form-control"  
+                    #d="ngModel" name="d" [(ngModel)]="offer.deliveryDate"/>
+              </div>
+                
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary" >Send</button>                     
+                 </div>
+            </form>
+        </div>
+    </div>
      
      <div class="card-content table-responsive table-full-width">
          <table class="table">
              <thead class="text-success">
-                <th>Id</th>
-                 <th>Name <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
-                 <th>Mark <i   style="color: rgb(70, 70, 70); cursor: pointer;" class="material-icons">sort</i></th>
-                 <th>Address</th>
+                <th>Pharmacy</th>
+                 <th>Time limit </th>
+                 <th>Status</th>
              </thead>
              <tbody>
-                 <tr *ngFor='let k of allPharmacies'>
-                    <td [routerLink]="[k.id]">{{k.id}}</td>
-                     <td >{{k.name}}</td>
-                     <td>{{k.mark}}</td>
-                     <td>{{k.address}}</td>
+                 <tr *ngFor='let o of orders'>
+                    <td >{{o.pharmacyName}}</td> 
+                     <td>{{o.timeLimit}}</td>
+                     <td>{{o.orderStatus}}</td>
+                     <td><button (click)="seeItems(o)">See items</button></td>
+                     <td><button (click)="writeOffer(o)">Write offer</button></td>
                  </tr>
+                
              </tbody>
          </table>
      </div>
  </div>
-</div>
 </div>

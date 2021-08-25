@@ -88,11 +88,22 @@ export class LoginComponent implements OnInit {
         localStorage.setItem(USER_ROLE_KEY, data.role);
         
         if(this.u.role=="ROLE_SYS_ADMIN"){
+          if(this.u.firstTimeLogin==true){
+            console.log("DJUBRE");
+            this.router.navigate(["/change-password"]);
+          }else{
           this.router.navigate(["/system-admin-homepage"]);
+          }
         }else if(this.u.role=="ROLE_PATIENT"){
           this.router.navigate(["/patient-homepage"]);
         }else if(this.u.role=="ROLE_SUPPLIER"){
-          this.router.navigate(["/supplier-homepage"]);
+          if(this.u.firstTimeLogin==true){
+            console.log("DJUBRE");
+            this.router.navigate(["/change-password"]);
+          }else{
+            this.router.navigate(["/supplier-homepage"]);
+          }
+          
         }
         alert("Logged in!");    
     },

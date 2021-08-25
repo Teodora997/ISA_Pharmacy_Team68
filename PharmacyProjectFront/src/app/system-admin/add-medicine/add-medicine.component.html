@@ -45,6 +45,24 @@
                     <p style="color: green; font-weight: 500;">Add medicine</p>
                 </a>
             </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/admin-all-medicines']"> <i
+                        class="material-icons">medication</i>
+                    <p style="color: green; font-weight: 500;">All medicines</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/loyalty-program']"> <i
+                        class="material-icons">article</i>
+                    <p style="color: green; font-weight: 500;">Loyalty program</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
+                <a  [routerLink]="['/complaints']"> <i
+                        class="material-icons">article</i>
+                    <p style="color: green; font-weight: 500;">Complaints</p>
+                </a>
+            </li>
         </ul>
     </nav>
 </div>	
@@ -65,15 +83,26 @@
                    </div>
                      <div class="form-group">
                          <label>Type</label>
-                         <input type="text"  class="form-control" 
-                            #type="ngModel" name="type" [(ngModel)]="newMedicine.type"/>
-                         
+                         <div class="form-group">
+                            <select name="type" #type="ngModel" [(ngModel)]="newMedicine.type" >
+                                <option value="ANTIBIOTIC">Antibiotic</option>
+                                <option value="ANTIHISTAMINE">Antihistamine</option>
+                                <option value="ANESTHETIC">Anesthetic</option>
+                                <option value="ANALGETIC">Analgetic</option> 
+                                <option value="ANTISEPTICS">Antiseptic</option>
+                            </select>
+                        </div>
                      </div>
                      <div class="form-group">
                        <label>Form</label>
-                       <input type="text"  class="form-control"  
-                         #form1="ngModel" name="form1" [(ngModel)]="newMedicine.form"/>
-                       
+                       <div class="form-group">
+                        <select name="form" #form="ngModel" [(ngModel)]="newMedicine.form" >
+                            <option value="TABLET">Tablet</option>
+                            <option value="SYRUP">Syrup</option> 
+                            <option value="CAPSULES">Capsules</option> 
+                            <option value="DROPS">Drops</option>
+                        </select>
+                    </div>
                    </div>
                    <div class="form-group">
                        <label>Ingredients</label>
@@ -89,15 +118,25 @@
                    </div>
                      <div class="form-group">
                          <label>Regime</label>
-                         <input type="text"  class="form-control"  
-                            #regime="ngModel" name="regime" [(ngModel)]="newMedicine.regime"/>
-                        
+                         <div class="form-group">
+                            <select name="regime" #regime="ngModel" [(ngModel)]="newMedicine.regime" >
+                                <option value="PRESCRIPTION">With prescription</option>
+                                <option value="NO_PRESCRIPTION">Without prescription</option> 
+                            </select>
+                        </div>
                      </div>
                     
                     <div class="form-group">
                         <label>Additional</label>
                         <input type="text"  class="form-control"  
                            #additional="ngModel" name="additional" [(ngModel)]="newMedicine.additional"/>
+                       
+                    </div>
+
+                    <div class="form-group">
+                        <label>Points</label>
+                        <input type="text"  class="form-control"  
+                           #points="ngModel" name="points" [(ngModel)]="newMedicine.points"/>
                        
                     </div>
         

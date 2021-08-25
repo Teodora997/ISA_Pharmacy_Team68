@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -23,11 +25,11 @@ public class Consulting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "Date")
-    private String date;
+    private LocalDate date;
     @Column(name = "Time")
     private String time;
     @Column(name = "Price")
-    private Integer price;
+    private Double price;
     @Column(name = "Duration")
     private Integer duration;
    
@@ -46,7 +48,7 @@ public class Consulting {
     }
     
 
-    public Consulting(Long id, String date, String time, Integer price, Integer duration, Pharmacist pharmacist,
+    public Consulting(Long id, LocalDate date, String time, Double price, Integer duration, Pharmacist pharmacist,
             Patient patient, ExaminationStatus status) {
         this.id = id;
         this.date = date;
@@ -58,7 +60,7 @@ public class Consulting {
         this.status = status;
     }
 
-    public Consulting(Long id, String date, String time, Integer price, Integer duration, Pharmacist pharmacist,
+    public Consulting(Long id, LocalDate date, String time, Double price, Integer duration, Pharmacist pharmacist,
             Patient patient) {
         this.id = id;
         this.date = date;
@@ -101,11 +103,11 @@ public class Consulting {
         this.id = id;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -117,11 +119,11 @@ public class Consulting {
         this.time = time;
     }
 
-    public Integer getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
