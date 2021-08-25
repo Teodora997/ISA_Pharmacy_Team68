@@ -26,7 +26,7 @@ INSERT INTO `work_time` (id,from_date,shift,to_date) values (1,'',1,'');
 INSERT INTO `work_time` (id,from_date,shift,to_date) values (2,'',2,'');
 
 INSERT INTO `patients` (category,penals,points,id) values ('Kategorija',1,10,200);
-INSERT INTO `patients` (category,penals,points,id) values ('Kategorija',1,10,300);
+INSERT INTO `patients` (category,penals,points,id) values ('Kategorija',4,10,300);
 
 INSERT INTO `dermatologists` (mark,id,work_time_id) values (10,400,1);
 INSERT INTO `dermatologists` (mark,id,work_time_id) values (10,500,2);
@@ -51,14 +51,14 @@ INSERT INTO `system_admins` (id) values (700);
 INSERT INTO `derm_pharmacy` (derm_id,pharmacy_id) values (400,1);
 INSERT INTO `derm_pharmacy` (derm_id,pharmacy_id) values (500,1);
 
-INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (1,'2021-08-28',0,500,3,'8:00',400,null,1);
+INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (1,'2021-08-30',0,500,3,'8:00',400,null,1);
 INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (2,'2021-08-20',0,1500,3,'8:30',500,null,1);
 INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (3,'2021-08-30',0,2000,3,'9:30',500,null,1);
-INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (4,'2021-08-28',0,1500,3,'8:00',500,null,1);
+INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (4,'2021-08-24',0,1500,4,'8:00',500,200,1);
 
 
 INSERT INTO `consulting` (id,date,duration,price,status,time,patient_id,pharmacist_id) values (1,'2021-08-30',0,800,3,'8:00',null,600);
-INSERT INTO `consulting` (id,date,duration,price,status,time,patient_id,pharmacist_id) values (2,'2021-08-31',0,800,0,'9:00',300,600);
+INSERT INTO `consulting` (id,date,duration,price,status,time,patient_id,pharmacist_id) values (2,'2021-08-31',0,800,4,'9:00',300,600);
 
 INSERT INTO `consulting` (id,date,duration,price,status,time,patient_id,pharmacist_id) values (3,'2021-08-20',0,800,3,'9:00',null,600);
 
@@ -66,4 +66,6 @@ INSERT INTO `med_price_list_items` (id,name,price,medicine_id,medicine_price_lis
 INSERT INTO `med_price_list_items` (id,name,price,medicine_id,medicine_price_list_id) values (2,'Rapten',200,2,1);
 INSERT INTO `pharmacy_storage`(id,in_stock,medicine_id,medicine_name,pharmacy_id,reserved) values(11,3,1,'Ibuprofen',1,1);
 INSERT INTO `pharmacy_storage`(id,in_stock,medicine_id,medicine_name,pharmacy_id,reserved) values(22,0,2,'Rapten',1,1);
+INSERT INTO `pharmacy_storage`(id,in_stock,medicine_id,medicine_name,pharmacy_id,reserved) values(33,2,2,'Rapten',2,1);
+
 

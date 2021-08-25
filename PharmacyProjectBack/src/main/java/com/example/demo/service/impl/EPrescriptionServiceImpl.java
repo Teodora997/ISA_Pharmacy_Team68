@@ -166,4 +166,15 @@ public class EPrescriptionServiceImpl implements EPrescriptionService {
             }
         }
     }
+    public List<EPrescription> gEPrescriptionByPatient(Long patientId){
+       List<EPrescription> ep=ePrescriptionRepository.findAll();
+       List<EPrescription> ret=new ArrayList<>();
+
+       for(EPrescription e:ep){
+           if(e.getPatient().getId()==patientId){
+                ret.add(e);
+           }
+       }
+       return ret;
+    }
 }

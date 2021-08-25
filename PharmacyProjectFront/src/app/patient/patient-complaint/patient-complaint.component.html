@@ -105,7 +105,7 @@
                     <th>Pharmacists</th> 
                 </thead>
                 <tbody>
-                    <tr *ngFor='let c of consultings'>
+                    <tr *ngFor='let c of consultings1'>
                         <td>{{c.pharmacistName}}</td>
                         <td><button (click)="writeComplaint(c.pharmacistId)">Write complaint</button></td>
                         <td> <select name="mark" [(ngModel)]='mark'>
@@ -123,7 +123,7 @@
                     <th>Dermatologists</th> 
                 </thead>
                 <tbody>
-                    <tr *ngFor='let e of examinations'>
+                    <tr *ngFor='let e of examinations1'>
                         <td>{{e.dermatologistName}}</td>
                         <td><button (click)="writeComplaint(e.dermatologistId)">Write complaint</button></td>
                         <td> <select name="mark" [(ngModel)]='mark'>

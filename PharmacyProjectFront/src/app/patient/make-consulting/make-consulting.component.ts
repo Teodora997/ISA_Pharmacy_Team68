@@ -24,6 +24,8 @@ export class MakeConsultingComponent implements OnInit {
     date:Date;
     time:String;
     pharmacies:Consulting[];
+    d:Date;
+    penalties:number=0;
   
     constructor(private router: Router, private loginService: LoginService,private userService:UserService,private patientService: PatientService) {
         this.user = new User();
@@ -31,15 +33,30 @@ export class MakeConsultingComponent implements OnInit {
         this.date=new Date;
         this.time="";
         this.pharmacies=[];
+        this.date=new Date();
+        this.d=new Date();
       }
       ngOnInit(): void {
        this.getUser();
        this.times=["8:00","8:30","9:00","9:30","10:00","10:30","11:00","11:30","12:00","12:30","13:00","13:30","14:00","14:30","15:00","15:30","16:00"];
       }
      
+      getMyPenalties(){
+        this.patientService.getMyPenalty(this.user.id).subscribe({
+          next: p=>{
+            this.penalties=p;
+          }
+        })
+      }
       //******** Nalazi dostupne preglede *******
       getPharmaciesForConsulting()
       {
+        let d1=new Date(this.date);
+        let d2=new Date();
+        if(d1<d2){
+          alert("Choose valid date!");
+        }else{
+
         console.log("Trazi slobodne apoteke za pregled kod farmaceuta");
         this.patientService.getPharmaciesForConsulting(this.date,this.time).subscribe({
             next: pharmacies=>
@@ -52,10 +69,13 @@ export class MakeConsultingComponent implements OnInit {
                 }
 
         });
-
+      }
       }
             //******** REZERVISE PREGLED KOD Farmaceuta *******
             makeConsulting(consultingId: number){
+              if(this.penalties>=3){
+                alert("You have "+this.penalties+" penals,so you can't reserve consulting!");
+              }else{
                 this.patientService.makeConsulting(consultingId,this.user.id).subscribe({
                 next: exId=>{
                   console.log(exId)
@@ -66,8 +86,7 @@ export class MakeConsultingComponent implements OnInit {
                     }
                 }
                 })
-                //window.location.reload();
-                //alert("Examination scheduled!");
+              }
             }
 
       getUser() {
@@ -76,6 +95,7 @@ export class MakeConsultingComponent implements OnInit {
           next: t => {
             this.user = t;
             console.log(this.user.city);
+            this.getMyPenalties();
           }
     
         });
