@@ -20,6 +20,7 @@ import { SystemAdminService } from './service/system-admin.service';
 import { PatientModule } from './patient/patient.module';
 import { PatientHomepageComponent } from './patient/patient-homepage/patient-homepage.component';
 import { PatientService } from './service/patient.service';
+import { SupplierModule } from './supplier/supplier.module';
 import { MedicineService } from './service/medicine.service';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { LoginModule } from './login/login.module';
@@ -32,7 +33,6 @@ import { LoginModule } from './login/login.module';
     HomePageComponent,
     AllMedicinesComponent,
     AllPharmaciesComponent,
-   
     PatientHomepageComponent,
     
   ],
@@ -43,7 +43,6 @@ import { LoginModule } from './login/login.module';
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
-    
     PatientModule,
     LoginModule
   ],
