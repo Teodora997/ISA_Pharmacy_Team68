@@ -1,86 +1,97 @@
 package com.example.demo.model;
 
+import java.time.LocalDate;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.example.demo.model.Users.Supplier;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="Offer")
 public class Offer {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="Id")
     private Long id;
 
-    @Column(name="idOrder")
-    private Integer idOrder;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private OrderMedicines order;
 
-    @Column(name="Price")
-    private Double price;
+    @Column(name="totalPrice")
+    private Double totalPrice;
     
-    @Column(name="Status")
-    private String status;
+    @Enumerated(EnumType.ORDINAL)
+	private OrderOfferStatus offerStatus;
 
     @Column(name = "DeliveryDate")
-    private String deliveryDate;
+    private LocalDate deliveryDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Supplier supplier;
 
     public Offer(){
 
     }
-    
-    public Long getId() {
-        return id;
-    }
-    public Offer(Long id, Integer idOrder, Double price, String status, String deliveryDate, Supplier supplier) {
+
+    public Offer(Long id, OrderMedicines order, Double totalPrice, OrderOfferStatus offerStatus, LocalDate deliveryDate,
+            Supplier supplier) {
         this.id = id;
-        this.idOrder = idOrder;
-        this.price = price;
-        this.status = status;
+        this.order = order;
+        this.totalPrice = totalPrice;
+        this.offerStatus = offerStatus;
         this.deliveryDate = deliveryDate;
         this.supplier = supplier;
     }
-    
+
+    public Long getId() {
+        return id;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getIdOrder() {
-        return idOrder;
+    public OrderMedicines getOrder() {
+        return order;
     }
 
-    public void setIdOrder(Integer idOrder) {
-        this.idOrder = idOrder;
+    public void setOrder(OrderMedicines order) {
+        this.order = order;
     }
 
-    public Double getPrice() {
-        return price;
+    public Double getTotalPrice() {
+        return totalPrice;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
-    public String getStatus() {
-        return status;
+    public OrderOfferStatus getOfferStatus() {
+        return offerStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setOfferStatus(OrderOfferStatus offerStatus) {
+        this.offerStatus = offerStatus;
     }
 
-    public String getDeliveryDate() {
+    public LocalDate getDeliveryDate() {
         return deliveryDate;
     }
 
-    public void setDeliveryDate(String deliveryDate) {
+    public void setDeliveryDate(LocalDate deliveryDate) {
         this.deliveryDate = deliveryDate;
     }
 
@@ -92,5 +103,8 @@ public class Offer {
         this.supplier = supplier;
     }
 
+   
+    
+   
     
 }
