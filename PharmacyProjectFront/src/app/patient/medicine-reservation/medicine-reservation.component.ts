@@ -7,6 +7,7 @@ import { MedicineForReservation } from 'src/app/model/medicineForReservation';
 import { Pharmacy } from 'src/app/model/pharmacy';
 import { PharmacyAndPriceForMedicine } from 'src/app/model/pharmacyAndPriceForMedicine';
 import { MedicineService } from 'src/app/service/medicine.service';
+import { PatientService } from 'src/app/service/patient.service';
 import { PharmacyService } from 'src/app/service/pharmacy.service';
 import { User } from 'src/app/user';
 
@@ -30,8 +31,9 @@ export class MedicineReservationComponent implements OnInit {
   reservations:MedicineForReservation[]=[];
   d!: String;
   d1!:Date;
+  penalties:number=0;
 
-  constructor(private router: Router,private medicineService:MedicineService, private pharmacyService: PharmacyService,private loginService:LoginService) {
+  constructor(private router: Router,private medicineService:MedicineService, private pharmacyService: PharmacyService,private loginService:LoginService,private patientService:PatientService) {
     this.selectedMedicine=new Medicine();
     this.user=new User();
     this.previewDescription=false;
@@ -121,7 +123,13 @@ getReservationsByPatient(){
 
 //********REZERVISE LIJEK    ******/
 makeReservation(med:MedicineForReservation){
-    
+    let d1=new Date(med.date);
+    let d2=new Date();
+    if(d1<d2){
+        alert("Choose valid date!");
+     }else if(this.penalties>=3){
+        alert("You have "+this.penalties+" penals,so you can't reserve medicine!");
+      }else{
     console.log(this.d);
     this.medicineService.makeReservation(med,this.user.id).subscribe({
         next: r=>{
@@ -132,6 +140,7 @@ makeReservation(med:MedicineForReservation){
             }
         }
     })
+}
 }
 //*********OTKAZIVANJE REZERVACIJE LIJEKA */
 cancelReservation(r:MedicineForReservation){
@@ -150,6 +159,13 @@ cancelReservation(r:MedicineForReservation){
     })
 }
 }
+getMyPenalties(){
+    this.patientService.getMyPenalty(this.user.id).subscribe({
+      next: p=>{
+        this.penalties=p;
+      }
+    })
+  }
 getUser() {
     
     this.loginService.getLoggedUser().subscribe({
@@ -157,6 +173,7 @@ getUser() {
         this.user = t;
         console.log(this.user.city);
         this.getReservationsByPatient();
+        this.getMyPenalties();
       }
 
     });
