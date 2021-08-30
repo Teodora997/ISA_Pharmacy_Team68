@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,10 +36,15 @@ public class DermatologistService {
     }
 
     @GetMapping(value = "/get3")
-    public List<Examination> getExaminations()
+    public List<String> getExaminations()
     {
         List<Examination> list = examinationRepository.findAll();
-        return  list;
+        List<String> lista2 = new ArrayList<String>();
+        for(Examination e : list)
+        {
+            lista2.add(e.getDermatologist().getFirstName());
+        }
+        return  lista2;
     }
 
    /* @GetMapping(value = "/get2")
