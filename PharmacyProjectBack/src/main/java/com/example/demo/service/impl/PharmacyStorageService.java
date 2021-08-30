@@ -1,19 +1,26 @@
 package com.example.demo.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.example.demo.dto.PharmacyStorageDTO;
+import com.example.demo.model.Pharmacy;
 import com.example.demo.model.PharmacyStorage;
 import com.example.demo.repository.PharmacyStorageRepository;
 import com.example.demo.service.IPharmacyStorageService;
 
+import com.example.demo.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
 public class PharmacyStorageService implements IPharmacyStorageService {
 
     @Autowired
     PharmacyStorageRepository pharmacyStorageRepository;
+    @Autowired
+    PharmacyService pharmacyService;
 
     @Override
     public Boolean checkAvailability(Long medId, Long phId) {
@@ -41,5 +48,35 @@ public class PharmacyStorageService implements IPharmacyStorageService {
             }
         
     }
+
+    // @GetMapping(value="api/get")
+    // @Override
+    public List<PharmacyStorage> findAllPharmacyStorages()
+    {
+        List<PharmacyStorage> pharmacyStorageList = pharmacyStorageRepository.findAll();
+        return pharmacyStorageList;
+    }
+
+    //@GetMapping(value="api/addAlternatives")
+    @Override
+    public List<String> FindPharmacyMedicine(int pharmacyId) {
+        List<Pharmacy> pharmacyList = pharmacyService.findAllPharmacies();  //lista farmacija
+        List<PharmacyStorage> pharmacyStorageList = findAllPharmacyStorages(); //lista magacina
+        int tempId = pharmacyId;                                                       //pomocna promjenljiva
+        List<String> retList = new ArrayList<>();                                   //lista koju vracamo
+        PharmacyStorageDTO pharmacyStorageDTO = new PharmacyStorageDTO();
+        pharmacyStorageDTO.setPharmacyId(pharmacyId);
+
+        for(PharmacyStorage p : pharmacyStorageList)
+        {
+            int id = p.getPharmacyId();
+            if(id == pharmacyId)
+            {
+                retList.add(p.getMedicineName());
+            }
+        }
+        return retList;
+    }
+
     
 }

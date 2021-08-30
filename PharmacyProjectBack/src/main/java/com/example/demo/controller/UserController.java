@@ -179,4 +179,21 @@ public class UserController {
         userService.editProfile(editedUser);
         return new ResponseEntity<>("Profile updated!",HttpStatus.OK);
     }
+
+    @GetMapping( value = "/getUserId")
+    public ResponseEntity getUserId( String userId)
+    {
+       // int retVal = u.getId().intValue();
+        //int retVal = Integer.parseInt(userId);
+
+
+
+        int retVal = Integer.parseInt(userId, 10);
+
+
+
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+
+    }
+
 }

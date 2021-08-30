@@ -39,6 +39,11 @@ export class UserService {
       return (localStorage.getItem(USER_ID_KEY) != null);
   }
 
+  public getUserId(id : string): Observable<any>
+  {
+      return this._http.get<any>("http://localhost:8081/api/users/getUserId?id="+id);
+  }
+
   isUserPatient(): boolean {
       if(this.isUserLoggedIn()) {
           this.user = JSON.parse(sessionStorage["user"]);

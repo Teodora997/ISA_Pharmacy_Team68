@@ -1,0 +1,63 @@
+
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<div  style="background-image: url(./assets/ph.jpg); margin-top: -2px;height: 100vh;background-repeat: no-repeat;background-size: cover; ">
+
+      <mat-card>
+
+            <div style = " text-align: center;">
+            Currently admin of pharmacy
+            </div>
+        
+           <div style = "text-align:center;"> 
+            <mat-form-field appearance="fill">
+            <mat-label>Please select a medecine</mat-label>
+            <mat-select name="sel" #sel = "ngModel" [(ngModel)] = "selectedMed"  (ngModelChange) = "onChangeSelect($event)" >
+             <mat-option *ngFor="let v of medList" [value] = "v">
+               {{ v }}
+              </mat-option> 
+            </mat-select>
+          </mat-form-field>
+          
+          <p>You selected: {{ selectedMed }}</p>
+
+            </div>    
+
+          <div style = "text-align:center">
+          Regular medicine price <label>{{regMedPrice}}</label>
+          </div>
+
+          <div style = "text-align:center">
+            <mat-label>Discounted price </mat-label>
+            <input matInput [(ngModel)] = "priceAfter" (ngModelChange) = "onChangePriceAfter($event)" > <br> <br>
+          </div>
+
+          <div style = "text-align:center">
+            <mat-label>Give a description to this promotion(make textarea wider in bottom right corner)</mat-label>  <br>
+            <textarea matInput placeholder="Description" [(ngModel)] = "description" (ngModelChange)="onChangeDescription($event)"></textarea>
+  
+          </div>
+
+          <div style = "text-align:center">
+            <mat-label>Starting date </mat-label>
+            <input matInput placeholder="yyyy-MM-dd" [(ngModel)] = "startDate" (ngModelChange) = "onChangeStartDate($event)">
+          </div>
+
+          <div style = "text-align:center">
+            <mat-label>Ending date </mat-label>
+            <input matInput placeholder="yyyy-MM-dd" [(ngModel)] = "endDate" (ngModelChange) = "onChangeEndDate($event)">
+          </div>
+
+          <div style = "text-align: center">
+          <button mat-raised-button (click)="addPromotion()">Confirm</button>
+          </div>
+
+                
+            
+      </mat-card>
+
+
+
+    </div>
+

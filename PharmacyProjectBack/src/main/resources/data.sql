@@ -63,3 +63,8 @@ INSERT INTO `med_price_list_items` (id,name,price,medicine_id,medicine_price_lis
 INSERT INTO `pharmacy_storage`(id,in_stock,medicine_id,medicine_name,pharmacy_id,reserved) values(11,3,1,'Ibuprofen',1,1);
 INSERT INTO `pharmacy_storage`(id,in_stock,medicine_id,medicine_name,pharmacy_id,reserved) values(22,0,2,'Rapten',1,1);
 
+INSERT INTO `pharmacy_promotion`(id, med_name, pharmacy_id, price_before, price_after, start_date, end_date, description) values(1, 'Rapten', 1, 20, 15, '2021-08-20', '2021-08-25', 'sadad');
+INSERT INTO `pharmacy_promotion`(id, med_name, pharmacy_id, price_before, price_after, start_date, end_date, description) values(2, 'Rapten', 1, 20, 15, '2021-08-20', '2021-08-25', 'sadad');
+INSERT INTO `pharmacy_promotion`(id, med_name, pharmacy_id, price_before, price_after, start_date, end_date, description) values(3, 'Rapten', 1, 20, 15, '2021-08-20', '2021-08-25', 'sadad');
+INSERT INTO `pharmacy_promotion`(id, med_name, pharmacy_id, price_before, price_after, start_date, end_date, description) values(4, 'Rapten', 1, 20, 15, '2021-08-20', '2021-08-25', 'sadad');
+

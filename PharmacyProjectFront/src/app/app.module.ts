@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +24,16 @@ import { MedicineService } from './service/medicine.service';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { LoginModule } from './login/login.module';
 
+import {MatFormFieldModule} from '@angular/material/form-field';
+
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PhadminModule } from './pharmacy-admin/phadmin.module';
+import { PromotionService } from './service/promotionService';
+import { DermatologistSearchComponent } from './dermatologist-search/dermatologist-search.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,8 +42,11 @@ import { LoginModule } from './login/login.module';
     HomePageComponent,
     AllMedicinesComponent,
     AllPharmaciesComponent,
+    
    
     PatientHomepageComponent,
+   
+    DermatologistSearchComponent,
     
   ],
   imports: [
@@ -43,10 +56,18 @@ import { LoginModule } from './login/login.module';
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
+    PhadminModule,
+    MatFormFieldModule,
+    //MatSelectModule,
+    //MatFormFieldModule,
+    
+   // MatDatepickerModule,
     
     PatientModule,
-    LoginModule
+    LoginModule,
+    BrowserAnimationsModule
   ],
+  
   providers: [
   LoginService,
   AuthService,
@@ -56,10 +77,12 @@ import { LoginModule } from './login/login.module';
   ConfigService,
   
   PatientService,
-  MedicineService
+  MedicineService,
+  PromotionService,
 
 
 ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  //schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

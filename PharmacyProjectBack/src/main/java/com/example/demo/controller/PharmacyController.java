@@ -31,6 +31,8 @@ public class PharmacyController {
     @Autowired
     PharmacyRepository pharmacyRepository;
 
+
+
     
 
     @GetMapping(value = "/allPharmacies")
@@ -84,4 +86,6 @@ public class PharmacyController {
         }
         return new ResponseEntity<>(ret,HttpStatus.OK);
     }
+
+
 }

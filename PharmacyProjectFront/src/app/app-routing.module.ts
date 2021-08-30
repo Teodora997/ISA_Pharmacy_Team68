@@ -9,6 +9,8 @@ import { SystemAdminModule } from './system-admin/system-admin.module';
 import { PatientModule } from './patient/patient.module';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { LoginModule } from './login/login.module';
+import { DermatologistSearchComponent } from './dermatologist-search/dermatologist-search.component';
+import { PhadminModule } from './pharmacy-admin/phadmin.module';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -18,6 +20,7 @@ const routes: Routes = [
   { path: 'medicines', component: AllMedicinesComponent },
   { path: '', redirectTo: 'homepage', pathMatch: 'full',}, 
   { path: '**', redirectTo: 'homepage', pathMatch: 'full'},
+  { path: 'dermatologist-search', component: DermatologistSearchComponent }
   //{ path: 'change-password', component: ChangePasswordComponent },
 ];
 
@@ -25,7 +28,8 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes),
   
   PatientModule,
-  LoginModule
+  LoginModule,
+  
   ],
   exports: [RouterModule]
 })

@@ -37,7 +37,7 @@ import { User } from "../user";
     
             } else if (this.user.role == "ROLE_PH_ADMIN") {
     
-              this.router.navigate(["/pharmacy-admin-homepage"]);
+              this.router.navigate(["/phadmin-homepage"]);
     
             } else if (this.user.role == "ROLE_SYS_ADMIN") {
                 console.log("aaaaaaaaaaaa");

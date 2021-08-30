@@ -14,10 +14,10 @@ public class PharmacyStorage {
     private Long id;
 
     @Column(name = "pharmacyId", nullable = false)
-    private Long pharmacyId;
+    private int pharmacyId;
 
     @Column(name = "medicineId", nullable = false)
-    private Long medicineId;
+    private int medicineId;
 
     @Column(name = "medicineName", nullable = false)
     private String medicineName;
@@ -31,7 +31,7 @@ public class PharmacyStorage {
     public PharmacyStorage() {
     }
 
-    public PharmacyStorage(Long pharmacyId, Long medicineId, int inStock, int reserved, String medicineName) {
+    public PharmacyStorage(int pharmacyId, int medicineId, int inStock, int reserved, String medicineName) {
         this.pharmacyId = pharmacyId;
         this.medicineId = medicineId;
         this.inStock = inStock;
@@ -55,19 +55,19 @@ public class PharmacyStorage {
         this.id = id;
     }
 
-    public Long getPharmacyId() {
+    public int getPharmacyId() {
         return pharmacyId;
     }
 
-    public void setPharmacyId(Long pharmacyId) {
+    public void setPharmacyId(int pharmacyId) {
         this.pharmacyId = pharmacyId;
     }
 
-    public Long getMedicineId() {
+    public int getMedicineId() {
         return medicineId;
     }
 
-    public void setMedicineId(Long medicineId) {
+    public void setMedicineId(int medicineId) {
         this.medicineId = medicineId;
     }
 
