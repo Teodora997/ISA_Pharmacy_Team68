@@ -1,0 +1,57 @@
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<div>
+<div id="divHeaderGuest">
+    <nav>
+        <ul >
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/supplier-homepage']" > <i class="material-icons">person</i>
+                    <p style="color: green; font-weight: 500;">My profile</p>
+                </a>
+            </li>
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/all-orders']" > <i class="material-icons">article</i>
+                    <p style="color: green; font-weight: 500;">Orders</p>
+                </a>
+            </li>
+            <li routerLinkActive="active">
+                <a  [routerLink]="['/all-offers']" > <i class="material-icons">article</i>
+                    <p style="color: green; font-weight: 500;">Offers</p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>	
+<div>
+    <h1 style="color: rgb(100, 98, 216);"> All offers</h1>
+    
+    <div class="card" style="margin-top: 150px;">
+     
+     <div class="card-content table-responsive table-full-width">
+         <table class="table">
+             <thead class="text-success">
+                <th>Offer id</th>
+                 <th>Total price</th>
+                 <th>Delivery date </th>
+                 <th>Order id</th>
+                 <th>Pharmacy name</th>
+                 <th>Time limit</th>
+                 <th>Offer status</th>
+             </thead>
+             <tbody>
+                 <tr *ngFor='let o of offers'>
+                    <td [routerLink]="[o.offerId]">{{o.offerId}}</td>
+                     <td >{{o.totalPrice}}</td>
+                     <td>{{o.deliveryDate}}</td>
+                     <td>{{o.orderId}}</td>
+                     <td>{{o.pharmacyName}}</td>
+                     <td>{{o.timeLimit}}</td>
+                     <td>{{o.offerStatus}}</td>
+                 </tr>
+             </tbody>
+         </table>
+     </div>
+ </div>
+</div>
+</div>

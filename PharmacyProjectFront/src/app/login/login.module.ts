@@ -11,12 +11,16 @@ import { SystemAdminModule } from '../system-admin/system-admin.module';
 import { SystemAdminService } from '../service/system-admin.service';
 import { PhadminHomepageComponent } from '../pharmacy-admin/phadmin-homepage/phadmin-homepage.component';
 import { PhadminModule } from '../pharmacy-admin/phadmin.module';
+import { SupplierHomepageComponent } from '../supplier/supplier-homepage/supplier-homepage.component';
+import { SupplierModule } from '../supplier/supplier.module';
+import { SupplierService } from '../service/supplier.service';
 
 
 @NgModule({
   declarations: [
    ChangePasswordComponent,
    SystemAdminHomepageComponent,
+   SupplierHomepageComponent
   ],
   imports: [
     CommonModule,
@@ -24,11 +28,13 @@ import { PhadminModule } from '../pharmacy-admin/phadmin.module';
     FormsModule,
     LoginRoutingModule,
     SystemAdminModule,
+    SupplierModule
     
     
   ],
   providers: [
     SystemAdminService,
+    SupplierService
   ]
 })
 export class LoginModule { }

@@ -44,10 +44,12 @@ public class PharmacyStorageService implements IPharmacyStorageService {
         for(PharmacyStorage p:ps){
             if(p.getMedicineId()==medId && p.getPharmacyId()==phId){
                p.setInStock(p.getInStock()-1);
+               pharmacyStorageRepository.save(p);
                 }
             }
         
     }
+
 
     // @GetMapping(value="api/get")
     // @Override
@@ -78,5 +80,32 @@ public class PharmacyStorageService implements IPharmacyStorageService {
         return retList;
     }
 
+
+    @Override
+    public void updateAfterCancel(Long medId, Long phId) {
+        List<PharmacyStorage> ps=pharmacyStorageRepository.findAll();
+        for(PharmacyStorage p:ps){
+            if(p.getMedicineId()==medId && p.getPharmacyId()==phId){
+               p.setInStock(p.getInStock()+1);
+               pharmacyStorageRepository.save(p);
+                }
+            }
+        
+    }
+
+    @Override
+    public Boolean checkAmount(Long medId, Long phId, int amount) {
+        PharmacyStorage ret=new PharmacyStorage();
+       List<PharmacyStorage> ps=pharmacyStorageRepository.findAll();
+       for(PharmacyStorage p:ps){
+           if(p.getMedicineId()==medId && p.getPharmacyId()==phId){
+               if(p.getInStock()>=amount){
+                   return true;
+               }
+           }
+       }
+        return false;
+       
+    }
     
 }

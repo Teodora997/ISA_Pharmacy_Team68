@@ -21,6 +21,7 @@ export class PatientPharmacyComponent implements OnInit {
     request!: Request;
     availableExaminations:DermatologistExaminations[];
     num!: number;
+    penalties:number=0;
     
 
     constructor(private router: Router, private pharmacyService: PharmacyService,private route: ActivatedRoute,private loginService:LoginService,private patientService:PatientService) {
@@ -47,6 +48,14 @@ export class PatientPharmacyComponent implements OnInit {
         );
     }
 
+    getMyPenalties(){
+      this.patientService.getMyPenalty(this.user.id).subscribe({
+        next: p=>{
+          this.penalties=p;
+        }
+      })
+    }
+
     //********DOSTUPNI PREGLEDI *********
     getAvailableExaminations(){
       console.log("PRONALAZI DOSTUPNE PREGLEDE");
@@ -61,6 +70,9 @@ export class PatientPharmacyComponent implements OnInit {
     }
     //******** REZERVISE PREGLED KOD DERMATOLOGA ********
     makeExamination(examinationId: number){
+      if(this.penalties>=3){
+        alert("You have "+this.penalties+" penals,so you can't reserve examination!");
+      }else{
       this.patientService.makeExamination(examinationId,this.user.id).subscribe({
         next: exId=>{;
           this.num=exId
@@ -74,6 +86,7 @@ export class PatientPharmacyComponent implements OnInit {
         }
       })
     }
+    }
     //****** NALAZI ULOGOVANOG ********
     getUser() {
     
@@ -81,6 +94,7 @@ export class PatientPharmacyComponent implements OnInit {
           next: t => {
             this.user = t;
             console.log(this.user.city);
+            this.getMyPenalties();
           }
     
         });

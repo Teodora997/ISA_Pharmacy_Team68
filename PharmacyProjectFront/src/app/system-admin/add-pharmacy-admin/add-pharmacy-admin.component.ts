@@ -53,7 +53,7 @@ export class AddPharmacyAdminComponent implements OnInit{
 }
 
   register() {
-    console.log(this.newPhAdmin);
+    console.log(this.newPhAdmin);   
 
     this.systemAdminService.registerPharmacyAdmin(this.newPhAdmin).subscribe(
         {

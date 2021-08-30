@@ -21,16 +21,28 @@ export class PatientExaminationComponent implements OnInit {
     request!: Request;
     examinations:DermatologistExaminations[];
     examination:Object;
+    penalties:number=0;
+   
   
     constructor(private router: Router, private loginService: LoginService,private userService:UserService,private patientService: PatientService) {
         this.user = new User();
        this.examinations=[];
        this.examination=new Object();
+       
       }
       ngOnInit(): void {
        this.getUser();
        
       }
+      getMyPenalties(){
+        this.patientService.getMyPenalty(this.user.id).subscribe({
+          next: p=>{
+            this.penalties=p;
+          }
+        })
+      }
+
+
       //*******VRACA SVE PREGLEDE *******
       getExaminationsByPatient(){
         this.patientService.getExaminationsByPatient(this.user.id).subscribe({
@@ -58,6 +70,19 @@ export class PatientExaminationComponent implements OnInit {
       }
 
 
+      //**********SORTIRANJE *******/
+      sort(sortType: string) {
+        console.log(sortType);
+        this.patientService.sortExaminations(this.examinations, sortType).subscribe({
+            next: ex => {
+                this.examinations = ex;
+            }
+
+        });
+    }
+
+    
+
       getUser() {
     
         this.loginService.getLoggedUser().subscribe({
@@ -65,6 +90,7 @@ export class PatientExaminationComponent implements OnInit {
             this.user = t;
             console.log(this.user.city);
             this.getExaminationsByPatient();
+            this.getMyPenalties();
           }
     
         });
