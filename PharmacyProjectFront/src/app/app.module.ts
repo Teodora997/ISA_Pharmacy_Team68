@@ -20,7 +20,6 @@ import { SystemAdminService } from './service/system-admin.service';
 import { PatientModule } from './patient/patient.module';
 import { PatientHomepageComponent } from './patient/patient-homepage/patient-homepage.component';
 import { PatientService } from './service/patient.service';
-import { SupplierModule } from './supplier/supplier.module';
 import { MedicineService } from './service/medicine.service';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { LoginModule } from './login/login.module';
@@ -43,13 +42,7 @@ import { DermatologistSearchComponent } from './dermatologist-search/dermatologi
     HomePageComponent,
     AllMedicinesComponent,
     AllPharmaciesComponent,
-<<<<<<< HEAD
-    
-   
-=======
->>>>>>> 923f530bf1bb59d65b9daad0ddd652403fcd0935
     PatientHomepageComponent,
-   
     DermatologistSearchComponent,
     
   ],
@@ -60,7 +53,6 @@ import { DermatologistSearchComponent } from './dermatologist-search/dermatologi
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
-<<<<<<< HEAD
     PhadminModule,
     MatFormFieldModule,
     //MatSelectModule,
@@ -68,8 +60,6 @@ import { DermatologistSearchComponent } from './dermatologist-search/dermatologi
     
    // MatDatepickerModule,
     
-=======
->>>>>>> 923f530bf1bb59d65b9daad0ddd652403fcd0935
     PatientModule,
     LoginModule,
     BrowserAnimationsModule
