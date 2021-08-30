@@ -47,6 +47,12 @@
                 </a>
             </li>
             <li routerLinkActive="active" >
+                <a [routerLink]="['/patient-eprescription']"> <i
+                        class="material-icons">playlist_add</i>
+                    <p style="color: green; font-weight: 500;"> ePrescription</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
                 <a [routerLink]="['/homepage']" (click)="logout()"> <i
                         class="material-icons">power_settings_new</i>
                     <p style="color: green; font-weight: 500;">Logout</p>
@@ -83,7 +89,7 @@
                                 <td>{{a.pharmacyAddress}}</td>
                                 <td>{{a.pharmacyRate}}</td>
                                 <td>{{a.pharmacistName}}</td>
-                                <td>{{a.pharmacistRate}}</td>
+                                <td>{{a.pharmaistRate}}</td>
                                 <td>{{a.price}}</td>
                                 <td><button (click)="makeConsulting(a.consultingId)" >Reserve</button></td>
                             </tr>

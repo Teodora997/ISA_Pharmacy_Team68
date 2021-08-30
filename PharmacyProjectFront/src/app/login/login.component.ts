@@ -105,6 +105,14 @@ export class LoginComponent implements OnInit {
         }
         else if(this.u.role=="ROLE_PATIENT"){
           this.router.navigate(["/patient-homepage"]);
+        }else if(this.u.role=="ROLE_SUPPLIER"){
+          if(this.u.firstTimeLogin==true){
+            console.log("DJUBRE");
+            this.router.navigate(["/change-password"]);
+          }else{
+            this.router.navigate(["/supplier-homepage"]);
+          }
+          
         }
         alert("Logged in!");    
     },

@@ -10,6 +10,7 @@ import { PatientConsultingComponent } from './patient-consultings/patient-consul
 import { PatientExaminationComponent } from './patient-examinations/patient-examinations.component';
 import { MedicineReservationComponent } from './medicine-reservation/medicine-reservation.component';
 import { PatientComplaintComponent } from './patient-complaint/patient-complaint.component';
+import { PatientEprescriptionComponent } from './patient-eprescription/patient-eprescription.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { PatientComplaintComponent } from './patient-complaint/patient-complaint
     PatientConsultingComponent,
     PatientExaminationComponent,
     MedicineReservationComponent,
-    PatientComplaintComponent
+    PatientComplaintComponent,
+    PatientEprescriptionComponent 
     
   ],
   imports: [

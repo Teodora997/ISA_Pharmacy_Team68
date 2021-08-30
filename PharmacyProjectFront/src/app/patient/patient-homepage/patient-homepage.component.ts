@@ -24,6 +24,10 @@ export class PatientHomepageComponent implements OnInit {
     allMedicines: Medicine[];
     newAllergy!: string;
     poruka:String;
+    penalties:number;
+    points:number=0;
+    category:string="";
+    c:number=0;
   
     constructor(private router: Router, private loginService: LoginService,private userService:UserService,private patientService: PatientService) {
         this.user = new User();
@@ -31,10 +35,46 @@ export class PatientHomepageComponent implements OnInit {
         this.editedUser=new User();
         this.allMedicines= [];
         this.poruka="";
+
+        this.penalties=0;
       }
       ngOnInit(): void {
        this.getUser();
       }
+        //**********PENALI */
+      getMyPenalties(){
+        this.patientService.getMyPenalty(this.user.id).subscribe({
+          next: p=>{
+            this.penalties=p;
+          }
+        })
+      }
+
+      //******KATEGORIJA *********
+      getCategory(){
+        this.patientService.getCategory(this.user.id).subscribe({
+          next: s=>{
+            this.c=s;
+            if(this.c==0)
+            {
+              this.category="REGULAR";
+            }else if(this.c==1){
+              this.category="SILVER";
+            }else if(this.c==2){
+              this.category="GOLD";
+            }
+          }
+        })
+      }
+      getPoints(){
+        this.patientService.getPoints(this.user.id).subscribe({
+          next: p=>{
+            this.points=p;
+          }
+        })
+      }
+
+
       //********PATIENT ALERGIES*******
       getMyAllergies() {
         console.log("UZIMA ALERGIJE"+this.user.id);
@@ -79,6 +119,9 @@ export class PatientHomepageComponent implements OnInit {
             console.log(this.user.city);
             this.getMyAllergies();
             this.getAllMedicines();
+            this.getMyPenalties();
+            this.getCategory();
+            this.getPoints();
           }
     
         });

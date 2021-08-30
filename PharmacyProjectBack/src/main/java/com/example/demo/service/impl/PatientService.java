@@ -1,30 +1,42 @@
 package com.example.demo.service.impl;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import com.example.demo.dto.ConsultingDTO;
 import com.example.demo.dto.ExaminationDTO;
+import com.example.demo.dto.MedicineReservationDTO;
 import com.example.demo.model.Complaint;
 import com.example.demo.model.Consulting;
+import com.example.demo.model.EPrescription;
 import com.example.demo.model.Examination;
 import com.example.demo.model.ExaminationStatus;
 import com.example.demo.model.Medicine;
+import com.example.demo.model.MedicineReservationStatus;
 import com.example.demo.model.Pharmacy;
+import com.example.demo.model.Users.Dermatologist;
 import com.example.demo.model.Users.Patient;
+import com.example.demo.model.Users.Pharmacist;
 import com.example.demo.model.Users.User;
 import com.example.demo.repository.ComplaintRepository;
 import com.example.demo.repository.ConsultingRepository;
+import com.example.demo.repository.EPrescriptionRepository;
 import com.example.demo.repository.ExaminationRepository;
+import com.example.demo.repository.MedicineRepository;
 import com.example.demo.repository.PharmacyRepository;
+import com.example.demo.repository.UserRepository.DermatologistRepository;
 import com.example.demo.repository.UserRepository.PatientRepository;
 import com.example.demo.repository.UserRepository.PharmacistRepository;
+import com.example.demo.service.EPrescriptionService;
 import com.example.demo.service.IPatientService;
-import com.example.demo.service.PharmacyService;
+import com.example.demo.service.MedicineService;
 import com.example.demo.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +56,8 @@ public class PatientService implements IPatientService{
     @Autowired
     private PharmacistRepository pharmacistRepository;
     @Autowired
+    private MedicineRepository medicineRepository;
+    @Autowired
     private EmailService emailService;
 
     @Autowired 
@@ -55,6 +69,17 @@ public class PatientService implements IPatientService{
     @Autowired
     PharmacyRepository pharmacyRepository;
 
+    @Autowired
+    DermatologistRepository dermatologistRepository;
+
+    @Autowired
+    MedicineService medicineService;
+
+    @Autowired
+    MedicineServiceImpl medicineServiceImpl;
+
+    @Autowired
+    EPrescriptionServiceImpl ePrescriptionService;
     
     public PatientService(PatientRepository patientRepository, ExaminationRepository examinationRepository,
             ConsultingRepository consultingRepository, PharmacistRepository pharmacistRepository,EmailService emailService) {
@@ -74,10 +99,19 @@ public class PatientService implements IPatientService{
 
     @Override
     public Long makeExamination(String patientId, Long examinationId) {
-        List<ConsultingDTO> cons=getConsultingsByPatient(Long.parseLong(patientId));
+        
+        List<ExaminationDTO> ex=getExaminationsByPatient(Long.parseLong(patientId));
         Boolean patientAvailable=true;
         Examination examination=examinationRepository.findById(examinationId).get();
+        List<ConsultingDTO> cons=getConsultingsByPatient(Long.parseLong(patientId));
         for(ConsultingDTO cd:cons){
+            if(cd.getDate().isEqual(examination.getDate()) && cd.getTime().equals(examination.getTime())){
+                System.out.println("pacijent je zauzet EXAMINATIONS");
+                patientAvailable=false;
+            }
+        }
+
+        for(ExaminationDTO cd:ex){
             if(cd.getDate().isEqual(examination.getDate()) && cd.getTime().equals(examination.getTime())){
                 System.out.println("pacijent je zauzet EXAMINATIONS");
                 patientAvailable=false;
@@ -108,6 +142,9 @@ public class PatientService implements IPatientService{
 
     @Override
     public List<ConsultingDTO> getPharmaciesForConsulting(LocalDate date, String time) {
+        if(date.isBefore(LocalDate.now())){
+            return null;
+        }
         List<Consulting> allConsultings=new ArrayList<>();
         allConsultings=consultingRepository.findAll();
         System.out.println("svi pregledi "+allConsultings+date);
@@ -151,6 +188,14 @@ public class PatientService implements IPatientService{
                 patientAvailable=false;
             }
         }
+
+        List<ConsultingDTO> cons=getConsultingsByPatient(Long.parseLong(patientId));
+        for(ConsultingDTO cd:cons){
+            if(cd.getDate().isEqual(consulting.getDate()) && cd.getTime().equals(consulting.getTime())){
+                System.out.println("pacijent je zauzet EXAMINATIONS");
+                patientAvailable=false;
+            }
+        }
         Patient patient=patientRepository.findById(Long.parseLong(patientId)).get();
         if(patientAvailable){
         if(consulting.getPatient()!=null){
@@ -185,7 +230,7 @@ public class PatientService implements IPatientService{
             mailMessage.setText("Consulting succesifully reserved !:"+
             "\n pharmacist:"+consulting.getPharmacist().getFirstName()+
             "\n patient:"+consulting.getPatient().getFirstName()+
-            "patient:"+consulting.getPatient().getFirstName());
+            "pharmacy:"+consulting.getPrice());
 
             emailService.sendEmail(mailMessage);
         
@@ -283,7 +328,7 @@ public class PatientService implements IPatientService{
         }
         ex.setStatus(ExaminationStatus.canceled);
         examinationRepository.save(ex);
-        return null;   
+        return ex;   
     }
 
     @Override
@@ -311,20 +356,37 @@ public class PatientService implements IPatientService{
        System.out.println("U SERVISU ZA APOTEKE ZA ZALBY: "+ patientId);
        List<ConsultingDTO> cons=getConsultingsByPatient(patientId);
        List<ExaminationDTO> exams=getExaminationsByPatient(patientId);
-
+        List<MedicineReservationDTO> medRes=medicineServiceImpl.getReservationsByPatient(patientId);
+        List<EPrescription> ep=ePrescriptionService.gEPrescriptionByPatient(patientId);
        List<Pharmacy> pharmacies=new ArrayList<Pharmacy>();
 
+
+       for(EPrescription e:ep){
+           if(e.isPurchased()){
+            Pharmacy p=pharmacyRepository.findById(e.getPharmacyId()).get();
+            pharmacies.add(p);
+           }
+       }
+       for(MedicineReservationDTO m:medRes){
+           if(m.getStatus().equals(MedicineReservationStatus.DONE)){
+               Pharmacy p=pharmacyRepository.findById(m.getPharmacyId()).get();
+               pharmacies.add(p);
+           }
+       }
        for(ConsultingDTO c:cons){
+           if(c.getExaminationStatus().equals(ExaminationStatus.done)){
            Pharmacy p=pharmacyRepository.findById(c.getPharmacyId()).get();
             System.out.println("u prvom foru: "+c.getPharmacyId()+" "+c.getPharmacyName());
            pharmacies.add(p);
        }
+    }
        for(ExaminationDTO e:exams){
+        if(e.getExaminationStatus().equals(ExaminationStatus.done)){
         Pharmacy p=pharmacyRepository.findById(e.getPharmacyId()).get();
         System.out.println("u drugom foru: "+e.getPharmacyId()+" "+e.getPharmacyName());
         pharmacies.add(p);
         }
-
+    }
         List<Pharmacy> pharmacies1= new ArrayList<>(new HashSet<>(pharmacies));
 
         
@@ -350,4 +412,157 @@ public class PatientService implements IPatientService{
 
         return 1;
     }
+
+    @Override
+    public Double rateUser(Long userId, Double mark) {
+        Pharmacist ph=pharmacistRepository.findById(userId).orElse(null);
+        Dermatologist d=dermatologistRepository.findById(userId).orElse(null);
+        Double newMark;
+        if(ph!=null){
+            newMark=(ph.getMark()+mark)/2;
+            ph.setMark(newMark);
+            pharmacistRepository.save(ph);
+        }else{
+            newMark=(d.getMark()+mark)/2;
+            d.setMark(newMark);
+            dermatologistRepository.save(d);
+        }
+        return newMark;
+    }
+
+    @Override
+    public Double rateMedicine(Long medicineId, Double mark) {
+        Medicine m=medicineRepository.findById(medicineId).get();
+        Double newMark;
+        newMark=(m.getMark()+mark)/2;
+        m.setMark(newMark);
+        medicineRepository.save(m);
+        return newMark;
+    }
+
+    @Override
+    public Double ratePharmacy(Long pharmacyId, Double mark) {
+        Pharmacy p=pharmacyRepository.findById(pharmacyId).get();
+        Double newMark;
+        newMark=(p.getMark()+mark)/2;
+        p.setMark(newMark);
+        pharmacyRepository.save(p);
+        return newMark;
+    }
+
+    @Override
+    public Set<Pharmacy> getSubscribedPharmacies(Long patientId) {
+        Patient p=patientRepository.findById(patientId).get();
+        Set<Pharmacy> pharmacies=p.getSubPharmacies();
+        return pharmacies;
+    }
+
+    @Override
+    public Pharmacy subscribe(Long patientId, Long pharmacyId) {
+        System.out.println("SERVIS SUBSCRIBE");
+        Patient p=patientRepository.findById(patientId).get();
+        Pharmacy ps=pharmacyRepository.findById(pharmacyId).get();
+        Set<Pharmacy> subPharmacies=p.getSubPharmacies();
+        for(Pharmacy ph:subPharmacies){
+            if(ph.getId().equals(pharmacyId)){
+                System.out.println("Vec pretplacen!");
+                return null;
+            }
+        }
+                subPharmacies.add(ps);
+                p.setSubPharmacies(subPharmacies);
+                patientRepository.save(p);
+         return ps;
+    }
+
+    @Override
+    public Pharmacy unsubscribe(Long patientId, Long pharmacyId) {
+        System.out.println("UNSUBSCRIBE");
+        Patient p=patientRepository.findById(patientId).get();
+        Pharmacy ps=pharmacyRepository.findById(pharmacyId).get();
+        Set<Pharmacy> subPharmacies=p.getSubPharmacies();      
+        subPharmacies.remove(ps);
+        p.setSubPharmacies(subPharmacies);
+        patientRepository.save(p);
+        return ps;
+    }
+
+    @Override
+    public ArrayList<ExaminationDTO> sort(ArrayList<ExaminationDTO> sortAppointments, String sortType) {
+       
+        if(sortType.equals("RATE")){
+            sortAppointments.sort(Comparator.comparingDouble(ExaminationDTO:: getDermatologistRate));
+            return sortAppointments;
+        }else if(sortType.equals("PRICE")){
+            sortAppointments.sort(Comparator.comparingDouble(ExaminationDTO:: getPrice));
+            return sortAppointments;
+        }
+        return null;
+    }
+
+    @Override
+    public Integer getPenals(Long patientId) {
+        LocalDate start = YearMonth.now().atDay(1);
+        System.out.println("PRVI AVGUST BU TREBAO"+start);
+        LocalDate end   = YearMonth.now().atEndOfMonth();
+        Patient p=patientRepository.findById(patientId).get();
+        List<MedicineReservationDTO> allRes=medicineServiceImpl.getReservationsByPatient(patientId);
+        List<ExaminationDTO> allEx=getExaminationsByPatient(patientId);
+        List<ConsultingDTO> allCons=getConsultingsByPatient(patientId);
+        Integer penals=0;
+        for(MedicineReservationDTO md:allRes){
+            if(md.getDate().isAfter(start)){//u ovom mjesecu
+                System.out.println("prvi if-znaci u ovom mjesecu je");
+                if(md.getDate().isBefore(LocalDate.now())){//prosao rok za preuzimanje
+                    System.out.println("prosao rok za preuzimanje");
+                    if(md.getStatus().equals(MedicineReservationStatus.RESERVED)) {
+                        System.out.println("ni otkazan ni preuzeto");
+                        penals++;
+                }
+            }
+        }
+        }
+        for(ConsultingDTO md:allCons){
+            if(md.getDate().isAfter(start)){//u ovom mjesecu
+                System.out.println("prvi if-znaci u ovom mjesecu je-consultings");
+                if(md.getDate().isBefore(LocalDate.now())){//prosao termin
+                    System.out.println("prosao termin");
+                    if(md.getExaminationStatus().equals(ExaminationStatus.didNotCome)) {
+                        System.out.println("nije se pojavio");
+                        penals++;
+                }
+            }
+        }
+        }
+        for(ExaminationDTO md:allEx){
+            if(md.getDate().isAfter(start)){//u ovom mjesecu
+                System.out.println("prvi if-znaci u ovom mjesecu je-examinations");
+                if(md.getDate().isBefore(LocalDate.now())){//prosao termin
+                    System.out.println("prosao termin");
+                    if(md.getExaminationStatus().equals(ExaminationStatus.didNotCome)) {
+                        System.out.println("nije se pojavio");
+                        penals++;
+                }
+            }
+        }
+        }
+        
+
+        return penals;
+    }
+
+    private Date getFirstDateInMonth() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        return calendar.getTime();
+    }
+
+    private Date getLastDateInMonth() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DATE));
+        calendar.set(Calendar.HOUR_OF_DAY,0);
+        return calendar.getTime();
+    }
+
 }

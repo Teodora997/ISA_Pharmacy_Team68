@@ -48,6 +48,12 @@
                 </a>
             </li>
             <li routerLinkActive="active" >
+                <a [routerLink]="['/patient-eprescription']"> <i
+                        class="material-icons">playlist_add</i>
+                    <p style="color: green; font-weight: 500;"> ePrescription</p>
+                </a>
+            </li>
+            <li routerLinkActive="active" >
                 <a [routerLink]="['/homepage']" (click)="logout()"> <i
                         class="material-icons">power_settings_new</i>
                     <p style="color: green; font-weight: 500;">Logout</p>
@@ -83,7 +89,9 @@
                 </div>
             
                 <div>
-                    <label>Number of points :</label>
+                    <label>Number of points:{{points}} </label><br>
+                    <label>Number of penalties:{{penalties}} </label><br>
+                    <label>Category: {{category}}</label><br>
                 </div>
 
         <div>

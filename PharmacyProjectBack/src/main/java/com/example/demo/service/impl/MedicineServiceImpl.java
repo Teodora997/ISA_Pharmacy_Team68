@@ -263,6 +263,7 @@ System.out.println("REZULTAT "+ret);
             System.out.println("NE MOZE! ");
             return null;
         }  
+        pharmacyStorageService.updateAfterCancel(m.getMedicineId(), m.getPharmacyId());
         m.setStatus(MedicineReservationStatus.CANCELED);
         medicineReservationRepository.save(m);
         return m;

@@ -1,8 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { AvailabilityEPrescription } from "../model/availabilityEprescription";
 import { Consulting } from "../model/consulting";
 import { DermatologistExaminations } from "../model/dermatologistExamination";
+import { MedFromQR } from "../model/medFromQR";
 import { Medicine } from "../model/medicine";
 import { Pharmacy } from "../model/pharmacy";
 import { User } from "../user";
@@ -53,4 +55,41 @@ export class PatientService {
   public makeComplaintPharmacy(patientId:string,pharmacyId:number,complaintText:string): Observable<number> {
     return this.http.post<number>("http://localhost:8081/api/patients/makeComplaintPharmacy/"+ patientId +"/"+ pharmacyId,complaintText);
   }  
+  public getEprescription(userId:string,formData: FormData): Observable<AvailabilityEPrescription> {
+    return this.http.post<AvailabilityEPrescription>("http://localhost:8081/api/eprescription/getEprescription/"+userId,formData);
+  }
+  public buyEprescription(pharmacyId:number,prescriptionId:number): Observable<any> {
+    return this.http.post<any>("http://localhost:8081/api/eprescription/buyEprescription/"+pharmacyId,prescriptionId);
+  }
+
+  public rateUser(userId:number,mark:string): Observable<number >{
+    return this.http.post<number>("http://localhost:8081/api/patients/rateUser/"+ userId,mark);
+  }
+  public ratePharmacy(pharmacyId:number,mark:string): Observable<number >{
+    return this.http.post<number>("http://localhost:8081/api/patients/ratePharmacy/"+ pharmacyId,mark);
+  }
+  public rateMedicine(medicineId:number,mark:string): Observable<number >{
+    return this.http.post<number>("http://localhost:8081/api/patients/rateMedicine/"+ medicineId,mark);
+  }
+  public getSubscribedPharmacies(patientId:string): Observable<Pharmacy[]> {
+    return this.http.get<Pharmacy[]>("http://localhost:8081/api/patients/getSubscribedPharmacies/"+patientId);
+  }
+  public subscribe(patientId:string,pharmacyId:number): Observable<Pharmacy >{
+    return this.http.post<Pharmacy>("http://localhost:8081/api/patients/subscribe/"+ patientId,pharmacyId);
+  }
+  public unsubscribe(patientId:string,pharmacyId:number): Observable<Pharmacy >{
+    return this.http.post<Pharmacy>("http://localhost:8081/api/patients/unsubscribe/"+ patientId,pharmacyId);
+  }
+  public sortExaminations(pharmacyList: DermatologistExaminations[], sortType: string): Observable<DermatologistExaminations[]> {
+    return this.http.post<DermatologistExaminations[]>("http://localhost:8081/api/patients/sort/"+ sortType, pharmacyList);
+  }
+  public getMyPenalty(patientId: string): Observable<number> {
+    return this.http.get<number>("http://localhost:8081/api/patients/getPenalties/" + patientId);
+  }
+  public getCategory(patientId: string): Observable<number> {
+    return this.http.get<number>("http://localhost:8081/api/patients/getCategory/" + patientId,{responseType:'json'});
+  }
+  public getPoints(patientId: string): Observable<number> {
+    return this.http.get<number>("http://localhost:8081/api/patients/getPoints/" + patientId);
+  }
 }
