@@ -55,6 +55,16 @@ public class SupplierController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping(value = "/changeOffer/{userId}/{orderId}")
+    public ResponseEntity<?> changeOffer(@PathVariable("userId") String userId,@PathVariable("orderId") Long orderId ,@RequestBody DisplayOfferDTO offer){
+       
+        Long id=Long.parseLong(userId);
+
+        offerService.changeOffer(id,orderId,offer);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
     @PostMapping(value = "/getOffers")
     public ResponseEntity<List<DisplayOfferDTO>> getOffers(@RequestBody String id){
         Long userId=Long.parseLong(id);

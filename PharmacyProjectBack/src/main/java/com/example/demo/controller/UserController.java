@@ -23,10 +23,12 @@ import com.example.demo.repository.UserRepository.ConfirmationTokenRepository;
 import com.example.demo.repository.UserRepository.UserRepository;
 import com.example.demo.service.RequestForRegService;
 import com.example.demo.service.UserService;
+import com.example.demo.service.impl.EmailService;
 import com.example.demo.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,6 +60,9 @@ public class UserController {
 
     @Autowired
 	private UserRepository  userRepository;
+
+    @Autowired
+    EmailService emailService;
 	
 	@Autowired
     private ConfirmationTokenRepository confirmationTokenRepository;
@@ -80,6 +85,15 @@ public class UserController {
         if(user != null) {
 
             ConfirmationToken confirmationToken = new ConfirmationToken(user);
+
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(user.getEmail());
+            mailMessage.setSubject("Account verification");
+            mailMessage.setFrom("isatim68@gmail.com");
+            mailMessage.setText("<a href='http://localhost:4200/login'>Click on this to go to your account. </a>"
+           );
+    
+            emailService.sendEmail(mailMessage);
 
             confirmationTokenRepository.save(confirmationToken);
 
