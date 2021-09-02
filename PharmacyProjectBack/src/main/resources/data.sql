@@ -77,3 +77,4 @@ insert into `loyalty`(id,consulting_points,examination_points,gold_points,regula
 insert into `medicine_reservation`(id,medicine_id,medicine_name,patient_email,patient_id,pharmacy_id,pharmacy_name,pick_up_date,reservation_code,status)values (100,1,'Ibuprofen','pacijent1@gmail.com',200,1,'Benu','2021-08-20','a1a1a1a1adf',0);
 insert into `medicine_reservation`(id,medicine_id,medicine_name,patient_email,patient_id,pharmacy_id,pharmacy_name,pick_up_date,reservation_code,status)values (300,1,'Ibuprofen','pacijent1@gmail.com',200,1,'Benu','2021-08-21','a1a1a1jjjja1adf',1);
 insert into `medicine_reservation`(id,medicine_id,medicine_name,patient_email,patient_id,pharmacy_id,pharmacy_name,pick_up_date,reservation_code,status)values (200,1,'Ibuprofen','pacijent1@gmail.com',200,1,'Benu','2021-07-21','a1a1a1jjjja1adf',0)
+

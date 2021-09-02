@@ -11,8 +11,8 @@ export class SupplierService {
   constructor(private http: HttpClient) {
   }
 
-  public getOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>("http://localhost:8081/api/supplier/getOrders");
+  public getOrders(userId:string): Observable<Order[]> { 
+    return this.http.post<Order[]>("http://localhost:8081/api/supplier/getOrders",userId);
   }
   public getItemsFromOrder(orderId:number): Observable<OrderItem[]> {
     return this.http.post<OrderItem[]>("http://localhost:8081/api/supplier/getItemsFromOrder",orderId);

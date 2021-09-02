@@ -40,7 +40,7 @@ export class AllOrdersComponent implements OnInit {
 
 ngOnInit(): void {
     this.getUser();
-    this.getOrders();
+  
 
 }
 
@@ -48,7 +48,7 @@ ngOnInit(): void {
 
 getOrders() {
     
-  this.supplierService.getOrders().subscribe({
+  this.supplierService.getOrders(this.user.id).subscribe({
     next: t => {
       this.orders = t;
       console.log(this.orders);
@@ -58,6 +58,7 @@ getOrders() {
         if(d2>d1){
           this.orders1.push(o);
       }
+     
     }
     }
 
@@ -78,18 +79,27 @@ seeItems(o:Order) {
 }
 sendOffer(){
   
+  let d1=new Date();
+  let d2=new Date(this.offer.deliveryDate);
   if(this.offer.deliveryDate==null || this.offer.totalPrice==null){
     alert("Fields cant be empty!");
-  }
+  }else{
+ 
+  if(d2<d1){
+    alert("Delivery date must be after today!");
+  }else{
   console.log(this.order.id);
   console.log(this.offer);
   this.supplierService.sendOffer(this.user.id,this.order.id,this.offer).subscribe({
     next: t => {
       this.response = t;
       alert("Offer is sent!");
+      this.refresh();
     }
 
   });
+}
+}
 }
 
 
@@ -99,13 +109,16 @@ getUser() {
       next: t => {
         this.user = t;
         console.log(this.user.city);
+        this.getOrders();
       }
 
     });
 
   }
   
-  
+  refresh() {
+    window.location.reload();
+}
   redirect() {
     this.router.navigate(["/homepage"]);
   }

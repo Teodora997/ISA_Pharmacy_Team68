@@ -31,9 +31,10 @@ public class SupplierController {
     @Autowired
     OfferService offerService;
 
-    @GetMapping(value = "/getOrders")
-    public ResponseEntity<List<OrderMedicinesDTO>> getOrders(){
-        List<OrderMedicinesDTO> orders=orderService.getWaitingOrders();
+    @PostMapping(value = "/getOrders")
+    public ResponseEntity<List<OrderMedicinesDTO>> getOrders(@RequestBody String userId){
+        Long id=Long.parseLong(userId);
+        List<OrderMedicinesDTO> orders=orderService.getWaitingOrders(id);
 
         return new ResponseEntity<>(orders,HttpStatus.OK);
     }
