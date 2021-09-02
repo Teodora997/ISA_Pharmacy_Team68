@@ -12,6 +12,7 @@ import com.example.demo.service.IPharmacyStorageService;
 import com.example.demo.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
@@ -39,6 +40,7 @@ public class PharmacyStorageService implements IPharmacyStorageService {
     }
 
     @Override
+    @Transactional(readOnly = false)
     public void updateStorage(Long medId, Long phId) {
         List<PharmacyStorage> ps=pharmacyStorageRepository.findAll();
         for(PharmacyStorage p:ps){

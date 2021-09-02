@@ -51,10 +51,11 @@ INSERT INTO `system_admins` (id) values (700);
 INSERT INTO `derm_pharmacy` (derm_id,pharmacy_id) values (400,1);
 INSERT INTO `derm_pharmacy` (derm_id,pharmacy_id) values (500,1);
 
-INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (1,'2021-08-30',0,500,3,'8:00',400,null,1);
-INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (2,'2021-08-20',0,1500,3,'8:30',500,null,1);
-INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (3,'2021-08-30',0,2000,3,'9:30',500,null,1);
-INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (4,'2021-08-24',0,1500,4,'8:00',500,200,1);
+INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (1,'2021-09-30',0,500,3,'8:00',400,null,1);
+INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (2,'2021-09-20',0,1500,3,'8:30',500,null,1);
+INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (3,'2021-09-30',0,2000,3,'9:30',500,null,1);
+INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (4,'2021-09-30',0,2000,3,'8:00',500,null,1);
+INSERT INTO `examinations` (id,date,duration,price,status,time,dermatologist_id,patient_id,pharmacy_id) values (5,'2021-09-03',0,1500,4,'8:00',500,200,1);
 
 
 INSERT INTO `consulting` (id,date,duration,price,status,time,patient_id,pharmacist_id) values (1,'2021-08-30',0,800,3,'8:00',null,600);
