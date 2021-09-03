@@ -83,11 +83,10 @@
      <div class="col-sm-6">
         <div class="form-group">
            <select name="type" #type="ngModel" [(ngModel)]="filterParameter" >
-               <option value="ANTIBIOTIC">Antibiotic</option>
-               <option value="ANTIHISTAMINE">Antihistamine</option>
-               <option value="ANESTHETIC">Anesthetic</option>
-               <option value="ANALGETIC">Analgetic</option> 
-               <option value="ANTISEPTICS">Antiseptic</option>
+            <option value="SYRUP">Syrup</option>
+            <option value="DROPS">Drops</option>
+            <option value="TABLET">Tablet</option>
+            <option value="CAPSULES">Capsules</option> 
            </select>
        </div>
        <button (click)="filter()">Filter</button>

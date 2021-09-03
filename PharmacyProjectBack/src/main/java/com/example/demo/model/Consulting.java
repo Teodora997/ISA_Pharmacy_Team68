@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import com.example.demo.model.Users.Patient;
 import com.example.demo.model.Users.Pharmacist;
@@ -24,6 +25,7 @@ public class Consulting {
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     @Column(name = "Date")
     private LocalDate date;
     @Column(name = "Time")
