@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import com.example.demo.model.Users.Dermatologist;
 import com.example.demo.model.Users.Patient;
@@ -26,6 +27,10 @@ public class Examination {
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Version
+    @Column(name = "version", columnDefinition = "integer DEFAULT 1", nullable = false)
+    private Long version;
+    
     @Column(name = "Date")
     private LocalDate date;
     @Column(name = "Time")

@@ -155,7 +155,7 @@ System.out.println("REZULTAT "+ret);
         System.out.println("PRETRAGA ->TIP "+type);
         for(MedicineDTO m:medicines){
             if (!type.equals("all")) {
-                if (!m.getType().toLowerCase().equals(type.toLowerCase())) {
+                if (!m.getForm().toLowerCase().equals(type.toLowerCase())) {
                     // and it is in the ret list
                     if (ret.contains(m)) {
                         // remove it from the ret list
@@ -197,6 +197,7 @@ System.out.println("REZULTAT "+ret);
         med.setStatus(mr.getStatus());
         med.setCode(mr.getReservationCode());
 
+       
         pharmacyStorageService.updateStorage(mr.getMedicineId(), mr.getPharmacyId());
         medicineReservationRepository.save(mr);
 
