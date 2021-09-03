@@ -50,7 +50,7 @@ Korisnici za testiranje:
 
 -farmaceut1@gmail.com
 
--dobavljac@gmail.com
+-dobavljaca je potrebno dodati sa naloga administratora sistema(nije dodat u bazu)
 
 --lozinka za sve korisnike je 123
 
