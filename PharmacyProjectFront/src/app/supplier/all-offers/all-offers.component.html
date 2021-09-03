@@ -25,6 +25,38 @@
 </div>	
 <div>
     <h1 style="color: rgb(100, 98, 216);"> All offers</h1>
+
+    <div  *ngIf="previewChangeOffer" >
+        <table class="table">
+            <thead class="text-success">
+               <th>Id</th>
+                <th>Name </th>
+                <th>Amount </th>
+            </thead>
+            <tbody>
+                <tr *ngFor='let i of orderItems'>
+                    <td >{{i.medicine.id}}</td>
+                     <td >{{i.medicine.name}}</td>
+                     <td>{{i.amount}}</td>
+                 </tr>
+            </tbody>
+        </table>
+
+        <form  #registrationForm="ngForm" (ngSubmit)="sendOffer()">
+            <div class="form-group">
+                <label>Total price:</label>
+                <input type="number" class="form-control"  
+                  #t="ngModel" name="t" [(ngModel)]="offer1.totalPrice"/>
+                  <label>Delivery date:</label>
+                <input type="date" class="form-control"  
+                  #d="ngModel" name="d" [(ngModel)]="offer1.deliveryDate"/> 
+            </div>
+              
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" >Send</button>                     
+               </div>
+          </form>
+    </div>
     
     <div class="card" style="margin-top: 150px;">
      
@@ -48,6 +80,7 @@
                      <td>{{o.pharmacyName}}</td>
                      <td>{{o.timeLimit}}</td>
                      <td>{{o.offerStatus}}</td>
+                     <td><button (click)="changeOffer(o)">Change offer</button></td>
                  </tr>
              </tbody>
          </table>

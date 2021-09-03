@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,24 +41,33 @@ public class SystemAdminController {
     @PostMapping(value = "/addLoyaltyProgram")
     public ResponseEntity<LoyaltyProgram> addLoyaltyProgram(@RequestBody LoyaltyProgram program){
         List<LoyaltyProgram> programs=loyaltyProgramRepository.findAll();
-        if(programs.isEmpty()==false){
-            loyaltyProgramRepository.deleteAll();
-        }
+        if(programs.size()==1 ){
+            LoyaltyProgram p=programs.get(0);
+            p.setConsultingPoints(program.getConsultingPoints());
+            p.setExaminationPoints(program.getExaminationPoints());
+            p.setGoldPoints(program.getGoldPoints());
+            p.setRegularPoints(program.getRegularPoints());
+            p.setSilverPoints(program.getSilverPoints());
+
+            loyaltyProgramRepository.save(p);
+        }else{
        loyaltyProgramRepository.save(program);
+        }
         return new ResponseEntity<>(program,HttpStatus.OK);
     }
 
     @GetMapping(value = "/getComplaints")
     public ResponseEntity<List<ComplaintDTO>> getComplaints(){
         List<ComplaintDTO> complaints=systemAdminService.getComplaints();
-        return new ResponseEntity<>(complaints,HttpStatus.OK);
+        return new ResponseEntity<>(complaints,HttpStatus.OK); 
     }
 
      @PostMapping(value = "/replyComplaint/{cId}")
-    public ResponseEntity replyComplaint(@PathVariable("cId") Long cId ,@RequestBody String reply){
+    public int  replyComplaint(@PathVariable("cId") Long cId ,@RequestBody String reply){
         
+        try{
         Complaint c=systemAdminService.replyComplaint(cId);
-
+        if(c!=null){
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(c.getPatient().getEmail());
         mailMessage.setSubject("Complaint Answer");
@@ -67,7 +77,13 @@ public class SystemAdminController {
 
         emailService.sendEmail(mailMessage);
 
-        return new ResponseEntity(HttpStatus.OK);
+        return 0;
+        }else{
+            return 1;
+        }
+        }catch(ObjectOptimisticLockingFailureException objectOptimisticLockingFailureException){
+            throw new ObjectOptimisticLockingFailureException("Another system admin has already answered.",HttpStatus.BAD_REQUEST);
+        }
     }
    
 }

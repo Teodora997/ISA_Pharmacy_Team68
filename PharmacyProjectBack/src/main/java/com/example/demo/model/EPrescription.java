@@ -31,9 +31,9 @@ public class EPrescription {
 
     @Column(name = "Date")
     private LocalDate date;
-
+ 
     @ManyToMany
-    @JsonIgnore
+    @JsonIgnore 
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     @JoinTable(name = "eprescription_medicines", joinColumns = @JoinColumn(name = "eprescription_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "medicine_id", referencedColumnName = "id"))

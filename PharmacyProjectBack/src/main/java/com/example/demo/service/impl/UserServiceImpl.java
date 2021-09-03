@@ -9,6 +9,7 @@ import com.example.demo.dto.UserForEditDTO;
 import com.example.demo.model.Pharmacy;
 import com.example.demo.model.Users.ConfirmationToken;
 import com.example.demo.model.Users.Dermatologist;
+import com.example.demo.model.Users.Patient;
 import com.example.demo.model.Users.PharmacyAdmin;
 import com.example.demo.model.Users.Supplier;
 import com.example.demo.model.Users.SystemAdmin;
@@ -17,6 +18,7 @@ import com.example.demo.repository.PharmacyRepository;
 import com.example.demo.repository.UserRepository.AuthorityRepository;
 import com.example.demo.repository.UserRepository.ConfirmationTokenRepository;
 import com.example.demo.repository.UserRepository.DermatologistRepository;
+import com.example.demo.repository.UserRepository.PatientRepository;
 import com.example.demo.repository.UserRepository.PharmacyAdminRepository;
 import com.example.demo.repository.UserRepository.SupplierRepository;
 import com.example.demo.repository.UserRepository.SystemAdminRepository;
@@ -64,6 +66,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PharmacyRepository pharmacyRepository;
+
+    @Autowired
+    private PatientRepository patientRepository;
 
     @Override
     public User findById(Long id) {
@@ -132,21 +137,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public User registerUser(User newUser) {
         if(findByEmail(newUser.getEmail()) == null){
-            User u = new User();
-            u.setPassword(passwordEncoder.encode(newUser.getPassword()));
-            u.setFirstName(newUser.getFirstName());
-            u.setLastName(newUser.getLastName());
-            u.setAddress(newUser.getAddress());
-            u.setCity(newUser.getCity());
-            u.setEmail(newUser.getEmail());
-            u.setTelephone(newUser.getTelephone());
-            u.setIsActivated(true);
-            u.setFirstTimeLogin(false);
+            Patient patient= new Patient();
+            patient.setPassword(passwordEncoder.encode(newUser.getPassword()));
+            patient.setFirstName(newUser.getFirstName());
+            patient.setLastName(newUser.getLastName());
+            patient.setAddress(newUser.getAddress());
+            patient.setCity(newUser.getCity());
+            patient.setEmail(newUser.getEmail());
+            patient.setTelephone(newUser.getTelephone());
+            patient.setIsActivated(true);
+            patient.setFirstTimeLogin(false);
            // u.setPrviPutLogovan(true);
-            u.setRole("ROLE_PATIENT");
+           patient.setRole("ROLE_PATIENT");
+           patient.setCategory("REGULAR");
+           patient.setPenals(0);
+           patient.setPoints(0);
 
-            userRepository.save(u);
-            return u;
+           patientRepository.save(patient);
+            return patient;
         }
         else {
             return null;

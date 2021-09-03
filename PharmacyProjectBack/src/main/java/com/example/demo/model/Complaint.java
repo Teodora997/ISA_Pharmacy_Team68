@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 
 import com.example.demo.model.Users.Patient;
 
@@ -25,7 +26,7 @@ public class Complaint {
     private String text;
 
     @ManyToOne(fetch =FetchType.LAZY)
-    private Patient patient;
+    private Patient patient; 
 
     @Column(name = "isAnswered")
     private Boolean isAnswered;
@@ -35,6 +36,10 @@ public class Complaint {
 
     @Column(name = "date")
     private LocalDate date;
+
+    @Version
+    @Column(name = "version", nullable = true)
+    private Long version;
 
     public Complaint() {
     }
@@ -54,6 +59,16 @@ public class Complaint {
         this.isAnswered = isAnswered;
         this.name = name;
         this.date = date;
+    }
+
+    
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 
     public Long getId() {

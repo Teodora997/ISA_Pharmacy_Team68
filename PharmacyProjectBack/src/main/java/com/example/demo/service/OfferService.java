@@ -8,4 +8,5 @@ import com.example.demo.dto.OfferDTO;
 public interface OfferService {
     void sendOffer(Long userId,Long orderId,OfferDTO offer);
     List<DisplayOfferDTO> getOffers(Long userId);
+    void changeOffer(Long userId,Long orderId,DisplayOfferDTO offer);
 }

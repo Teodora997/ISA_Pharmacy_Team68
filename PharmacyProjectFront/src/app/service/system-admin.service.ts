@@ -53,8 +53,8 @@ public getAllMedicines():Observable<Medicine[]>{
 public getComplaints():Observable<Complaint[]>{
     return this.http.get<Complaint[]>("http://localhost:8081/api/systemAdmin/getComplaints");
   }
-  public replyComplaint(cId:number,complaintReply:string){
-    return this.http.post("http://localhost:8081/api/systemAdmin/replyComplaint/"+cId,complaintReply); 
+  public replyComplaint(cId:number,complaintReply:string):Observable<any>{
+    return this.http.post<any>("http://localhost:8081/api/systemAdmin/replyComplaint/"+cId,complaintReply); 
 
 }
 }

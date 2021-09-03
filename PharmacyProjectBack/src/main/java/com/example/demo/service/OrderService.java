@@ -7,7 +7,7 @@ import com.example.demo.model.OrderItem;
 
 
 public interface OrderService {
-    List<OrderMedicinesDTO> getWaitingOrders();
+    List<OrderMedicinesDTO> getWaitingOrders(Long userId);
     List<OrderItem> getItemsFromOrder(Long orderId);
     
 }
