@@ -45,8 +45,8 @@ export class RegistrationComponent implements OnInit{
               console.log("User with this email already exists!");
               alert("User with this email already exists!");
             }else{
-              alert("Successufully registered!");
-            this.router.navigate(["/login"]);
+              alert("Check your email for verification!"); 
+            //this.router.navigate(["/login"]);
             }
           }
         }

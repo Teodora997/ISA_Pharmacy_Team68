@@ -31,9 +31,10 @@ public class SupplierController {
     @Autowired
     OfferService offerService;
 
-    @GetMapping(value = "/getOrders")
-    public ResponseEntity<List<OrderMedicinesDTO>> getOrders(){
-        List<OrderMedicinesDTO> orders=orderService.getWaitingOrders();
+    @PostMapping(value = "/getOrders")
+    public ResponseEntity<List<OrderMedicinesDTO>> getOrders(@RequestBody String userId){
+        Long id=Long.parseLong(userId);
+        List<OrderMedicinesDTO> orders=orderService.getWaitingOrders(id);
 
         return new ResponseEntity<>(orders,HttpStatus.OK);
     }
@@ -51,6 +52,16 @@ public class SupplierController {
         Long id=Long.parseLong(userId);
 
         offerService.sendOffer(id,orderId,offer);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/changeOffer/{userId}/{orderId}")
+    public ResponseEntity<?> changeOffer(@PathVariable("userId") String userId,@PathVariable("orderId") Long orderId ,@RequestBody DisplayOfferDTO offer){
+       
+        Long id=Long.parseLong(userId);
+
+        offerService.changeOffer(id,orderId,offer);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

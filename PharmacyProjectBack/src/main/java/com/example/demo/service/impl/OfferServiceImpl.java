@@ -71,5 +71,15 @@ public class OfferServiceImpl implements OfferService {
        }
         return dtos;
     }
+
+    @Override
+    public void changeOffer(Long userId, Long orderId, DisplayOfferDTO offer) {
+       Offer o=offerRepository.findById(offer.getOfferId()).get();
+
+       o.setDeliveryDate(offer.getDeliveryDate());
+       o.setTotalPrice(offer.getTotalPrice());
+        
+       offerRepository.save(o);
+    }
     
 }

@@ -100,11 +100,15 @@ public class SystemAdminServiceImpl implements SystemAdminService {
     public Complaint replyComplaint(Long id) {
        
        Complaint c=complaintRepository.findById(id).get();
+       if(c.getIsAnswered()==true ){
+           return null;
+       }else{
        c.setIsAnswered(true);
        
        complaintRepository.save(c);
 
        return c;
+       }
     }
 
    

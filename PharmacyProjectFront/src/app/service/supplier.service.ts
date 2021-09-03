@@ -11,8 +11,8 @@ export class SupplierService {
   constructor(private http: HttpClient) {
   }
 
-  public getOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>("http://localhost:8081/api/supplier/getOrders");
+  public getOrders(userId:string): Observable<Order[]> { 
+    return this.http.post<Order[]>("http://localhost:8081/api/supplier/getOrders",userId);
   }
   public getItemsFromOrder(orderId:number): Observable<OrderItem[]> {
     return this.http.post<OrderItem[]>("http://localhost:8081/api/supplier/getItemsFromOrder",orderId);
@@ -23,5 +23,8 @@ export class SupplierService {
   }
   public getOffers(userId:string): Observable<DisplayOffer[]> {
     return this.http.post<DisplayOffer[]>("http://localhost:8081/api/supplier/getOffers",userId);
+  }
+  public changeOffer(userId:string,orderId:number,offer:DisplayOffer): Observable<any> {
+    return this.http.post<any>("http://localhost:8081/api/supplier/changeOffer/"+ userId+"/"+orderId,offer);
   }
 }

@@ -151,3 +151,4 @@ INSERT INTO `order_medicines_order_items` (order_medicines_id,order_items_id) va
 INSERT INTO `order_medicines_order_items` (order_medicines_id,order_items_id) values (92,4);
 INSERT INTO `order_medicines_order_items`(order_medicines_id,order_items_id) values (92,5);
 INSERT INTO `order_medicines_order_items` (order_medicines_id,order_items_id) values (92,6)
+

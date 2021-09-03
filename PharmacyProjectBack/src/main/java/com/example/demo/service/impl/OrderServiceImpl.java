@@ -3,7 +3,7 @@ package com.example.demo.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import com.example.demo.dto.DisplayOfferDTO;
 import com.example.demo.dto.OrderMedicinesDTO;
 
 import com.example.demo.model.OrderItem;
@@ -13,6 +13,7 @@ import com.example.demo.model.OrderOfferStatus;
 import com.example.demo.repository.OfferRepository;
 import com.example.demo.repository.OrderRepository;
 import com.example.demo.repository.UserRepository.UserRepository;
+import com.example.demo.service.OfferService;
 import com.example.demo.service.OrderService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     UserRepository userRepository;
+    
+    @Autowired
+    OfferService offerService;
 
     @Override
-    public List<OrderMedicinesDTO> getWaitingOrders() {
+    public List<OrderMedicinesDTO> getWaitingOrders(Long userId) {
        List<OrderMedicines> orders1=orderRepository.findAll();
+
+       List<DisplayOfferDTO> offers=offerService.getOffers(userId);
 
        List<OrderMedicinesDTO> orders=new ArrayList<>();
 
@@ -46,7 +52,17 @@ public class OrderServiceImpl implements OrderService {
                orders.add(dto);
            }
        }
-       return orders;
+
+       List<OrderMedicinesDTO> orders11=new ArrayList<>(orders);
+       
+       for(DisplayOfferDTO o1:offers){
+            for(OrderMedicinesDTO o:orders){
+                if(o.getId()==o1.getOrderId()){
+                   orders11.remove(o);
+                }
+            }
+       }
+       return orders11;
     }
 
     @Override

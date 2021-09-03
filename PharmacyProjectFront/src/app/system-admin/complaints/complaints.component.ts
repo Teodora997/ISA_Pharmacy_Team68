@@ -25,6 +25,7 @@ export class ComplaintsComponent implements OnInit {
   request!: Request; 
   complaintReply!:string;
   ret:Object=new Object();
+  response!:any;
 
 
   constructor(private router: Router,private systemAdminService:SystemAdminService, private pharmacyService: PharmacyService,private loginService:LoginService) {
@@ -46,8 +47,17 @@ ngOnInit(): void {
 
 replyComplaint(c:Complaint){
    
-    this.systemAdminService.replyComplaint(c.id,c.complaintReply).subscribe();
-    alert("Reply is sucessufully sent");
+    this.systemAdminService.replyComplaint(c.id,c.complaintReply).subscribe({
+      next: t => {
+        this.response = t;
+        if(this.response==0){
+          alert("Succesufull!");
+        }else{
+          alert("Already answered!");
+        }
+      }
+
+    });
 }
 
 getUser() {

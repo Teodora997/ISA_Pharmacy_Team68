@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.Version;
+
 @Entity
 @Table(name = "Loyalty")
 public class LoyaltyProgram {
@@ -30,6 +32,10 @@ public class LoyaltyProgram {
 
     @Column(name = "gold_points")
     private Integer goldPoints;
+
+    @Version
+    @Column(name = "version", nullable = true)
+    private Long version;
 
     public LoyaltyProgram() {
     }
