@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+
 import com.example.demo.dto.MedFromQRDTO;
 import com.example.demo.dto.PharmaciesEPrescriptionDTO;
 import com.example.demo.model.EPrescription;
@@ -32,6 +33,8 @@ import com.google.zxing.common.HybridBinarizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javassist.NotFoundException;
 
@@ -137,6 +140,7 @@ public class EPrescriptionServiceImpl implements EPrescriptionService {
     }
 
     @Override
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
     public void buyEprescription(Long pharmacyId, Long prescriptionId) {
         EPrescription e=ePrescriptionRepository.findById(prescriptionId).get();
         e.setPharmacyId(pharmacyId);

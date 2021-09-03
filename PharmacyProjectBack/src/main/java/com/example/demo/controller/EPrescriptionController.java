@@ -37,7 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/eprescription")
-public class EPrescriptionController {
+public class EPrescriptionController { 
 
     @Autowired
 	EPrescriptionService ePrescriptionService;
