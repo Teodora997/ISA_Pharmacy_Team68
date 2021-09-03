@@ -50,5 +50,7 @@ Korisnici za testiranje:
 
 -farmaceut1@gmail.com
 
+-dobavljac@gmail.com
+
 --lozinka za sve korisnike je 123
 
