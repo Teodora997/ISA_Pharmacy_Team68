@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Version;
 
 @Entity
 public class PharmacyStorage {
@@ -13,6 +14,10 @@ public class PharmacyStorage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Version
+    @Column(name = "version", columnDefinition = "integer DEFAULT 1", nullable = false)
+    private Long version;
+    
     @Column(name = "pharmacyId", nullable = false)
     private int pharmacyId;
 

@@ -40,7 +40,9 @@ import com.example.demo.service.MedicineService;
 import com.example.demo.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -117,11 +119,13 @@ public class PatientService implements IPatientService{
                 patientAvailable=false;
             }
         }
+        try{
         if(patientAvailable){
         examination.setStatus(ExaminationStatus.scheduled);
         Patient patient=patientRepository.findById(Long.parseLong(patientId)).get();
         examination.setPatient(patient);
         examinationRepository.save(examination);
+
         SimpleMailMessage mailMessage = new SimpleMailMessage();
        mailMessage.setTo(patient.getEmail());
        mailMessage.setSubject("Reserved examination!");
@@ -138,6 +142,10 @@ public class PatientService implements IPatientService{
             System.out.println("zauzet pacijent examinations");
             return null;
         }
+    }catch(ObjectOptimisticLockingFailureException objectOptimisticLockingFailureException){
+    throw new ObjectOptimisticLockingFailureException("Invalid request", HttpStatus.BAD_REQUEST);
+
+    }
     }
 
     @Override
@@ -189,6 +197,7 @@ public class PatientService implements IPatientService{
             }
         }
 
+
         List<ConsultingDTO> cons=getConsultingsByPatient(Long.parseLong(patientId));
         for(ConsultingDTO cd:cons){
             if(cd.getDate().isEqual(consulting.getDate()) && cd.getTime().equals(consulting.getTime())){
@@ -197,6 +206,7 @@ public class PatientService implements IPatientService{
             }
         }
         Patient patient=patientRepository.findById(Long.parseLong(patientId)).get();
+        try{
         if(patientAvailable){
         if(consulting.getPatient()!=null){
             if(!consulting.getPatient().getId().equals(patient.getId()))
@@ -239,6 +249,9 @@ public class PatientService implements IPatientService{
         }else{
             System.out.println("Pacijent ima zakazan pregled tada!");
             return null;
+        }
+    }catch(ObjectOptimisticLockingFailureException objectOptimisticLockingFailureException){
+        throw new ObjectOptimisticLockingFailureException("Invalid request", HttpStatus.BAD_REQUEST);
         }
     }
 
